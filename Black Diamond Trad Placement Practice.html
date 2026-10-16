@@ -1,0 +1,2977 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Diamond Trad Placement Practice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f17;
+            color: #e2e8f0;
+            user-select: none;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        ::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .gear-btn {
+            transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gear-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+        }
+        .gear-btn.selected {
+            transform: translateY(-4px);
+            box-shadow: 0 0 0 2px #f59e0b, 0 8px 16px -3px rgba(245, 158, 11, 0.35);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-2 sm:p-4 max-w-[1440px] mx-auto gap-3">
+
+    <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 sm:px-5 shadow-xl flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none">
+                    <circle cx="13" cy="12" r="5" fill="#3b82f6" stroke="#f8fafc" stroke-width="1.3"/>
+                    <circle cx="23" cy="12" r="5" fill="#eab308" stroke="#f8fafc" stroke-width="1.3"/>
+                    <circle cx="18" cy="21" r="5" fill="#ef4444" stroke="#f8fafc" stroke-width="1.3"/>
+                    <path d="M18 15 L18 32" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">Black Diamond Trad Placement Practice</h1>
+                    <span id="modeBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">Ground School</span>
+                </div>
+                <p class="text-xs text-slate-400">Master sizing and placing Black Diamond Camalots, Z4s, Offsets, and Stoppers.</p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between sm:justify-end gap-2">
+            <button id="toggleOutdoorModeBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border-slate-700">
+                <span>⛰️ Switch to Cragging Mode</span>
+            </button>
+
+            <button id="openCalibBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/40">
+                <span>💳 Calibrate 1:1 Scale</span>
+            </button>
+
+            <button id="openSpecsBtn" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+                📊 Spec Chart
+            </button>
+
+            <div class="flex items-center gap-2 bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                <div class="text-center px-2 border-r border-slate-800">
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Score</div>
+                    <div id="scoreDisplay" class="text-sm font-bold mono text-emerald-400">0 / 0</div>
+                </div>
+                <div class="text-center px-2 border-r border-slate-800">
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Streak</div>
+                    <div id="streakDisplay" class="text-sm font-bold mono text-amber-400">0 🔥</div>
+                </div>
+                <div class="text-center px-2">
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Accuracy</div>
+                    <div id="accuracyDisplay" class="text-sm font-bold mono text-sky-400">100%</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="outdoorHud" class="hidden bg-slate-900/95 border border-amber-500/40 rounded-2xl p-3 sm:px-5 shadow-xl">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2.5">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400">⛰️ Cragging Mode</span>
+                    <span class="text-[11px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">🔒 Blind mm Ranges</span>
+                </div>
+                <button id="openOutdoorSetupBtn" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-bold transition flex items-center gap-1">
+                    <span>🎒 Rack &amp; Route Setup</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 flex-1 max-w-4xl">
+                <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                    <div class="flex items-center justify-between text-[10px] uppercase text-slate-400 font-semibold">
+                        <span>Current Pitch</span>
+                        <span id="totalElevationText" class="mono text-amber-300">Elev: 0m</span>
+                    </div>
+                    <div id="pitchProgressText" class="text-sm font-extrabold mono text-white">Pitch 1 / 3</div>
+                </div>
+                <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                    <div class="flex items-center justify-between text-[10px] uppercase text-slate-400 font-semibold mb-1">
+                        <span>Pitch Progress</span>
+                        <span id="climberHeightText" class="mono text-sky-400 font-bold">0.0m / 35.0m</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                        <div id="pitchHeightBarFill" class="h-full bg-sky-400 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                    <div class="text-[10px] uppercase text-slate-400 font-semibold">Runout Above Pro</div>
+                    <div id="runoutText" class="text-sm font-extrabold mono text-amber-400">0.0m (Whip: 1.5m)</div>
+                </div>
+                <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                    <div class="flex items-center justify-between text-[10px] uppercase text-slate-400 font-semibold mb-1">
+                        <span>Lead Stress</span>
+                        <span id="stressPctText" class="mono text-emerald-400 font-bold">0% (+0.4%/s)</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                        <div id="stressBarFill" class="h-full bg-emerald-500 transition-all duration-150" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-slate-950/90 border border-amber-500/30 px-3 py-1.5 rounded-xl">
+                    <div class="flex items-center justify-between text-[10px] uppercase text-slate-400 font-semibold mb-1">
+                        <span>Grip Meter</span>
+                        <span id="staminaPctText" class="mono text-emerald-400 font-bold">100% (-0.9%/s)</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                        <div id="staminaBarFill" class="h-full bg-emerald-400 transition-all duration-150" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
+        
+        <!-- Left Column: Interactive Rock Crack Viewport + Active Gear Rack Underneath -->
+        <div class="lg:col-span-8 flex flex-col gap-3">
+            
+            <!-- Crack Viewport Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                
+                <!-- Visual Aids & Orientation Toolbar -->
+                <div class="bg-slate-950/80 border-b border-slate-800 px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex flex-wrap items-center gap-1.5">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">Visual Aids:</span>
+                        
+                        <button id="toggleGridBtn" class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition bg-sky-500/20 text-sky-300 border-sky-500/40">
+                            📏 mm Grid
+                        </button>
+
+                        <div class="flex items-center bg-amber-500/15 border border-amber-500/40 rounded-lg overflow-hidden">
+                            <button id="toggleJamBtn" class="px-2.5 py-1 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 transition">
+                                🤚 Jam Gauge
+                            </button>
+                            <select id="jamSelect" class="bg-slate-900 text-amber-200 text-xs font-semibold px-1.5 py-1 border-l border-amber-500/40 focus:outline-none">
+                                <option value="auto">Auto (Closest Jam)</option>
+                                <option value="12">12mm Pinky</option>
+                                <option value="18">18mm Index Finger</option>
+                                <option value="28">28mm 2-Finger Stack</option>
+                                <option value="45">45mm Thin Hand</option>
+                                <option value="65">65mm Hand Jam</option>
+                                <option value="95">95mm Fist Jam</option>
+                                <option value="135">135mm Offwidth</option>
+                                <option value="185">185mm Chicken Wing</option>
+                            </select>
+                        </div>
+
+                        <button id="toggleCardOverlayBtn" class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition bg-slate-800 text-slate-400 border-slate-700 hover:text-white">
+                            💳 Card Overlay
+                        </button>
+
+                        <button id="rawEyeBtn" class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition bg-slate-800 text-slate-400 border-slate-700 hover:text-white">
+                            👁️ Raw Eye
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+                        <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-xs">
+                            <span class="text-[11px] text-slate-400 px-1.5">Placement:</span>
+                            <button id="orientStandardBtn" class="px-2 py-1 rounded-md font-bold bg-amber-500 text-slate-950 transition">Standard</button>
+                            <button id="orientFlipBtn" class="px-2 py-1 rounded-md font-bold text-slate-400 hover:text-white transition">Sideways / Flip</button>
+                        </div>
+
+                        <button id="scaleModeToggleBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold border border-emerald-500/40 bg-emerald-500/15 text-emerald-300 transition">
+                            1:1 Scale Lock
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Viewport Container -->
+                <div id="canvasViewportContainer" class="relative w-full h-[380px] sm:h-[430px] bg-slate-950 overflow-hidden">
+                    <canvas id="crackCanvas" class="absolute inset-0 w-full h-full block cursor-default"></canvas>
+
+                    <!-- Top-Left Target Badge -->
+                    <div class="absolute top-3 left-3 pointer-events-none bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl text-xs text-slate-300 flex items-center gap-2 shadow-lg">
+                        <span id="scaleBadgeDot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span id="viewportModeLabel">Target Zone: Crack Constriction (1:1 Scale)</span>
+                    </div>
+
+                    <!-- Top-Right Caliper Reveal Readout -->
+                    <div id="revealReadout" class="hidden absolute top-3 right-3 bg-slate-950/95 border border-slate-700 px-3.5 py-2 rounded-xl shadow-xl text-right">
+                        <div class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Actual Crack Width</div>
+                        <div id="actualWidthText" class="text-lg font-extrabold mono text-white">21.4 mm</div>
+                        <div id="idealGearText" class="text-xs text-emerald-400 font-semibold">Ideal: C4 #0.5</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Viewport Action Bar -->
+                <div class="bg-slate-950/90 border-t border-slate-800 p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                    <div id="statusPrompt" class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+                        <span class="inline-block w-2 h-2 rounded-full bg-sky-400"></span>
+                        <span>Select gear from the rack below to test your placement.</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+                        <button id="testPullBtn" disabled class="flex-1 sm:flex-initial px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-amber-500 hover:bg-amber-400 disabled:bg-slate-800 disabled:text-slate-600 text-slate-950 transition shadow-lg flex items-center justify-center gap-1.5">
+                            <span>⚡ Set and Test Gear</span>
+                        </button>
+                        <button id="skipPlacementBtn" class="hidden px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/40 transition flex items-center justify-center gap-1.5" title="Climb past this placement without placing gear (increases Runout & Lead Stress)">
+                            <span>⏭️ Skip Placement (+Stress)</span>
+                        </button>
+                        <button id="nextCrackBtn" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition flex items-center justify-center gap-1.5">
+                            <span>🪨 New Crack</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Gear Rack directly under viewport -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white">Active Gear Rack</h2>
+                        <span id="activeRackCountBadge" class="text-[11px] px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30 font-semibold">All Gear</span>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-1.5">
+                        <!-- Quick Type Filter Buttons (All / Cams / Stoppers) -->
+                        <div class="flex items-center bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-xs">
+                            <button data-typefilter="all" class="type-filter-btn px-2.5 py-1 rounded-md font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 transition">All</button>
+                            <button data-typefilter="cams" class="type-filter-btn px-2.5 py-1 rounded-md font-bold text-slate-400 hover:text-white transition">Cams</button>
+                            <button data-typefilter="stoppers" class="type-filter-btn px-2.5 py-1 rounded-md font-bold text-slate-400 hover:text-white transition">Stoppers</button>
+                        </div>
+
+                        <button id="toggleRackMmBtn" class="text-xs text-sky-400 hover:text-sky-300 font-semibold px-2 py-1">
+                            Hide mm
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rack Preset Category Tabs -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 mb-3">
+                    <button data-preset="all" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">All Gear</button>
+                    <button data-preset="cams_standard" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Camalots (Z4+C4)</button>
+                    <button data-preset="fingers_hands" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Fingers (#0.1–#3)</button>
+                    <button data-preset="offsets" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Z4 Offsets</button>
+                    <button data-preset="pin_scar" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Pin-Scar &amp; Flare</button>
+                    <button data-preset="offwidth" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Offwidth (#3–#8)</button>
+                    <button data-preset="stoppers" class="preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Stoppers &amp; Offsets</button>
+                </div>
+
+                <!-- Dynamic Gear Grid -->
+                <div id="gearRackGrid" class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-2 max-h-[310px] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
+
+        <!-- Right Column: Gear Specs & Physics Analysis -->
+        <div class="lg:col-span-4 flex flex-col gap-3">
+            
+            <!-- Selected Gear Specifications Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Selected Gear Spec</h2>
+                    <span id="selectedGearBadge" class="text-xs font-mono px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-400 font-bold">None Selected</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5 text-xs">
+                    <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+                        <div class="text-slate-400 text-[11px]">Active Range</div>
+                        <div id="specRange" class="text-sm font-bold mono text-white mt-0.5">-- mm</div>
+                    </div>
+                    <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+                        <div class="text-slate-400 text-[11px]">Sweet Spot (Bomber)</div>
+                        <div id="specSweetSpot" class="text-sm font-bold mono text-emerald-400 mt-0.5">-- mm</div>
+                    </div>
+                    <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+                        <div class="text-slate-400 text-[11px]">Strength Rating</div>
+                        <div id="specStrength" class="text-sm font-bold mono text-amber-400 mt-0.5">-- kN</div>
+                    </div>
+                    <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+                        <div class="text-slate-400 text-[11px]">Category / Axle</div>
+                        <div id="specCategory" class="text-sm font-bold text-slate-300 mt-0.5">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placement Physics & Inspection Feedback Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Placement Physics Analysis</h2>
+                        <span id="evalStatusBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400">Awaiting Test</span>
+                    </div>
+
+                    <div id="evalBody" class="space-y-3 py-1">
+                        <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+                            <div class="text-2xl mb-1">🧗</div>
+                            <div class="text-sm font-bold text-slate-200">Size Up the Constriction</div>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                Select a piece from the rack below and click <strong>"Set and Test Gear"</strong>, or switch to Cragging Mode to climb the route.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
+                    <div>💡 <strong class="text-slate-200">Camalot Rule:</strong> Aim for <strong>30%–75% retraction</strong> so lobes have room to bite without tipping out or getting over-cammed.</div>
+                    <div>💡 <strong class="text-slate-200">Stopper Rule:</strong> Seat the wedge so the bottleneck contacts the middle <strong>20%–85%</strong> of the nut's taper.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Credit Card 1:1 Calibration Modal -->
+    <div id="calibModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden items-center justify-start p-3 sm:p-6 md:pl-10">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                    <h3 class="text-base sm:text-lg font-extrabold text-white">💳 1:1 Real-Life Screen Calibration</h3>
+                    <p class="text-xs text-slate-400">Standard ISO/IEC 7810 ID-1 Card: <strong>85.60 mm × 53.98 mm</strong></p>
+                </div>
+                <button id="closeCalibModalBtn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">✕</button>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Align the <strong>top-left corner</strong> of your physical card with the pinned yellow corner guide below. As you adjust the slider, the top-left corner stays locked in place while the outline expands <strong>right (→)</strong> and <strong>down (↓)</strong>.
+            </p>
+
+            <div class="relative h-[330px] sm:h-[380px] bg-slate-950 border border-slate-800 rounded-xl overflow-auto">
+                <div class="absolute top-1.5 left-5 text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1 pointer-events-none">
+                    <span>📌 Fixed Top-Left Corner Anchor</span>
+                </div>
+
+                <div class="absolute top-6 left-4 w-7 h-7 border-t-4 border-l-4 border-amber-400 rounded-tl-md pointer-events-none z-10"></div>
+
+                <div id="calibCardBox" class="absolute top-7 left-5 rounded-xl border-2 border-emerald-400 bg-gradient-to-br from-emerald-500/25 to-slate-900 flex flex-col justify-between p-3 shadow-lg select-none" style="width: 323px; height: 204px;">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-extrabold mono text-amber-300">↖ HOLD CORNER HERE</span>
+                        <span class="w-7 h-5 rounded bg-amber-400/80 border border-amber-200"></span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs font-bold text-white/95">PLACE PHYSICAL CARD HERE</div>
+                        <div class="text-[10px] font-semibold text-emerald-300 mt-0.5">Expands Right (→) &amp; Down (↓)</div>
+                    </div>
+                    <div class="flex justify-between text-[10px] mono text-slate-300">
+                        <span>85.60 mm W →</span>
+                        <span>53.98 mm H ↓</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-400 font-semibold">Scale Factor (<span id="calibPpiText" class="mono text-emerald-400">96 PPI</span>)</span>
+                    <span id="calibPxPerMmText" class="mono font-bold text-white">3.78 px/mm</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="calibMinusBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">−</button>
+                    <input id="calibSlider" type="range" min="2.2" max="7.5" step="0.02" value="3.78" class="flex-1 accent-emerald-500">
+                    <button id="calibPlusBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">+</button>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
+                <button id="resetCalibBtn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Reset Default (96 PPI)</button>
+                <button id="saveCalibBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950">Save 1:1 Calibration</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gear Specifications Chart Modal -->
+    <div id="specsModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base sm:text-lg font-extrabold text-white">Official Black Diamond Trad Gear Specifications</h3>
+                    <p class="text-xs text-slate-400">Camalot Z4, Camalot C4 (#0.3–#8), Z4 Offsets, Stoppers (#1–#13) &amp; Offset Stoppers</p>
+                </div>
+                <button id="closeSpecsModalBtn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">✕</button>
+            </div>
+            <div class="p-4 overflow-y-auto text-xs">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-800 text-slate-400 uppercase text-[11px]">
+                            <th class="py-2 px-2">Piece</th>
+                            <th class="py-2 px-2">Type / Axle</th>
+                            <th class="py-2 px-2">Active Range</th>
+                            <th class="py-2 px-2">Sweet Spot</th>
+                            <th class="py-2 px-2">Strength</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specsTableBody" class="divide-y divide-slate-800/60 mono"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outdoor Mode Outcome Modal -->
+    <div id="outdoorModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl text-center space-y-4 max-h-[92vh] overflow-y-auto">
+            <div id="outdoorModalIcon" class="text-4xl">⛰️</div>
+            <h3 id="outdoorModalTitle" class="text-lg font-extrabold text-white">Belay Anchor Reached!</h3>
+            <p id="outdoorModalDesc" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+
+            <div id="outdoorModalScoreBox" class="hidden bg-slate-950/95 border border-slate-800 rounded-xl p-3.5 text-left space-y-3"></div>
+
+            <div id="outdoorModalPitchBox" class="bg-slate-950/90 border border-slate-800 rounded-xl p-3 text-left space-y-1.5">
+                <label for="modalPitchCountSelect" class="block text-[11px] font-bold uppercase tracking-wider text-amber-400">Select Pitches for Next Climb</label>
+                <select id="modalPitchCountSelect" class="w-full bg-slate-900 text-amber-300 font-bold text-xs sm:text-sm rounded-lg px-3 py-2 border border-slate-700 focus:outline-none focus:border-amber-400">
+                    <option value="1">1 Pitch • 35m (Single Pitch Crag)</option>
+                    <option value="2">2 Pitches • 70m (Multi-Pitch Crag)</option>
+                    <option value="3" selected>3 Pitches • 105m (Classic Trad Route)</option>
+                    <option value="4">4 Pitches • 140m (Half-Dome Apron)</option>
+                    <option value="5">5 Pitches • 175m (Long Trad Route)</option>
+                    <option value="6">6 Pitches • 210m (Grade IV Wall)</option>
+                    <option value="7">7 Pitches • 245m (High Sierra Spire)</option>
+                    <option value="8">8 Pitches • 280m (Alpine Wall)</option>
+                    <option value="9">9 Pitches • 315m (Grade V Big Wall)</option>
+                    <option value="10">10 Pitches • 350m (Big Wall Free)</option>
+                </select>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+                <button id="outdoorModalPrimaryBtn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950">Continue Climb</button>
+                <button id="outdoorModalSetupBtn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700">🎒 Route &amp; Rack Setup</button>
+                <button id="outdoorModalExitBtn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Switch to Ground School</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cragging Mode Pre-Climb & Rack Selection Modal -->
+    <div id="outdoorSetupModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">⛰️</span>
+                        <h3 class="text-base sm:text-lg font-extrabold text-white">Cragging Mode — Route &amp; Harness Rack Setup</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">Configure your multi-pitch route and choose what gear to rack on your harness before stepping off the ground.</p>
+                </div>
+                <button id="cancelOutdoorSetupTopBtn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">✕</button>
+            </div>
+
+            <div class="p-4 overflow-y-auto space-y-4 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2">
+                        <div class="font-bold uppercase tracking-wider text-slate-400 text-[11px]">1. Select Route Length (Pitches)</div>
+                        <select id="pitchCountSelect" class="w-full bg-slate-900 text-amber-300 font-bold rounded-lg px-3 py-2 border border-slate-700 focus:outline-none">
+                            <option value="1">1 Pitch • 35m (Single Pitch Crag)</option>
+                            <option value="2">2 Pitches • 70m (Multi-Pitch Crag)</option>
+                            <option value="3" selected>3 Pitches • 105m (Classic Trad Route)</option>
+                            <option value="4">4 Pitches • 140m (Half-Dome Apron)</option>
+                            <option value="5">5 Pitches • 175m (Long Trad Route)</option>
+                            <option value="6">6 Pitches • 210m (Grade IV Wall)</option>
+                            <option value="7">7 Pitches • 245m (High Sierra Spire)</option>
+                            <option value="8">8 Pitches • 280m (Alpine Wall)</option>
+                            <option value="9">9 Pitches • 315m (Grade V Big Wall)</option>
+                            <option value="10">10 Pitches • 350m (Big Wall Free)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2">
+                        <div class="font-bold uppercase tracking-wider text-slate-400 text-[11px]">2. Copies Per Selected Size</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="rackQtySingleBtn" class="px-3 py-2 rounded-lg font-bold border transition bg-amber-500 text-slate-950 border-amber-400">
+                                1x Single Rack
+                            </button>
+                            <button type="button" id="rackQtyDoubleBtn" class="px-3 py-2 rounded-lg font-bold border transition bg-slate-900 text-slate-300 border-slate-700 hover:text-white">
+                                2x Double Rack
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2.5">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="font-bold uppercase tracking-wider text-slate-400 text-[11px]">3. Quick Harness Rack Presets</span>
+                        <span id="setupSelectedCountText" class="text-xs font-extrabold mono text-emerald-400">20 Pieces on Harness</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                        <button type="button" data-outpreset="std_rack_nuts" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-slate-950 transition">Standard Rack + Nuts (#0.3–#3 + Stoppers)</button>
+                        <button type="button" data-outpreset="std_rack_only" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Standard Rack (#0.3–#3)</button>
+                        <button type="button" data-outpreset="extended_trad" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Extended Trad (Z4 + C4 #0.3–#4 + Nuts)</button>
+                        <button type="button" data-outpreset="micros_fingers_nuts" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Thin &amp; Fingers (Z4 #0–#0.75 + Nuts)</button>
+                        <button type="button" data-outpreset="creek_fingers_hands" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Indian Creek (Z4 + C4 #0.1–#3)</button>
+                        <button type="button" data-outpreset="cams_only" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">All Cams (Z4 + C4)</button>
+                        <button type="button" data-outpreset="offsets_aid" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Pin-Scar Offsets (Cams + Nuts)</button>
+                        <button type="button" data-outpreset="offwidth" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Offwidth Monsters (#3–#8)</button>
+                        <button type="button" data-outpreset="nuts_only" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Stoppers &amp; Offset Nuts Only</button>
+                        <button type="button" data-outpreset="all" class="outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">Full Everything Rack</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold uppercase tracking-wider text-slate-400 text-[11px]">4. Customize Individual Pieces on Your Harness (Click to Toggle)</span>
+                        <span class="text-[11px] text-slate-400">Green = Racked on Harness</span>
+                    </div>
+                    <div id="outdoorSetupGearGrid" class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-1.5 max-h-[250px] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/60">
+                <button type="button" id="cancelOutdoorSetupBtn" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel &amp; Stay in Ground School</button>
+                <button type="button" id="startOutdoorClimbBtn" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg flex items-center gap-2">
+                    <span>🧗 Start Climb (Pitch 1)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ALL_GEAR = [
+            { id: 'z4_0',   name: 'Z4 #0',    category: 'z4', type: 'cam_z4', hex: '#16a34a', highlight: '#4ade80', dark: '#14532d', rMin: 7.5,  rMax: 11.8, sweetMin: 8.6,  sweetMax: 10.7, kN: 5,  axle: 'Single (RigidFlex)' },
+            { id: 'z4_01',  name: 'Z4 #0.1',  category: 'z4', type: 'cam_z4', hex: '#dc2626', highlight: '#f87171', dark: '#7f1d1d', rMin: 8.8,  rMax: 13.8, sweetMin: 10.0, sweetMax: 12.5, kN: 5,  axle: 'Single (RigidFlex)' },
+            { id: 'z4_02',  name: 'Z4 #0.2',  category: 'z4', type: 'cam_z4', hex: '#eab308', highlight: '#fde047', dark: '#713f12', rMin: 10.4, rMax: 16.3, sweetMin: 11.9, sweetMax: 14.8, kN: 6,  axle: 'Single (RigidFlex)' },
+            { id: 'z4_03',  name: 'Z4 #0.3',  category: 'z4', type: 'cam_z4', hex: '#2563eb', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 12.4, rMax: 22.6, sweetMin: 14.8, sweetMax: 20.0, kN: 8,  axle: 'Single (RigidFlex)' },
+            { id: 'z4_04',  name: 'Z4 #0.4',  category: 'z4', type: 'cam_z4', hex: '#64748b', highlight: '#cbd5e1', dark: '#334155', rMin: 15.3, rMax: 27.7, sweetMin: 18.2, sweetMax: 24.6, kN: 9,  axle: 'Single (RigidFlex)' },
+            { id: 'z4_05',  name: 'Z4 #0.5',  category: 'z4', type: 'cam_z4', hex: '#9333ea', highlight: '#c084fc', dark: '#581c87', rMin: 18.8, rMax: 33.9, sweetMin: 22.4, sweetMax: 30.1, kN: 10, axle: 'Single (RigidFlex)' },
+            { id: 'z4_075', name: 'Z4 #0.75', category: 'z4', type: 'cam_z4', hex: '#16a34a', highlight: '#4ade80', dark: '#14532d', rMin: 23.1, rMax: 42.1, sweetMin: 27.6, sweetMax: 37.3, kN: 10, axle: 'Single (RigidFlex)' },
+
+            { id: 'c4_03',  name: 'C4 #0.3',  category: 'c4', type: 'cam_c4', hex: '#2563eb', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 13.8,  rMax: 23.4,  sweetMin: 16.0,  sweetMax: 21.0,  kN: 8,  axle: 'Double Axle' },
+            { id: 'c4_04',  name: 'C4 #0.4',  category: 'c4', type: 'cam_c4', hex: '#64748b', highlight: '#cbd5e1', dark: '#334155', rMin: 15.5,  rMax: 26.7,  sweetMin: 18.2,  sweetMax: 23.9,  kN: 9,  axle: 'Double Axle' },
+            { id: 'c4_05',  name: 'C4 #0.5',  category: 'c4', type: 'cam_c4', hex: '#9333ea', highlight: '#c084fc', dark: '#581c87', rMin: 19.6,  rMax: 33.5,  sweetMin: 23.0,  sweetMax: 30.0,  kN: 12, axle: 'Double Axle' },
+            { id: 'c4_075', name: 'C4 #0.75', category: 'c4', type: 'cam_c4', hex: '#16a34a', highlight: '#4ade80', dark: '#14532d', rMin: 23.9,  rMax: 41.2,  sweetMin: 28.0,  sweetMax: 36.8,  kN: 12, axle: 'Double Axle' },
+            { id: 'c4_1',   name: 'C4 #1',    category: 'c4', type: 'cam_c4', hex: '#dc2626', highlight: '#f87171', dark: '#7f1d1d', rMin: 30.2,  rMax: 52.1,  sweetMin: 35.5,  sweetMax: 46.6,  kN: 12, axle: 'Double Axle' },
+            { id: 'c4_2',   name: 'C4 #2',    category: 'c4', type: 'cam_c4', hex: '#eab308', highlight: '#fde047', dark: '#713f12', rMin: 37.2,  rMax: 64.9,  sweetMin: 44.0,  sweetMax: 58.0,  kN: 12, axle: 'Double Axle' },
+            { id: 'c4_3',   name: 'C4 #3',    category: 'c4', type: 'cam_c4', hex: '#2563eb', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 50.7,  rMax: 87.9,  sweetMin: 59.8,  sweetMax: 78.6,  kN: 12, axle: 'Double Axle' },
+            { id: 'c4_4',   name: 'C4 #4',    category: 'c4', type: 'cam_c4', hex: '#64748b', highlight: '#cbd5e1', dark: '#334155', rMin: 66.0,  rMax: 114.7, sweetMin: 78.0,  sweetMax: 102.5, kN: 14, axle: 'Double Axle' },
+            { id: 'c4_5',   name: 'C4 #5',    category: 'c4', type: 'cam_c4', hex: '#9333ea', highlight: '#c084fc', dark: '#581c87', rMin: 85.4,  rMax: 148.5, sweetMin: 101.0, sweetMax: 132.8, kN: 14, axle: 'Double Axle' },
+            { id: 'c4_6',   name: 'C4 #6',    category: 'c4', type: 'cam_c4', hex: '#16a34a', highlight: '#4ade80', dark: '#14532d', rMin: 114.1, rMax: 195.0, sweetMin: 134.0, sweetMax: 174.8, kN: 14, axle: 'Double Axle' },
+            { id: 'c4_7',   name: 'C4 #7',    category: 'c4', type: 'cam_c4', hex: '#dc2626', highlight: '#f87171', dark: '#7f1d1d', rMin: 150.0, rMax: 253.5, sweetMin: 165.5, sweetMax: 215.0, kN: 8,  axle: 'Double Axle' },
+            { id: 'c4_8',   name: 'C4 #8',    category: 'c4', type: 'cam_c4', hex: '#eab308', highlight: '#fde047', dark: '#713f12', rMin: 193.0, rMax: 321.0, sweetMin: 218.0, sweetMax: 285.0, kN: 5,  axle: 'Double Axle' },
+
+            { id: 'z4_off_01_02',  name: 'Z4 Off #0.1/0.2',  category: 'offsets', type: 'cam_offset', hex: '#eab308', hexAlt: '#dc2626', highlight: '#fde047', dark: '#713f12', rMin: 9.6,  rMax: 15.0, sweetMin: 10.8, sweetMax: 13.7, kN: 5,  axle: 'Offset RigidFlex' },
+            { id: 'z4_off_02_03',  name: 'Z4 Off #0.2/0.3',  category: 'offsets', type: 'cam_offset', hex: '#2563eb', hexAlt: '#eab308', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 11.4, rMax: 19.5, sweetMin: 13.2, sweetMax: 17.5, kN: 6,  axle: 'Offset RigidFlex' },
+            { id: 'z4_off_03_04',  name: 'Z4 Off #0.3/0.4',  category: 'offsets', type: 'cam_offset', hex: '#64748b', hexAlt: '#2563eb', highlight: '#cbd5e1', dark: '#334155', rMin: 13.8, rMax: 25.1, sweetMin: 16.5, sweetMax: 22.3, kN: 8,  axle: 'Offset RigidFlex' },
+            { id: 'z4_off_04_05',  name: 'Z4 Off #0.4/0.5',  category: 'offsets', type: 'cam_offset', hex: '#9333ea', hexAlt: '#64748b', highlight: '#c084fc', dark: '#581c87', rMin: 17.0, rMax: 30.8, sweetMin: 20.3, sweetMax: 27.3, kN: 9,  axle: 'Offset RigidFlex' },
+            { id: 'z4_off_05_075', name: 'Z4 Off #0.5/0.75', category: 'offsets', type: 'cam_offset', hex: '#16a34a', hexAlt: '#9333ea', highlight: '#4ade80', dark: '#14532d', rMin: 21.0, rMax: 38.0, sweetMin: 25.0, sweetMax: 33.7, kN: 10, axle: 'Offset RigidFlex' },
+
+            { id: 'nut_1',  name: '#1 Stopper',  category: 'stoppers', type: 'nut', hex: '#ef4444', highlight: '#fca5a5', dark: '#991b1b', rMin: 4.3,  rMax: 6.7,  sweetMin: 4.8,  sweetMax: 6.3,  kN: 2,  axle: 'Passive Wedge' },
+            { id: 'nut_2',  name: '#2 Stopper',  category: 'stoppers', type: 'nut', hex: '#eab308', highlight: '#fde047', dark: '#854d0e', rMin: 4.8,  rMax: 7.5,  sweetMin: 5.3,  sweetMax: 7.0,  kN: 2,  axle: 'Passive Wedge' },
+            { id: 'nut_3',  name: '#3 Stopper',  category: 'stoppers', type: 'nut', hex: '#3b82f6', highlight: '#93c5fd', dark: '#1e40af', rMin: 5.5,  rMax: 8.4,  sweetMin: 6.1,  sweetMax: 7.9,  kN: 5,  axle: 'Passive Wedge' },
+            { id: 'nut_4',  name: '#4 Stopper',  category: 'stoppers', type: 'nut', hex: '#a855f7', highlight: '#d8b4fe', dark: '#6b21a8', rMin: 6.2,  rMax: 9.2,  sweetMin: 6.8,  sweetMax: 8.7,  kN: 6,  axle: 'Passive Wedge' },
+            { id: 'nut_5',  name: '#5 Stopper',  category: 'stoppers', type: 'nut', hex: '#94a3b8', highlight: '#e2e8f0', dark: '#475569', rMin: 7.2,  rMax: 10.3, sweetMin: 7.8,  sweetMax: 9.8,  kN: 6,  axle: 'Passive Wedge' },
+            { id: 'nut_6',  name: '#6 Stopper',  category: 'stoppers', type: 'nut', hex: '#2563eb', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 8.3,  rMax: 11.4, sweetMin: 8.9,  sweetMax: 10.9, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_7',  name: '#7 Stopper',  category: 'stoppers', type: 'nut', hex: '#eab308', highlight: '#fef08a', dark: '#713f12', rMin: 9.4,  rMax: 12.7, sweetMin: 10.1, sweetMax: 12.1, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_8',  name: '#8 Stopper',  category: 'stoppers', type: 'nut', hex: '#dc2626', highlight: '#f87171', dark: '#7f1d1d', rMin: 10.7, rMax: 14.2, sweetMin: 11.4, sweetMax: 13.6, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_9',  name: '#9 Stopper',  category: 'stoppers', type: 'nut', hex: '#e11d48', highlight: '#fb7185', dark: '#881337', rMin: 12.2, rMax: 16.0, sweetMin: 13.0, sweetMax: 15.4, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_10', name: '#10 Stopper', category: 'stoppers', type: 'nut', hex: '#1d4ed8', highlight: '#60a5fa', dark: '#172554', rMin: 14.0, rMax: 18.0, sweetMin: 14.8, sweetMax: 17.3, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_11', name: '#11 Stopper', category: 'stoppers', type: 'nut', hex: '#9333ea', highlight: '#c084fc', dark: '#581c87', rMin: 16.2, rMax: 20.6, sweetMin: 17.1, sweetMax: 19.8, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_12', name: '#12 Stopper', category: 'stoppers', type: 'nut', hex: '#16a34a', highlight: '#4ade80', dark: '#14532d', rMin: 18.8, rMax: 23.6, sweetMin: 19.8, sweetMax: 22.8, kN: 10, axle: 'Passive Wedge' },
+            { id: 'nut_13', name: '#13 Stopper', category: 'stoppers', type: 'nut', hex: '#cbd5e1', highlight: '#f8fafc', dark: '#475569', rMin: 21.8, rMax: 26.9, sweetMin: 22.8, sweetMax: 26.0, kN: 10, axle: 'Passive Wedge' },
+
+            { id: 'off_nut_7',  name: 'Offset #7',  category: 'offset_nuts', type: 'nut_offset', hex: '#dc2626', highlight: '#f87171', dark: '#7f1d1d', rMin: 8.0,  rMax: 12.0, sweetMin: 8.8,  sweetMax: 11.3, kN: 10, axle: 'Asymmetric Wedge' },
+            { id: 'off_nut_8',  name: 'Offset #8',  category: 'offset_nuts', type: 'nut_offset', hex: '#eab308', highlight: '#fde047', dark: '#713f12', rMin: 9.5,  rMax: 14.2, sweetMin: 10.4, sweetMax: 13.4, kN: 10, axle: 'Asymmetric Wedge' },
+            { id: 'off_nut_9',  name: 'Offset #9',  category: 'offset_nuts', type: 'nut_offset', hex: '#2563eb', highlight: '#60a5fa', dark: '#1e3a8a', rMin: 11.2, rMax: 16.5, sweetMin: 12.2, sweetMax: 15.6, kN: 10, axle: 'Asymmetric Wedge' },
+            { id: 'off_nut_10', name: 'Offset #10', category: 'offset_nuts', type: 'nut_offset', hex: '#64748b', highlight: '#cbd5e1', dark: '#334155', rMin: 13.5, rMax: 19.6, sweetMin: 14.7, sweetMax: 18.5, kN: 10, axle: 'Asymmetric Wedge' },
+            { id: 'off_nut_11', name: 'Offset #11', category: 'offset_nuts', type: 'nut_offset', hex: '#9333ea', highlight: '#c084fc', dark: '#581c87', rMin: 16.0, rMax: 23.6, sweetMin: 17.5, sweetMax: 22.3, kN: 10, axle: 'Asymmetric Wedge' }
+        ];
+
+        const JAM_REFERENCES = [
+            { mm: 12,  label: '12mm PINKY',        type: 'pinky' },
+            { mm: 18,  label: '18mm FINGER',       type: 'finger' },
+            { mm: 28,  label: '28mm 2-FINGER',     type: 'two_finger' },
+            { mm: 45,  label: '45mm THIN HAND',    type: 'thin_hand' },
+            { mm: 65,  label: '65mm HAND JAM',     type: 'hand' },
+            { mm: 95,  label: '95mm FIST JAM',     type: 'fist' },
+            { mm: 135, label: '135mm OFFWIDTH',    type: 'offwidth' },
+            { mm: 185, label: '185mm CHICKEN WING',type: 'chicken_wing' }
+        ];
+
+        const state = {
+            crack: null,
+            selectedGearId: null,
+            evaluated: false,
+            rackPreset: 'all',
+            typeFilter: 'all',
+            orientation: 'standard',
+            showGrid: true,
+            showJamGauge: true,
+            jamGaugeMode: 'auto',
+            showCardOverlay: false,
+            showRackMm: true,
+            scaleLock1to1: true,
+            pxPerMm: parseFloat(localStorage.getItem('bd_trad_px_per_mm')) || 3.78,
+            score: 0,
+            attempts: 0,
+            streak: 0,
+            animOffset: 0,
+            animId: null,
+            autoAdvanceTimerId: null,
+            outdoorMode: false,
+            outdoorClimbActive: false,
+            totalPitches: 3,
+            currentPitch: 1,
+            climberHeightM: 0,
+            lastProHeightM: 0,
+            stress: 0,
+            stamina: 100,
+            outdoorTimerId: null,
+            outdoorModalOpen: false,
+            outdoorRackMultiplier: 1,
+            outdoorSelectedIds: ALL_GEAR.filter(g => (g.category === 'c4' && g.rMax <= 90) || g.category === 'stoppers').map(g => g.id),
+            gearRemainingCounts: {},
+            outdoorDroppedCounts: {},
+            pitchPlacedGearIds: [],
+            pitchPeakStress: 0,
+            pitchMarginalCount: 0
+        };
+
+        const canvas = document.getElementById('crackCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function roundRectPath(ctx, x, y, w, h, r) {
+            const radius = Math.min(r, w / 2, h / 2);
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + w - radius, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+            ctx.lineTo(x + w, y + h - radius);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+            ctx.lineTo(x + radius, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+        }
+
+        function resetOutdoorGearCounts(isNewClimb = true) {
+            if (isNewClimb) {
+                state.outdoorDroppedCounts = {};
+            }
+            state.pitchPlacedGearIds = [];
+            state.pitchPeakStress = 0;
+            state.pitchMarginalCount = 0;
+            state.gearRemainingCounts = {};
+            ALL_GEAR.forEach(g => {
+                if (state.outdoorSelectedIds.includes(g.id)) {
+                    const dropped = state.outdoorDroppedCounts[g.id] || 0;
+                    state.gearRemainingCounts[g.id] = Math.max(0, state.outdoorRackMultiplier - dropped);
+                } else {
+                    state.gearRemainingCounts[g.id] = 0;
+                }
+            });
+        }
+
+        function rollFollowerDroppedGear() {
+            if (!state.pitchPlacedGearIds || state.pitchPlacedGearIds.length === 0) {
+                return { droppedNames: [], followerStressPct: 0 };
+            }
+
+            const totalHeightM = (state.currentPitch - 1) * 35.0 + state.climberHeightM;
+            const leaderBaseStress = Math.max(state.stress, state.pitchPeakStress, 4) / 100;
+            const heightExposure = Math.min(1, totalHeightM / 245);
+            const marginalFactor = Math.min(0.35, state.pitchMarginalCount * 0.08);
+
+            // Follower is ~10x more scared than the leader's baseline exposure/stress
+            const followerFearRatio = 10.0;
+            const rawFollowerFear = (leaderBaseStress * 0.055 + heightExposure * 0.03 + marginalFactor * 0.025) * followerFearRatio;
+            const followerStressPct = Math.min(100, Math.round(rawFollowerFear * 100));
+
+            // Calibrated so a drop happens roughly once every ~15 climbs (~2.2% to 4.5% per pitch, scaled by the follower's 10x fear)
+            const perPitchDropProb = Math.min(0.085, (1 / (15 * Math.max(1, state.totalPitches))) * (0.55 + rawFollowerFear * 1.15));
+
+            if (Math.random() >= perPitchDropProb) {
+                return { droppedNames: [], followerStressPct };
+            }
+
+            // Follower fumbles! Determine random number of dropped pieces scaled by the 10x fear level
+            const maxPossibleDrops = Math.min(
+                state.pitchPlacedGearIds.length,
+                followerStressPct >= 80 ? 3 : followerStressPct >= 50 ? 2 : 1
+            );
+            const numToDrop = 1 + Math.floor(Math.random() * maxPossibleDrops);
+
+            const pool = [...state.pitchPlacedGearIds];
+            const droppedNames = [];
+            for (let i = 0; i < numToDrop && pool.length > 0; i++) {
+                const idx = Math.floor(Math.random() * pool.length);
+                const droppedId = pool.splice(idx, 1)[0];
+                state.outdoorDroppedCounts[droppedId] = (state.outdoorDroppedCounts[droppedId] || 0) + 1;
+                const gearObj = ALL_GEAR.find(g => g.id === droppedId);
+                if (gearObj) {
+                    droppedNames.push(gearObj.name);
+                }
+            }
+
+            return { droppedNames, followerStressPct };
+        }
+
+        function getActiveGearList() {
+            let list = ALL_GEAR;
+            if (state.outdoorMode) {
+                list = ALL_GEAR.filter(g => state.outdoorSelectedIds.includes(g.id));
+            } else {
+                if (state.rackPreset === 'cams_standard') {
+                    list = list.filter(g => g.category === 'z4' || g.category === 'c4');
+                } else if (state.rackPreset === 'fingers_hands') {
+                    list = list.filter(g => (g.category === 'z4' || g.category === 'c4') && g.rMax <= 90 && g.rMin >= 8.5);
+                } else if (state.rackPreset === 'offsets') {
+                    list = list.filter(g => g.category === 'offsets');
+                } else if (state.rackPreset === 'pin_scar') {
+                    list = list.filter(g => g.category === 'offsets' || g.category === 'offset_nuts');
+                } else if (state.rackPreset === 'offwidth') {
+                    list = list.filter(g => g.rMax >= 65);
+                } else if (state.rackPreset === 'stoppers') {
+                    list = list.filter(g => g.category === 'stoppers' || g.category === 'offset_nuts');
+                }
+            }
+
+            if (state.typeFilter === 'cams') {
+                const camsOnly = list.filter(g => g.type.includes('cam'));
+                if (camsOnly.length > 0) list = camsOnly;
+            } else if (state.typeFilter === 'stoppers') {
+                const nutsOnly = list.filter(g => g.type.includes('nut'));
+                if (nutsOnly.length > 0) list = nutsOnly;
+            }
+            return list;
+        }
+
+        function getEffectiveGearRange(gear) {
+            const isSidewaysNut = state.orientation === 'alternate' && gear.type.includes('nut');
+            if (isSidewaysNut) {
+                const rMin = +(gear.rMax * 0.92).toFixed(1);
+                const rMax = +(gear.rMax * 1.22).toFixed(1);
+                const span = rMax - rMin;
+                return {
+                    rMin,
+                    rMax,
+                    sweetMin: +(rMin + span * 0.2).toFixed(1),
+                    sweetMax: +(rMin + span * 0.85).toFixed(1)
+                };
+            }
+            return {
+                rMin: gear.rMin,
+                rMax: gear.rMax,
+                sweetMin: gear.sweetMin,
+                sweetMax: gear.sweetMax
+            };
+        }
+
+        function generateCrack() {
+            if (state.animId) {
+                cancelAnimationFrame(state.animId);
+                state.animId = null;
+            }
+            if (state.autoAdvanceTimerId) {
+                clearTimeout(state.autoAdvanceTimerId);
+                state.autoAdvanceTimerId = null;
+            }
+            state.animOffset = 0;
+            state.evaluated = false;
+            state.selectedGearId = null;
+
+            let isForcedSkip = false;
+            let bottleneckMm = 20.0;
+
+            // In Crag Mode, 5% of the time generate a constriction that cannot be protected with the current rack, forcing a skip
+            if (state.outdoorMode && Math.random() < 0.05) {
+                isForcedSkip = true;
+                const availGear = ALL_GEAR.filter(g =>
+                    state.outdoorSelectedIds.includes(g.id) && (state.gearRemainingCounts[g.id] || 0) > 0
+                );
+
+                const fitsAnyAvailable = (w) => availGear.some(g => {
+                    const stdFits = w >= g.rMin && w <= g.rMax;
+                    const sideRMin = +(g.rMax * 0.92).toFixed(1);
+                    const sideRMax = +(g.rMax * 1.22).toFixed(1);
+                    const sideFits = g.type.includes('nut') && w >= sideRMin && w <= sideRMax;
+                    return stdFits || sideFits;
+                });
+
+                const candidateWidths = [];
+                ALL_GEAR.forEach(g => {
+                    const mid = +((g.sweetMin + g.sweetMax) / 2).toFixed(1);
+                    if (!fitsAnyAvailable(mid)) {
+                        candidateWidths.push(mid);
+                    }
+                });
+
+                for (let w = 3.2; w <= 210; w = +(w + 0.6).toFixed(1)) {
+                    if (!fitsAnyAvailable(w)) {
+                        candidateWidths.push(w);
+                    }
+                }
+
+                if (candidateWidths.length > 0) {
+                    bottleneckMm = candidateWidths[Math.floor(Math.random() * candidateWidths.length)];
+                } else {
+                    bottleneckMm = 3.4; // Incipient seam narrower than #1 Stopper (4.3 mm)
+                }
+            } else {
+                let pool = state.outdoorMode
+                    ? ALL_GEAR.filter(g => state.outdoorSelectedIds.includes(g.id))
+                    : getActiveGearList();
+
+                if (state.outdoorMode) {
+                    const availablePool = pool.filter(g => (state.gearRemainingCounts[g.id] || 0) > 0);
+                    if (availablePool.length > 0) {
+                        pool = availablePool;
+                    }
+                }
+                const targetGear = pool[Math.floor(Math.random() * pool.length)] || ALL_GEAR[0];
+                const span = targetGear.sweetMax - targetGear.sweetMin;
+                bottleneckMm = +(targetGear.sweetMin + (0.2 + Math.random() * 0.6) * span).toFixed(1);
+            }
+
+            const profileTypes = ['parallel', 'constriction', 'pin_scar'];
+            const profileType = (state.rackPreset === 'pin_scar' || state.rackPreset === 'offsets')
+                ? 'pin_scar'
+                : profileTypes[Math.floor(Math.random() * profileTypes.length)];
+
+            const crackTaperSlope = profileType === 'parallel'
+                ? 0.005 + Math.random() * 0.015
+                : 0.12 + Math.random() * 0.09;
+
+            const bottleneckY = 4;
+            const samples = [];
+            const numSteps = 120;
+            const yStart = -280;
+            const yEnd = 280;
+            const seed = Math.random() * 1000;
+
+            for (let i = 0; i <= numSteps; i++) {
+                const t = i / numSteps;
+                const yMm = yStart + t * (yEnd - yStart);
+                const dy = yMm - bottleneckY;
+
+                let baseWidth;
+                if (profileType === 'parallel') {
+                    baseWidth = bottleneckMm + Math.abs(dy) * crackTaperSlope * 0.2;
+                } else if (dy <= 0) {
+                    const podFlare = Math.max(0, (-dy - 16) * 0.08);
+                    baseWidth = bottleneckMm + (-dy) * crackTaperSlope + podFlare;
+                } else {
+                    baseWidth = bottleneckMm + Math.pow(Math.abs(dy), 1.12) * 0.22;
+                }
+
+                const distFromNeck = Math.min(1, Math.abs(dy) / 12);
+                const leftJitter = (Math.sin(i * 1.7 + seed) * 0.3 + Math.cos(i * 3.1 + seed) * 0.15) * distFromNeck;
+                const rightJitter = (Math.cos(i * 1.9 + seed * 2) * 0.3 + Math.sin(i * 2.7 + seed) * 0.15) * distFromNeck;
+                const centerWander = Math.sin(t * Math.PI * 1.5 + seed) * 1.2 * distFromNeck;
+
+                samples.push({
+                    yMm,
+                    leftX: centerWander - baseWidth / 2 + leftJitter,
+                    rightX: centerWander + baseWidth / 2 + rightJitter,
+                    width: baseWidth
+                });
+            }
+
+            const speckles = [];
+            for (let i = 0; i < 140; i++) {
+                speckles.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    r: 0.8 + Math.random() * 2.0,
+                    light: Math.random() > 0.5
+                });
+            }
+
+            state.crack = {
+                bottleneckMm,
+                bottleneckY,
+                profileType,
+                crackTaperSlope,
+                samples,
+                speckles,
+                isForcedSkip
+            };
+
+            document.getElementById('revealReadout').classList.add('hidden');
+            const testPullBtn = document.getElementById('testPullBtn');
+            testPullBtn.disabled = true;
+            testPullBtn.classList.toggle('hidden', state.outdoorMode);
+            const skipBtn = document.getElementById('skipPlacementBtn');
+            if (skipBtn) {
+                skipBtn.disabled = false;
+                skipBtn.classList.toggle('hidden', !state.outdoorMode);
+            }
+            const nextBtn = document.getElementById('nextCrackBtn');
+            if (nextBtn) {
+                nextBtn.classList.toggle('hidden', state.outdoorMode);
+            }
+            document.getElementById('statusPrompt').innerHTML = `
+                <span class="inline-block w-2 h-2 rounded-full bg-sky-400"></span>
+                <span>${state.outdoorMode
+                    ? 'Size up the crack! Click any piece on your harness below to immediately place it, or click <strong>"Skip Placement"</strong> to run it out.'
+                    : 'Select gear from the rack below to test your placement.'}</span>
+            `;
+
+            updateSelectedSpecUI();
+            resetEvalCardUI();
+            renderGearRack();
+            drawViewport();
+        }
+
+        function evaluateGearPlacement(gear, crack) {
+            const W = crack.bottleneckMm;
+            const { rMin, rMax, sweetMin, sweetMax } = getEffectiveGearRange(gear);
+            const isCam = gear.type.includes('cam');
+
+            if (W < rMin) {
+                return {
+                    status: 'TOO_LARGE',
+                    quality: isCam ? 'Too Large (Over-Cammed!)' : 'Too Large (Perches Above Neck)',
+                    placementW: W,
+                    reason: `${gear.name} minimum width (${rMin} mm) is wider than the ${W.toFixed(1)} mm crack at this spot. ${
+                        isCam ? 'It is completely pinched beyond its minimum range.' : 'Its narrow bottom edge cannot enter the constriction.'
+                    }`
+                };
+            }
+
+            if (W > rMax) {
+                return {
+                    status: 'TOO_SMALL',
+                    quality: isCam ? 'Too Small (Umbrellaed / Pulls Through!)' : 'Too Small (Blows Straight Through!)',
+                    placementW: W,
+                    reason: `${gear.name} maximum width (${rMax} mm) is narrower than the ${W.toFixed(1)} mm crack. ${
+                        isCam ? 'The lobes cannot bite the rock walls and will rip right out.' : 'The nut is smaller than the crack; it pulls straight through.'
+                    }`
+                };
+            }
+
+            if (W >= sweetMin && W <= sweetMax) {
+                return {
+                    status: 'IDEAL',
+                    quality: 'Bomber Placement! (Solid Pro)',
+                    placementW: W,
+                    reason: `Textbook placement! The ${W.toFixed(1)} mm crack sits right in the optimal sweet spot (${sweetMin}–${sweetMax} mm) for ${gear.name}.`
+                };
+            }
+
+            if (W < sweetMin) {
+                return {
+                    status: isCam ? 'MARGINAL_TIGHT' : 'MARGINAL_LARGE',
+                    quality: isCam ? 'Slightly Tight (Over-retracted)' : 'Slightly Large (Shallow Entry)',
+                    placementW: W,
+                    reason: isCam
+                        ? `The crack (${W.toFixed(1)} mm) is toward the tighter end of ${gear.name}'s range. Retraction is high (>80%), making it hard to clean.`
+                        : `Only the very bottom tip of ${gear.name} enters the ${W.toFixed(1)} mm crack.`
+                };
+            }
+
+            return {
+                status: isCam ? 'MARGINAL_LOOSE' : 'MARGINAL_SMALL',
+                quality: isCam ? 'Slightly Loose (Under-retracted)' : 'Slightly Small (Shallow Bite)',
+                placementW: W,
+                reason: isCam
+                    ? `The crack (${W.toFixed(1)} mm) is near the wider end of ${gear.name}'s range. Retraction is low, risking cam walk.`
+                    : `${gear.name} barely catches near its top rim in the ${W.toFixed(1)} mm slot.`
+            };
+        }
+
+        function resizeCanvas() {
+            const container = document.getElementById('canvasViewportContainer');
+            if (!container) return;
+            const rect = container.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = Math.max(300, rect.width) * dpr;
+            canvas.height = Math.max(260, rect.height) * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            drawViewport();
+        }
+
+        function drawViewport() {
+            if (!state.crack) return;
+            const width = canvas.clientWidth || 700;
+            const height = canvas.clientHeight || 400;
+            ctx.clearRect(0, 0, width, height);
+
+            const maxWallRoomPx = Math.max(135, width - 270);
+            const fitPxPerMm = maxWallRoomPx / (state.crack.bottleneckMm * 1.45);
+            const basePxPerMm = state.scaleLock1to1 ? state.pxPerMm : Math.min(width, height) / 72;
+            const pxPerMm = Math.min(basePxPerMm, fitPxPerMm);
+
+            const centerX = width * 0.5;
+            const centerY = height * 0.46;
+            const mmToX = (xMm) => centerX + xMm * pxPerMm;
+            const mmToY = (yMm) => centerY + yMm * pxPerMm;
+
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+            bgGrad.addColorStop(0, '#04070d');
+            bgGrad.addColorStop(0.5, '#080d16');
+            bgGrad.addColorStop(1, '#030509');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, width, height);
+
+            if (state.showGrid) {
+                drawMmGrid(width, height, centerX, centerY, pxPerMm);
+            }
+
+            const neckSample = state.crack.samples.reduce((best, s) =>
+                Math.abs(s.yMm - state.crack.bottleneckY) < Math.abs(best.yMm - state.crack.bottleneckY) ? s : best
+            );
+            const neckYPx = mmToY(state.crack.bottleneckY);
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.11)';
+            ctx.fillRect(
+                mmToX(neckSample.leftX) - 4,
+                neckYPx - 24,
+                (neckSample.rightX - neckSample.leftX) * pxPerMm + 8,
+                48
+            );
+
+            drawGraniteWalls(width, height, mmToX, mmToY);
+
+            const leftNeckX = mmToX(neckSample.leftX);
+            const rightNeckX = mmToX(neckSample.rightX);
+            drawTargetArrows(leftNeckX, rightNeckX, neckYPx);
+
+            if (state.evaluated) {
+                drawEvaluatedCaliperTag(rightNeckX + 18, neckYPx, `${state.crack.bottleneckMm.toFixed(1)} mm`);
+            }
+
+            if (state.showJamGauge) {
+                drawJamGauge(height);
+            }
+
+            if (state.showCardOverlay) {
+                drawCreditCardOverlay(width, height, pxPerMm);
+            }
+
+            if (state.showGrid) {
+                drawScaleBar(width, height, pxPerMm);
+            }
+
+            if (state.selectedGearId) {
+                const gear = ALL_GEAR.find(g => g.id === state.selectedGearId);
+                if (gear) {
+                    drawPlacedGear(gear, mmToX, mmToY, pxPerMm);
+                }
+            }
+        }
+
+        function drawMmGrid(width, height, centerX, centerY, pxPerMm) {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            const stepMm = pxPerMm < 2.2 ? 10 : 5;
+            for (let mm = -280; mm <= 280; mm += stepMm) {
+                const x = centerX + mm * pxPerMm;
+                if (x >= 0 && x <= width) {
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                }
+            }
+            for (let mm = -220; mm <= 220; mm += stepMm) {
+                const y = centerY + mm * pxPerMm;
+                if (y >= 0 && y <= height) {
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                }
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawGraniteWalls(width, height, mmToX, mmToY) {
+            const samples = state.crack.samples;
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(mmToX(samples[0].leftX), mmToY(samples[0].yMm));
+            for (let i = 1; i < samples.length; i++) {
+                ctx.lineTo(mmToX(samples[i].leftX), mmToY(samples[i].yMm));
+            }
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            const leftGrad = ctx.createLinearGradient(0, 0, width * 0.45, 0);
+            leftGrad.addColorStop(0, '#1e293b');
+            leftGrad.addColorStop(0.7, '#334155');
+            leftGrad.addColorStop(1, '#475569');
+            ctx.fillStyle = leftGrad;
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(width, 0);
+            ctx.lineTo(mmToX(samples[0].rightX), mmToY(samples[0].yMm));
+            for (let i = 1; i < samples.length; i++) {
+                ctx.lineTo(mmToX(samples[i].rightX), mmToY(samples[i].yMm));
+            }
+            ctx.lineTo(width, height);
+            ctx.closePath();
+            const rightGrad = ctx.createLinearGradient(width, 0, width * 0.55, 0);
+            rightGrad.addColorStop(0, '#1e293b');
+            rightGrad.addColorStop(0.7, '#334155');
+            rightGrad.addColorStop(1, '#475569');
+            ctx.fillStyle = rightGrad;
+            ctx.fill();
+
+            state.crack.speckles.forEach(sp => {
+                ctx.fillStyle = sp.light ? 'rgba(226, 232, 240, 0.07)' : 'rgba(15, 23, 42, 0.25)';
+                ctx.beginPath();
+                ctx.arc(sp.x * width, sp.y * height, sp.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 2.2;
+            ctx.beginPath();
+            ctx.moveTo(mmToX(samples[0].leftX), mmToY(samples[0].yMm));
+            for (let i = 1; i < samples.length; i++) {
+                ctx.lineTo(mmToX(samples[i].leftX), mmToY(samples[i].yMm));
+            }
+            ctx.moveTo(mmToX(samples[0].rightX), mmToY(samples[0].yMm));
+            for (let i = 1; i < samples.length; i++) {
+                ctx.lineTo(mmToX(samples[i].rightX), mmToY(samples[i].yMm));
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawTargetArrows(leftX, rightX, neckY) {
+            ctx.save();
+            ctx.strokeStyle = '#fbbf24';
+            ctx.fillStyle = '#fbbf24';
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(leftX - 20, neckY);
+            ctx.lineTo(leftX - 13, neckY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(leftX - 3, neckY);
+            ctx.lineTo(leftX - 11, neckY - 5);
+            ctx.lineTo(leftX - 11, neckY + 5);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(rightX + 20, neckY);
+            ctx.lineTo(rightX + 13, neckY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(rightX + 3, neckY);
+            ctx.lineTo(rightX + 11, neckY - 5);
+            ctx.lineTo(rightX + 11, neckY + 5);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawEvaluatedCaliperTag(x, y, text) {
+            ctx.save();
+            const w = 68;
+            const h = 22;
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            roundRectPath(ctx, x, y - h / 2, w, h, 6);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 11px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, x + w / 2, y + 0.5);
+            ctx.restore();
+        }
+
+        function drawJamGauge(viewportHeight) {
+            let ref = JAM_REFERENCES[1];
+            if (state.jamGaugeMode === 'auto') {
+                const targetW = state.crack.bottleneckMm;
+                ref = JAM_REFERENCES.reduce((best, item) =>
+                    Math.abs(item.mm - targetW) < Math.abs(best.mm - targetW) ? item : best
+                );
+            } else {
+                const targetMm = parseInt(state.jamGaugeMode, 10);
+                ref = JAM_REFERENCES.find(j => j.mm === targetMm) || JAM_REFERENCES[1];
+            }
+
+            const boxW = 88;
+            const boxH = 116;
+            const boxX = 14;
+            const minTop = 48;
+            const maxTop = Math.max(minTop, (viewportHeight || 400) - boxH - 48);
+            const boxY = Math.max(minTop, Math.min(maxTop, (viewportHeight || 400) / 2 - boxH / 2));
+
+            ctx.save();
+            ctx.fillStyle = 'rgba(11, 15, 25, 0.95)';
+            ctx.strokeStyle = 'rgba(245, 158, 11, 0.65)';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            roundRectPath(ctx, boxX, boxY, boxW, boxH, 10);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            roundRectPath(ctx, boxX + 2, boxY + 2, boxW - 4, boxH - 4, 8);
+            ctx.clip();
+
+            ctx.fillStyle = '#fbbf24';
+            ctx.font = 'bold 8px "Inter", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(ref.label, boxX + boxW / 2, boxY + 11);
+
+            const cx = boxX + boxW / 2;
+            const cy = boxY + 58;
+
+            const makeSkinGrad = (x0, x1) => {
+                const g = ctx.createLinearGradient(x0, cy - 26, x1, cy + 26);
+                g.addColorStop(0, '#b85d43');
+                g.addColorStop(0.3, '#e89878');
+                g.addColorStop(0.55, '#f7b699');
+                g.addColorStop(0.8, '#d87d5f');
+                g.addColorStop(1, '#9e4730');
+                return g;
+            };
+
+            const drawRealisticFinger = (fx, fy, fw, fh, showNail = true) => {
+                ctx.save();
+                ctx.fillStyle = makeSkinGrad(fx - fw / 2, fx + fw / 2);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1;
+
+                ctx.beginPath();
+                ctx.moveTo(fx - fw * 0.48, fy + fh / 2);
+                ctx.quadraticCurveTo(fx - fw * 0.52, fy + fh * 0.1, fx - fw * 0.45, fy - fh * 0.25);
+                ctx.quadraticCurveTo(fx - fw * 0.42, fy - fh / 2, fx, fy - fh / 2);
+                ctx.quadraticCurveTo(fx + fw * 0.42, fy - fh / 2, fx + fw * 0.45, fy - fh * 0.25);
+                ctx.quadraticCurveTo(fx + fw * 0.52, fy + fh * 0.1, fx + fw * 0.48, fy + fh / 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                if (showNail) {
+                    const nw = fw * 0.65;
+                    const nh = fw * 0.72;
+                    const ny = fy - fh / 2 + 3;
+
+                    const nailGrad = ctx.createLinearGradient(fx - nw / 2, ny, fx + nw / 2, ny + nh);
+                    nailGrad.addColorStop(0, '#fde8e8');
+                    nailGrad.addColorStop(0.5, '#f9d5d5');
+                    nailGrad.addColorStop(1, '#e5b3b3');
+                    ctx.fillStyle = nailGrad;
+                    ctx.strokeStyle = 'rgba(136, 55, 42, 0.5)';
+                    ctx.lineWidth = 0.75;
+                    ctx.beginPath();
+                    roundRectPath(ctx, fx - nw / 2, ny, nw, nh, nw * 0.35);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.arc(fx, ny + nw * 0.35, nw * 0.32, 1.15 * Math.PI, 1.85 * Math.PI);
+                    ctx.stroke();
+
+                    ctx.fillStyle = 'rgba(255, 252, 252, 0.75)';
+                    ctx.beginPath();
+                    ctx.arc(fx, ny + nh - 1.2, nw * 0.26, 1.1 * Math.PI, 1.9 * Math.PI);
+                    ctx.fill();
+                }
+
+                ctx.strokeStyle = 'rgba(107, 39, 20, 0.5)';
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.arc(fx, fy - 2, fw * 0.26, 0.15 * Math.PI, 0.85 * Math.PI);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(fx, fy + 9, fw * 0.3, 0.12 * Math.PI, 0.88 * Math.PI);
+                ctx.stroke();
+                ctx.restore();
+            };
+
+            if (ref.type === 'pinky') {
+                drawRealisticFinger(cx, cy, 14, 52, true);
+            } else if (ref.type === 'finger') {
+                drawRealisticFinger(cx, cy, 19, 56, true);
+            } else if (ref.type === 'two_finger') {
+                drawRealisticFinger(cx - 7, cy + 1, 14, 54, true);
+                drawRealisticFinger(cx + 7, cy - 1, 14, 56, true);
+            } else if (ref.type === 'thin_hand') {
+                [-12, -4, 4, 12].forEach((dx, i) => {
+                    drawRealisticFinger(cx + dx, cy - 4, 9.5, 46 + i * 2, true);
+                });
+                ctx.fillStyle = makeSkinGrad(cx - 20, cx + 20);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 18, cy + 3, 36, 24, 8);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = makeSkinGrad(cx - 14, cx + 12);
+                ctx.beginPath();
+                ctx.ellipse(cx - 2, cy + 13, 13, 6, -0.18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            } else if (ref.type === 'hand') {
+                [-16, -5, 6, 17].forEach((dx, i) => {
+                    drawRealisticFinger(cx + dx, cy - 4, 10.5, 48 + (i % 2) * 4, true);
+                });
+                ctx.fillStyle = makeSkinGrad(cx - 24, cx + 24);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 22, cy + 4, 44, 26, 9);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = makeSkinGrad(cx, cx + 26);
+                ctx.strokeStyle = '#6b2714';
+                ctx.beginPath();
+                ctx.ellipse(cx + 12, cy + 13, 13, 6.5, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            } else if (ref.type === 'fist') {
+                ctx.fillStyle = makeSkinGrad(cx - 28, cx + 28);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 26, cy - 12, 52, 38, 11);
+                ctx.fill();
+                ctx.stroke();
+
+                [-18, -6, 6, 18].forEach(dx => {
+                    ctx.fillStyle = makeSkinGrad(cx + dx - 6, cx + dx + 6);
+                    ctx.beginPath();
+                    roundRectPath(ctx, cx + dx - 6, cy - 16, 12, 22, 5);
+                    ctx.fill();
+                    ctx.stroke();
+                });
+
+                ctx.fillStyle = makeSkinGrad(cx - 20, cx + 18);
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 20, cy + 2, 40, 11, 5);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f9d5d5';
+                ctx.beginPath();
+                roundRectPath(ctx, cx + 7, cy + 3.5, 7, 7, 2.5);
+                ctx.fill();
+            } else if (ref.type === 'offwidth') {
+                ctx.fillStyle = makeSkinGrad(cx - 30, cx - 3);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 28, cy - 22, 22, 44, 8);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = makeSkinGrad(cx - 4, cx + 30);
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 10, cy - 16, 38, 38, 9);
+                ctx.fill();
+                ctx.stroke();
+
+                [-2, 8, 18].forEach(dx => {
+                    ctx.beginPath();
+                    roundRectPath(ctx, cx + dx - 4.5, cy - 20, 9, 18, 4);
+                    ctx.fill();
+                    ctx.stroke();
+                });
+            } else if (ref.type === 'chicken_wing') {
+                ctx.save();
+                ctx.fillStyle = makeSkinGrad(cx - 32, cx + 32);
+                ctx.strokeStyle = '#6b2714';
+                ctx.lineWidth = 1.1;
+                ctx.lineJoin = 'round';
+
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 26, cy - 18, 52, 36, 12);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(107, 39, 20, 0.6)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(cx - 18, cy - 6);
+                ctx.quadraticCurveTo(cx, cy - 10, cx + 18, cy - 6);
+                ctx.stroke();
+
+                ctx.fillStyle = makeSkinGrad(cx - 16, cx + 16);
+                ctx.beginPath();
+                roundRectPath(ctx, cx - 16, cy + 2, 32, 14, 6);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = 'bold 9px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillText(`= ${ref.mm} mm`, cx, boxY + boxH - 7);
+            ctx.restore();
+        }
+
+        function drawCreditCardOverlay(width, height, pxPerMm) {
+            const cardW = 85.60 * pxPerMm;
+            const cardH = 53.98 * pxPerMm;
+            const x = width - cardW - 16;
+            const y = height - cardH - 16;
+
+            ctx.save();
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.16)';
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 4]);
+            ctx.beginPath();
+            roundRectPath(ctx, x, y, cardW, cardH, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#6ee7b7';
+            ctx.font = 'bold 10px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('CREDIT CARD (85.60 mm)', x + cardW / 2, y + cardH / 2);
+            ctx.restore();
+        }
+
+        function drawScaleBar(width, height, pxPerMm) {
+            const barX = 16;
+            const barY = height - 18;
+            const mm20Px = 20 * pxPerMm;
+            const mm10Px = 10 * pxPerMm;
+
+            ctx.save();
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            roundRectPath(ctx, barX - 8, barY - 22, mm20Px + 22, 30, 7);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(barX, barY);
+            ctx.lineTo(barX + mm20Px, barY);
+            ctx.moveTo(barX, barY - 4);
+            ctx.lineTo(barX, barY + 4);
+            ctx.moveTo(barX + mm10Px, barY - 3);
+            ctx.lineTo(barX + mm10Px, barY + 3);
+            ctx.moveTo(barX + mm20Px, barY - 4);
+            ctx.lineTo(barX + mm20Px, barY + 4);
+            ctx.stroke();
+
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('0', barX - 2, barY - 8);
+            ctx.textAlign = 'center';
+            ctx.fillText('10mm', barX + mm10Px, barY - 8);
+            ctx.textAlign = 'right';
+            ctx.fillText('20mm', barX + mm20Px + 4, barY - 8);
+            ctx.restore();
+        }
+
+        function drawPlacedGear(gear, mmToX, mmToY, pxPerMm) {
+            const placementY = state.crack.bottleneckY;
+            const targetSample = state.crack.samples.reduce((best, s) =>
+                Math.abs(s.yMm - placementY) < Math.abs(best.yMm - placementY) ? s : best
+            );
+            const W = targetSample.width;
+            const centerXMm = (targetSample.leftX + targetSample.rightX) / 2;
+
+            ctx.save();
+            if (gear.type.includes('cam')) {
+                const yMm = placementY + state.animOffset;
+                const pxX = mmToX(centerXMm);
+                const pxY = mmToY(yMm);
+
+                const effectiveSpanMm = Math.max(gear.rMin, Math.min(gear.rMax, W));
+                const halfSpanPx = Math.max(10, (effectiveSpanMm / 2) * pxPerMm);
+                const lobeH = Math.max(26, halfSpanPx * 1.42);
+                const axleGap = gear.type === 'cam_c4' ? Math.max(3.5, Math.min(6, halfSpanPx * 0.14)) : 0;
+
+                const drawCamLobe = (side, isBackPair, colorHex, highlightHex, darkHex) => {
+                    ctx.save();
+                    const yShift = isBackPair ? -3.5 : 0;
+                    const xIn = pxX + side * axleGap;
+                    const xOut = pxX + side * (halfSpanPx + (isBackPair ? -1.5 : 0));
+                    const yAxle = pxY + yShift;
+                    const yTop = pxY - lobeH + yShift;
+                    const yBot = pxY + lobeH * 0.14 + yShift;
+
+                    const grad = ctx.createLinearGradient(xIn, yTop, xOut, yBot);
+                    grad.addColorStop(0, highlightHex || '#93c5fd');
+                    grad.addColorStop(0.45, colorHex);
+                    grad.addColorStop(1, darkHex || '#1e3a8a');
+
+                    ctx.fillStyle = grad;
+                    ctx.strokeStyle = isBackPair ? 'rgba(248, 250, 252, 0.65)' : '#f8fafc';
+                    ctx.lineWidth = isBackPair ? 1.1 : 1.7;
+
+                    ctx.beginPath();
+                    ctx.moveTo(xIn, yAxle);
+                    ctx.quadraticCurveTo(
+                        xIn + side * (halfSpanPx * 0.16),
+                        yTop + lobeH * 0.25,
+                        xIn + side * (halfSpanPx * 0.62),
+                        yTop
+                    );
+                    ctx.bezierCurveTo(
+                        xOut - side * (halfSpanPx * 0.04),
+                        yTop + lobeH * 0.12,
+                        xOut + side * 1.5,
+                        yAxle - lobeH * 0.12,
+                        xOut,
+                        yAxle + lobeH * 0.04
+                    );
+                    ctx.quadraticCurveTo(
+                        xIn + side * (halfSpanPx * 0.55),
+                        yBot + 3,
+                        xIn,
+                        yAxle
+                    );
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                    if (!isBackPair) {
+                        const holeX = xIn + side * (halfSpanPx * 0.52);
+                        const holeY = yAxle - lobeH * 0.36;
+                        const holeR = Math.max(2.5, Math.min(6.5, halfSpanPx * 0.14));
+                        ctx.fillStyle = 'rgba(15, 23, 42, 0.55)';
+                        ctx.beginPath();
+                        ctx.arc(holeX, holeY, holeR, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                };
+
+                const leftColor = gear.type === 'cam_offset' && state.orientation === 'alternate' ? (gear.hexAlt || gear.hex) : gear.hex;
+                const rightColor = gear.type === 'cam_offset' && state.orientation === 'standard' ? (gear.hexAlt || gear.hex) : gear.hex;
+
+                drawCamLobe(-1, true, leftColor, gear.highlight, gear.dark);
+                drawCamLobe(1, true, rightColor, gear.highlight, gear.dark);
+
+                const stemBottomY = pxY + 64;
+                const triggerY = pxY + 42;
+
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.moveTo(pxX - halfSpanPx * 0.45, pxY + 2);
+                ctx.lineTo(pxX - 11, triggerY);
+                ctx.moveTo(pxX + halfSpanPx * 0.45, pxY + 2);
+                ctx.lineTo(pxX + 11, triggerY);
+                ctx.stroke();
+
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 4.2;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(pxX, pxY);
+                ctx.lineTo(pxX, stemBottomY);
+                ctx.stroke();
+
+                drawCamLobe(-1, false, leftColor, gear.highlight, gear.dark);
+                drawCamLobe(1, false, rightColor, gear.highlight, gear.dark);
+
+                ctx.fillStyle = '#f8fafc';
+                ctx.strokeStyle = '#0f172a';
+                ctx.lineWidth = 1.6;
+                if (gear.type === 'cam_c4') {
+                    [-axleGap, axleGap].forEach(dx => {
+                        ctx.beginPath();
+                        ctx.arc(pxX + dx, pxY, 4.2, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.stroke();
+                    });
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(pxX, pxY, 4.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.strokeStyle = '#334155';
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                roundRectPath(ctx, pxX - 16, triggerY - 3, 32, 7, 3);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = gear.hex;
+                ctx.lineWidth = 3.8;
+                ctx.beginPath();
+                ctx.moveTo(pxX, stemBottomY - 2);
+                ctx.bezierCurveTo(pxX - 15, stemBottomY + 26, pxX + 15, stemBottomY + 26, pxX, stemBottomY - 2);
+                ctx.stroke();
+
+                const labelText = gear.name.replace('Off ', '');
+                ctx.font = 'bold 11px "JetBrains Mono", monospace';
+                const pillW = Math.max(54, ctx.measureText(labelText).width + 14);
+                const pillH = 20;
+                const pillY = pxY + 18;
+
+                ctx.fillStyle = '#0f172a';
+                ctx.strokeStyle = gear.hex;
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                roundRectPath(ctx, pxX - pillW / 2, pillY, pillW, pillH, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f8fafc';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(labelText, pxX, pillY + pillH / 2 + 0.5);
+
+            } else {
+                const { rMin: wMin, rMax: wMax } = getEffectiveGearRange(gear);
+                const taperSpan = Math.max(0.5, wMax - wMin);
+                const contactFraction = (W - wMin) / taperSpan;
+                const nutHeightMm = Math.max(9.5, 8.5 + (wMax * 0.42));
+
+                let centerYMm;
+                if (wMin > W) {
+                    const stopAboveMm = Math.min(18, Math.max(6, (wMin - W) * 2.2));
+                    centerYMm = placementY - stopAboveMm - nutHeightMm * 0.35 + state.animOffset;
+                } else if (wMax < W) {
+                    centerYMm = placementY + state.animOffset;
+                } else {
+                    const clampedFrac = Math.max(0, Math.min(1, contactFraction));
+                    const yBottomMm = placementY + clampedFrac * nutHeightMm + state.animOffset;
+                    centerYMm = yBottomMm - nutHeightMm / 2;
+                }
+
+                const pxX = mmToX(centerXMm);
+                const pxY = mmToY(centerYMm);
+                const nutTopW = Math.max(6, wMax * pxPerMm);
+                const nutBotW = Math.max(4, wMin * pxPerMm);
+                const nutH = Math.max(14, nutHeightMm * pxPerMm);
+
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = Math.max(1.8, Math.min(2.6, nutBotW * 0.12));
+                ctx.beginPath();
+                ctx.moveTo(pxX - nutBotW * 0.24, pxY + nutH / 2 - 2);
+                ctx.quadraticCurveTo(pxX - nutBotW * 0.3, pxY + nutH / 2 + 34, pxX, pxY + nutH / 2 + 56);
+                ctx.quadraticCurveTo(pxX + nutBotW * 0.3, pxY + nutH / 2 + 34, pxX + nutBotW * 0.24, pxY + nutH / 2 - 2);
+                ctx.stroke();
+
+                const swageW = Math.max(6, Math.min(11, nutBotW * 0.55));
+                ctx.fillStyle = gear.hex;
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                roundRectPath(ctx, pxX - swageW / 2, pxY + nutH / 2 + 14, swageW, 9, 2);
+                ctx.fill();
+                ctx.stroke();
+
+                const nutGrad = ctx.createLinearGradient(pxX - nutTopW / 2, pxY - nutH / 2, pxX + nutTopW / 2, pxY + nutH / 2);
+                nutGrad.addColorStop(0, gear.highlight || '#f8fafc');
+                nutGrad.addColorStop(0.4, gear.hex);
+                nutGrad.addColorStop(1, gear.dark || '#0f172a');
+
+                ctx.fillStyle = nutGrad;
+                ctx.strokeStyle = '#f8fafc';
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.moveTo(pxX - nutTopW / 2, pxY - nutH / 2);
+                ctx.quadraticCurveTo(pxX, pxY - nutH / 2 + 1.5, pxX + nutTopW / 2, pxY - nutH / 2);
+                ctx.lineTo(pxX + nutBotW / 2, pxY + nutH / 2);
+                ctx.lineTo(pxX - nutBotW / 2, pxY + nutH / 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold ${Math.max(8, Math.min(11, nutBotW * 0.48))}px "JetBrains Mono", monospace`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(gear.name.replace(' Stopper', '').replace('Offset ', 'Off '), pxX, pxY);
+            }
+            ctx.restore();
+        }
+
+        function renderGearRack() {
+            const grid = document.getElementById('gearRackGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const list = getActiveGearList();
+            if (state.outdoorMode) {
+                const totalRemaining = list.reduce((sum, g) => sum + (state.gearRemainingCounts[g.id] || 0), 0);
+                const totalDropped = list.reduce((sum, g) => sum + (state.outdoorDroppedCounts[g.id] || 0), 0);
+                const totalStart = list.length * state.outdoorRackMultiplier;
+                document.getElementById('activeRackCountBadge').textContent = totalDropped > 0
+                    ? `${totalRemaining} / ${totalStart} Avail (${totalDropped} Dropped)`
+                    : `${totalRemaining} / ${totalStart} Avail`;
+            } else {
+                document.getElementById('activeRackCountBadge').textContent = `${list.length} Pieces`;
+            }
+
+            list.forEach(gear => {
+                const isSelected = state.selectedGearId === gear.id;
+                const remCount = state.outdoorMode ? (state.gearRemainingCounts[gear.id] || 0) : 1;
+                const droppedCount = state.outdoorMode ? (state.outdoorDroppedCounts[gear.id] || 0) : 0;
+                const isDroppedOut = state.outdoorMode && remCount <= 0 && droppedCount >= state.outdoorRackMultiplier;
+                const isUsed = state.outdoorMode && remCount <= 0;
+                const { rMin, rMax } = getEffectiveGearRange(gear);
+                const isCam = gear.type.includes('cam');
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.disabled = isUsed && !state.evaluated;
+                btn.className = `gear-btn relative flex flex-col items-center justify-between p-2 rounded-xl border text-center ${
+                    isUsed && !isSelected
+                        ? 'opacity-40 cursor-not-allowed bg-slate-950/50 border-slate-800/60'
+                        : isSelected
+                            ? 'selected bg-slate-800 border-amber-400 cursor-pointer'
+                            : 'bg-slate-950/90 border-slate-800 hover:border-slate-600 hover:bg-slate-800/60 cursor-pointer'
+                }`;
+
+                if (state.evaluated && !state.outdoorMode) {
+                    const check = evaluateGearPlacement(gear, state.crack);
+                    if (check.status === 'IDEAL') {
+                        btn.classList.add('ring-2', 'ring-emerald-500/80');
+                    }
+                }
+
+                const iconSvg = isCam
+                    ? `<svg class="w-10 h-10 my-0.5" viewBox="0 0 40 40">
+                        <path d="M20 18 L20 36" stroke="#94a3b8" stroke-width="2.2"/>
+                        <path d="M19 18 C11 18 9 7 15 5 C18 4 19 12 19 18 Z" fill="${gear.hexAlt || gear.hex}" stroke="#f8fafc" stroke-width="1.1"/>
+                        <path d="M21 18 C29 18 31 7 25 5 C22 4 21 12 21 18 Z" fill="${gear.hex}" stroke="#f8fafc" stroke-width="1.1"/>
+                        <circle cx="20" cy="18" r="2.2" fill="#f8fafc"/>
+                       </svg>`
+                    : `<svg class="w-10 h-10 my-0.5" viewBox="0 0 40 40">
+                        <path d="M16 24 Q16 36 20 37 Q24 36 24 24" fill="none" stroke="#94a3b8" stroke-width="1.6"/>
+                        <polygon points="11,8 29,8 25,24 15,24" fill="${gear.hex}" stroke="#f8fafc" stroke-width="1.2"/>
+                       </svg>`;
+
+                const showMm = state.showRackMm && !state.outdoorMode;
+                const usedOverlay = isDroppedOut
+                    ? `<span class="absolute inset-x-1 top-1/2 -translate-y-1/2 bg-amber-950/95 border border-amber-500/60 text-amber-300 text-[9px] font-extrabold uppercase py-0.5 rounded shadow">Dropped</span>`
+                    : isUsed
+                        ? `<span class="absolute inset-x-1 top-1/2 -translate-y-1/2 bg-rose-950/95 border border-rose-500/50 text-rose-300 text-[9px] font-extrabold uppercase py-0.5 rounded shadow">Placed</span>`
+                        : (state.outdoorMode && state.outdoorRackMultiplier > 1)
+                            ? `<span class="absolute bottom-1 right-1 px-1 rounded bg-slate-900/90 border border-slate-700 text-[9px] font-bold mono text-amber-300">${remCount}x</span>`
+                            : '';
+
+                btn.innerHTML = `
+                    <div class="flex items-center justify-between w-full px-0.5">
+                        <span class="text-[11px] font-extrabold mono text-white truncate">${gear.name}</span>
+                        <span class="w-2.5 h-2.5 rounded-full shrink-0 border border-white/30" style="background:${gear.hex}"></span>
+                    </div>
+                    ${iconSvg}
+                    ${usedOverlay}
+                    <div class="${showMm ? 'block' : 'hidden'} text-[10px] mono text-slate-400">
+                        ${rMin}–${rMax}mm
+                    </div>
+                `;
+
+                btn.addEventListener('click', () => {
+                    if (isUsed && !state.evaluated) return;
+                    selectGear(gear.id);
+                });
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectGear(id) {
+            if (state.animId) {
+                cancelAnimationFrame(state.animId);
+                state.animId = null;
+            }
+            state.animOffset = 0;
+            state.selectedGearId = id;
+
+            document.getElementById('testPullBtn').disabled = state.evaluated;
+            updateSelectedSpecUI();
+            renderGearRack();
+
+            if (state.outdoorMode && !state.evaluated) {
+                drawViewport();
+                runPlacementTest();
+                return;
+            }
+
+            const gear = ALL_GEAR.find(g => g.id === id);
+            if (state.evaluated) {
+                const evalRes = evaluateGearPlacement(gear, state.crack);
+                renderEvaluationCard(gear, evalRes);
+                document.getElementById('statusPrompt').innerHTML = `
+                    <span class="inline-block w-2 h-2 rounded-full" style="background:${gear.hex}"></span>
+                    <span>Comparing <strong>${gear.name}</strong> (${evalRes.quality}). Click <strong>"New Crack"</strong> for the next placement!</span>
+                `;
+                animateWhipTest(evalRes.status);
+            } else {
+                document.getElementById('statusPrompt').innerHTML = `
+                    <span class="inline-block w-2 h-2 rounded-full" style="background:${gear.hex}"></span>
+                    <span>Previewing <strong>${gear.name}</strong>. Click <strong>"Set and Test Gear"</strong>!</span>
+                `;
+                drawViewport();
+            }
+        }
+
+        function updateSelectedSpecUI() {
+            const badge = document.getElementById('selectedGearBadge');
+            const rangeEl = document.getElementById('specRange');
+            const sweetEl = document.getElementById('specSweetSpot');
+            const kNEl = document.getElementById('specStrength');
+            const catEl = document.getElementById('specCategory');
+
+            if (!state.selectedGearId) {
+                badge.textContent = 'None Selected';
+                badge.style.backgroundColor = '#1e293b';
+                badge.style.color = '#94a3b8';
+                rangeEl.textContent = '-- mm';
+                sweetEl.textContent = '-- mm';
+                kNEl.textContent = '-- kN';
+                catEl.textContent = '--';
+                return;
+            }
+
+            const gear = ALL_GEAR.find(g => g.id === state.selectedGearId);
+            const { rMin, rMax, sweetMin, sweetMax } = getEffectiveGearRange(gear);
+
+            badge.textContent = gear.name;
+            badge.style.backgroundColor = gear.hex;
+            badge.style.color = '#ffffff';
+
+            if (state.outdoorMode && !state.evaluated) {
+                rangeEl.textContent = '🔒 Hidden (Cragging Mode)';
+                sweetEl.textContent = '🔒 Hidden (Cragging Mode)';
+            } else {
+                rangeEl.textContent = `${rMin} – ${rMax} mm`;
+                sweetEl.textContent = `${sweetMin} – ${sweetMax} mm`;
+            }
+            kNEl.textContent = `${gear.kN} kN`;
+            catEl.textContent = gear.axle;
+        }
+
+        function runPlacementTest() {
+            if (!state.selectedGearId || state.evaluated) return;
+
+            const gear = ALL_GEAR.find(g => g.id === state.selectedGearId);
+            const evalRes = evaluateGearPlacement(gear, state.crack);
+
+            state.attempts++;
+
+            if (state.outdoorMode) {
+                const isIdeal = evalRes.status === 'IDEAL';
+                const isMarginal = evalRes.status.startsWith('MARGINAL');
+
+                if (isIdeal || isMarginal) {
+                    state.evaluated = true;
+                    if (isIdeal) {
+                        state.score++;
+                        state.streak++;
+                    } else {
+                        state.score += 0.5;
+                        state.streak = 0;
+                    }
+
+                    if ((state.gearRemainingCounts[state.selectedGearId] || 0) > 0) {
+                        state.gearRemainingCounts[state.selectedGearId]--;
+                        state.pitchPlacedGearIds.push(state.selectedGearId);
+                    }
+                    if (isMarginal) {
+                        state.pitchMarginalCount++;
+                    }
+
+                    updateScoreHUD();
+                    document.getElementById('testPullBtn').disabled = true;
+                    const skipBtn = document.getElementById('skipPlacementBtn');
+                    if (skipBtn) skipBtn.disabled = true;
+
+                    const marginalStressPenalty = isMarginal ? 10 : 0;
+                    renderEvaluationCard(gear, evalRes, isMarginal ? { stressPenalty: marginalStressPenalty, gripPenalty: 0 } : null);
+                    renderGearRack();
+                    animateWhipTest(evalRes.status);
+
+                    const toppedOut = advanceOutdoorPitchOnPlacement(isMarginal, marginalStressPenalty);
+                    if (!toppedOut && !state.outdoorModalOpen) {
+                        if (isIdeal) {
+                            document.getElementById('statusPrompt').innerHTML = `
+                                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span class="text-emerald-300 font-semibold">Bomber <strong>${gear.name}</strong> locked in! Auto-advancing up the pitch...</span>
+                            `;
+                        } else {
+                            document.getElementById('statusPrompt').innerHTML = `
+                                <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                                <span class="text-amber-300 font-semibold">Marginal <strong>${gear.name}</strong> holds (<strong>+${marginalStressPenalty}% Stress</strong>)! Auto-advancing up the pitch...</span>
+                            `;
+                        }
+                        state.autoAdvanceTimerId = setTimeout(() => {
+                            if (state.outdoorMode && !state.outdoorModalOpen) {
+                                generateCrack();
+                            }
+                        }, 800);
+                    }
+                } else {
+                    state.streak = 0;
+                    updateScoreHUD();
+
+                    const stressPenalty = 18;
+                    const gripPenalty = 14;
+
+                    state.stress = Math.min(100, state.stress + stressPenalty);
+                    state.stamina = Math.max(0, state.stamina - gripPenalty);
+                    updateOutdoorHUD();
+
+                    renderEvaluationCard(gear, evalRes, { stressPenalty, gripPenalty });
+                    animateWhipTest(evalRes.status);
+
+                    document.getElementById('statusPrompt').innerHTML = `
+                        <span class="inline-block w-2 h-2 rounded-full bg-rose-400"></span>
+                        <span class="text-rose-300"><strong>${gear.name}</strong> doesn't fit (${evalRes.quality})! Penalized <strong>+${stressPenalty}% Stress</strong> &amp; <strong>-${gripPenalty}% Grip</strong>. Pick a size that fits or Skip!</span>
+                    `;
+
+                    if (state.stress >= 100) {
+                        triggerOutdoorGameOver('MAX_STRESS');
+                    } else if (state.stamina <= 0) {
+                        triggerOutdoorGameOver('METER_EMPTY');
+                    }
+                }
+                return;
+            }
+
+            state.evaluated = true;
+            if (evalRes.status === 'IDEAL') {
+                state.score++;
+                state.streak++;
+            } else if (evalRes.status.startsWith('MARGINAL')) {
+                state.score += 0.5;
+                state.streak = 0;
+            } else {
+                state.streak = 0;
+            }
+
+            updateScoreHUD();
+            updateSelectedSpecUI();
+            document.getElementById('testPullBtn').disabled = true;
+            const skipBtn = document.getElementById('skipPlacementBtn');
+            if (skipBtn) {
+                skipBtn.disabled = true;
+            }
+
+            document.getElementById('actualWidthText').textContent = `${evalRes.placementW.toFixed(1)} mm`;
+            const idealGearList = getActiveGearList()
+                .filter(g => evaluateGearPlacement(g, state.crack).status === 'IDEAL')
+                .map(g => g.name);
+            document.getElementById('idealGearText').textContent = `Ideal: ${idealGearList.slice(0, 2).join(', ') || 'See chart'}`;
+            document.getElementById('revealReadout').classList.remove('hidden');
+
+            document.getElementById('statusPrompt').innerHTML = `
+                <span class="inline-block w-2 h-2 rounded-full" style="background:${gear.hex}"></span>
+                <span>Tested <strong>${gear.name}</strong>: <strong>${evalRes.quality}</strong>. Click other gear to compare or <strong>"New Crack"</strong>!</span>
+            `;
+
+            renderEvaluationCard(gear, evalRes);
+            renderGearRack();
+            animateWhipTest(evalRes.status);
+        }
+
+        function animateWhipTest(status) {
+            let start = null;
+            const duration = 520;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const elapsed = timestamp - start;
+                const progress = Math.min(1, elapsed / duration);
+
+                if (status === 'TOO_SMALL') {
+                    state.animOffset = Math.pow(progress, 2) * 34;
+                } else if (status === 'IDEAL') {
+                    state.animOffset = Math.sin(progress * Math.PI) * 1.5;
+                } else {
+                    state.animOffset = Math.sin(progress * Math.PI * 4) * 2.0 * (1 - progress);
+                }
+
+                drawViewport();
+                if (progress < 1) {
+                    state.animId = requestAnimationFrame(step);
+                }
+            }
+            state.animId = requestAnimationFrame(step);
+        }
+
+        function renderEvaluationCard(gear, evalRes, penaltyInfo = null) {
+            const badge = document.getElementById('evalStatusBadge');
+            const body = document.getElementById('evalBody');
+            const { rMin, rMax } = getEffectiveGearRange(gear);
+            const W = evalRes.placementW;
+
+            let badgeCls = 'bg-amber-500/20 text-amber-300 border border-amber-500/40';
+            let boxCls = 'border-amber-500/50 bg-amber-950/20';
+            let icon = '⚖️';
+
+            if (evalRes.status === 'IDEAL') {
+                badgeCls = 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                boxCls = 'border-emerald-500/50 bg-emerald-950/20';
+                icon = '✅';
+            } else if (evalRes.status === 'TOO_LARGE' || evalRes.status === 'TOO_SMALL') {
+                badgeCls = 'bg-rose-500/20 text-rose-300 border border-rose-500/40';
+                boxCls = 'border-rose-500/50 bg-rose-950/20';
+                icon = '⚠️';
+            }
+
+            badge.className = `text-xs font-bold px-2.5 py-0.5 rounded-full ${badgeCls}`;
+            badge.textContent = evalRes.quality;
+
+            if (state.outdoorMode && evalRes.status !== 'IDEAL') {
+                const isMarginal = evalRes.status.startsWith('MARGINAL');
+                const blindReason = evalRes.status === 'TOO_LARGE'
+                    ? `${gear.name} is too wide for this constriction and cannot enter properly.${state.crack.isForcedSkip ? ' (No available gear on your harness fits this constriction — you must Skip Placement!)' : ''}`
+                    : evalRes.status === 'TOO_SMALL'
+                        ? `${gear.name} is too narrow for this constriction and pulls right through under load!${state.crack.isForcedSkip ? ' (No available gear on your harness fits this constriction — you must Skip Placement!)' : ''}`
+                        : `${gear.name} fits inside the crack and will hold, but sits outside its optimal sweet spot. Climbing on marginal gear adds mental stress!`;
+
+                body.innerHTML = `
+                    <div class="p-3.5 rounded-xl border ${boxCls} space-y-2.5">
+                        <div class="text-sm font-bold text-white flex items-center gap-1.5">
+                            <span>${icon}</span>
+                            <span>${gear.name} — ${evalRes.quality}</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">${blindReason}</p>
+                        ${penaltyInfo ? `
+                        <div class="p-2 rounded-lg ${isMarginal ? 'bg-amber-950/60 border border-amber-500/40 text-amber-200' : 'bg-rose-950/60 border border-rose-500/40 text-rose-200'} text-xs font-semibold flex items-center justify-between">
+                            <span>${isMarginal ? '⚖️ Sketchy Pro Penalty:' : '⚡ Failed Placement Penalty:'}</span>
+                            <span class="mono">${isMarginal ? `+${penaltyInfo.stressPenalty}% Stress (Advances)` : `+${penaltyInfo.stressPenalty}% Stress / -${penaltyInfo.gripPenalty}% Grip`}</span>
+                        </div>` : ''}
+                    </div>
+                `;
+                return;
+            }
+
+            const pct = Math.max(0, Math.min(100, Math.round(((W - rMin) / Math.max(0.5, rMax - rMin)) * 100)));
+            const idealMatches = getActiveGearList()
+                .filter(g => evaluateGearPlacement(g, state.crack).status === 'IDEAL')
+                .map(g => g.name)
+                .slice(0, 3)
+                .join(' or ');
+
+            body.innerHTML = `
+                <div class="p-3.5 rounded-xl border ${boxCls} space-y-2.5">
+                    <div class="text-sm font-bold text-white flex items-center gap-1.5">
+                        <span>${icon}</span>
+                        <span>${gear.name} — ${evalRes.quality}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">${evalRes.reason}</p>
+                    <div class="pt-1">
+                        <div class="flex justify-between text-[11px] mono text-slate-400 mb-1">
+                            <span>Min (${rMin}mm)</span>
+                            <span class="text-white font-bold">Placement Width: ${W.toFixed(1)}mm</span>
+                            <span>Max (${rMax}mm)</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 relative">
+                            <div class="absolute top-0 bottom-0 left-[22%] right-[18%] bg-emerald-500/25 border-x border-emerald-500/40"></div>
+                            <div class="h-full transition-all duration-300 ${evalRes.status === 'IDEAL' ? 'bg-emerald-400' : 'bg-amber-400'}" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">Bomber Fit:</span>
+                        <span class="font-bold text-emerald-400 mono">${idealMatches || 'Check Spec Chart'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function resetEvalCardUI() {
+            const badge = document.getElementById('evalStatusBadge');
+            badge.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400';
+            badge.textContent = 'Awaiting Test';
+            document.getElementById('evalBody').innerHTML = `
+                <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+                    <div class="text-2xl mb-1">🧗</div>
+                    <div class="text-sm font-bold text-slate-200">Size Up the Constriction</div>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                        Select a piece from the rack below and click <strong>"Set and Test Gear"</strong>, or switch to Cragging Mode to climb the route.
+                    </p>
+                </div>
+            `;
+        }
+
+        function updateScoreHUD() {
+            const formattedScore = Number.isInteger(state.score) ? state.score : state.score.toFixed(1);
+            document.getElementById('scoreDisplay').textContent = `${formattedScore} / ${state.attempts}`;
+            document.getElementById('streakDisplay').textContent = `${state.streak} 🔥`;
+            const acc = state.attempts === 0 ? 100 : Math.round((state.score / state.attempts) * 100);
+            document.getElementById('accuracyDisplay').textContent = `${acc}%`;
+        }
+
+        function getSessionPerformanceRating(score, attempts, isSuccess) {
+            if (attempts === 0) {
+                return {
+                    pct: 0,
+                    tier: 'Unprotected Soloist',
+                    badgeText: '🪂 No Gear Tested',
+                    colorClass: 'text-rose-400',
+                    badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+                    verdict: 'You finished without testing any gear placements! Slot protection on lead to build your session score.'
+                };
+            }
+
+            const pct = Math.max(0, Math.min(100, Math.round((score / attempts) * 100)));
+
+            if (pct >= 90) {
+                return {
+                    pct,
+                    tier: 'Rope Gun / Trad Master',
+                    badgeText: '👑 Doing Exceptional',
+                    colorClass: 'text-emerald-400',
+                    badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+                    verdict: isSuccess
+                        ? 'Laser-accurate eye! Nearly every piece you slotted was textbook 10kN+ bomber protection.'
+                        : 'Your gear-sizing eye is dialed in—just watch your runouts and grip pacing on the sharp end!'
+                };
+            }
+            if (pct >= 75) {
+                return {
+                    pct,
+                    tier: 'Solid Crag Leader',
+                    badgeText: '⛰️ Doing Great',
+                    colorClass: 'text-sky-400',
+                    badgeClass: 'bg-sky-500/20 text-sky-300 border-sky-500/40',
+                    verdict: 'Strong, dependable placements! You are reading crack constrictions accurately and keeping fumbles low.'
+                };
+            }
+            if (pct >= 55) {
+                return {
+                    pct,
+                    tier: 'Apprentice Leader',
+                    badgeText: '⚖️ Doing Okay',
+                    colorClass: 'text-amber-400',
+                    badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+                    verdict: 'You are getting gear in the rock, but mixing in marginal placements or size fumbles under pressure.'
+                };
+            }
+            return {
+                pct,
+                tier: 'Gripped Gumby',
+                badgeText: '⚠️ Needs Practice',
+                colorClass: 'text-rose-400',
+                badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+                verdict: 'Too many blown or mismatched sizes on lead. Spend a few rounds in Ground School to calibrate your eye!'
+            };
+        }
+
+        function renderOutdoorSessionScoreBox(isSuccess) {
+            const scoreBox = document.getElementById('outdoorModalScoreBox');
+            if (!scoreBox) return;
+
+            const formattedScore = Number.isInteger(state.score) ? state.score : state.score.toFixed(1);
+            const rating = getSessionPerformanceRating(state.score, state.attempts, isSuccess);
+            const markerLeft = Math.max(2, Math.min(98, rating.pct));
+
+            scoreBox.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2">
+                    <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Current Session Score &amp; Scale</span>
+                    <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${rating.badgeClass}">${rating.badgeText}</span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 text-center items-stretch">
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-center">
+                        <div class="text-[10px] uppercase text-slate-400 font-semibold">Session Score</div>
+                        <div class="text-sm sm:text-base font-extrabold mono text-white mt-0.5">${formattedScore} / ${state.attempts}</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-center">
+                        <div class="text-[10px] uppercase text-slate-400 font-semibold">Accuracy</div>
+                        <div class="text-sm sm:text-base font-extrabold mono ${rating.colorClass} mt-0.5">${rating.pct}%</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-center">
+                        <div class="text-[10px] uppercase text-slate-400 font-semibold">Trad Rating</div>
+                        <div class="text-[11px] sm:text-xs font-extrabold ${rating.colorClass} mt-0.5 leading-tight break-words">${rating.tier}</div>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5 pt-1">
+                    <div class="relative h-3 w-full rounded-full overflow-hidden flex border border-slate-800">
+                        <div class="h-full bg-rose-500/80" style="width: 55%" title="Needs Practice (0–54%)"></div>
+                        <div class="h-full bg-amber-400/85" style="width: 20%" title="Doing Okay (55–74%)"></div>
+                        <div class="h-full bg-sky-400/85" style="width: 15%" title="Doing Great (75–89%)"></div>
+                        <div class="h-full bg-emerald-400/90" style="width: 10%" title="Trad Master (90–100%)"></div>
+                        <div class="absolute top-0 bottom-0 w-1.5 -ml-0.5 bg-white shadow-[0_0_8px_#fff] rounded-full transition-all duration-300" style="left: ${markerLeft}%"></div>
+                    </div>
+                    <div class="grid grid-cols-4 text-[10px] mono text-slate-400">
+                        <span class="text-left text-rose-400">0% Gumby</span>
+                        <span class="text-center text-amber-400">55% Okay</span>
+                        <span class="text-center text-sky-400">75% Great</span>
+                        <span class="text-right text-emerald-400">90%+ Master</span>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-slate-300 leading-relaxed bg-slate-900/70 border border-slate-800/80 rounded-lg p-2">
+                    ${rating.verdict}
+                </p>
+            `;
+            scoreBox.classList.remove('hidden');
+        }
+
+        function getStaminaDrainPerSec() {
+            return +(0.75 + Math.pow(state.stress / 100, 1.25) * 4.2).toFixed(1);
+        }
+
+        function getStressGainPerSec() {
+            const runout = Math.max(0, state.climberHeightM - state.lastProHeightM);
+            const runoutRate = runout * 0.09;
+
+            // Account for current pitch height plus total multi-pitch height off the deck,
+            // tempered to a slower rate due to belay rests between pitches.
+            const priorPitchesHeightM = (state.currentPitch - 1) * 35.0;
+            const currentPitchExposure = state.climberHeightM * 0.0035;
+            const totalHeightExposure = priorPitchesHeightM * 0.0016;
+
+            const lowGripFactor = Math.pow(Math.max(0, 100 - state.stamina) / 100, 1.35) * 1.55;
+            return +(0.14 + currentPitchExposure + totalHeightExposure + runoutRate + lowGripFactor).toFixed(2);
+        }
+
+        function updateOutdoorHUD() {
+            document.getElementById('pitchProgressText').textContent = `Pitch ${state.currentPitch} / ${state.totalPitches}`;
+            const totalElevM = (state.currentPitch - 1) * 35.0 + state.climberHeightM;
+            const totalElevEl = document.getElementById('totalElevationText');
+            if (totalElevEl) {
+                totalElevEl.textContent = `Elev: ${totalElevM.toFixed(0)}m`;
+            }
+            document.getElementById('climberHeightText').textContent = `${state.climberHeightM.toFixed(1)}m / 35.0m`;
+            const pitchPct = Math.max(0, Math.min(100, (state.climberHeightM / 35.0) * 100));
+            const heightBar = document.getElementById('pitchHeightBarFill');
+            if (heightBar) {
+                heightBar.style.width = `${pitchPct}%`;
+            }
+            const runout = Math.max(0, state.climberHeightM - state.lastProHeightM);
+            const fallDist = +(runout * 2 + 1.5).toFixed(1);
+            document.getElementById('runoutText').textContent = `${runout.toFixed(1)}m (Whip: ${fallDist}m)`;
+
+            const stressRate = getStressGainPerSec();
+            const stressTextEl = document.getElementById('stressPctText');
+            stressTextEl.textContent = `${Math.round(state.stress)}% (+${stressRate}%/s)`;
+            stressTextEl.className = `mono font-bold ${
+                state.stress >= 75 ? 'text-rose-400 animate-pulse' : state.stress >= 45 ? 'text-amber-400' : 'text-emerald-400'
+            }`;
+            const fill = document.getElementById('stressBarFill');
+            fill.style.width = `${Math.min(100, state.stress)}%`;
+            fill.className = `h-full transition-all duration-150 ${
+                state.stress >= 75 ? 'bg-rose-500' : state.stress >= 45 ? 'bg-amber-400' : 'bg-emerald-500'
+            }`;
+
+            const drainRate = getStaminaDrainPerSec();
+            const staminaEl = document.getElementById('staminaPctText');
+            const staminaFill = document.getElementById('staminaBarFill');
+            if (staminaEl && staminaFill) {
+                staminaEl.textContent = `${Math.max(0, Math.ceil(state.stamina))}% (-${drainRate}%/s)`;
+                staminaEl.className = `mono font-bold ${
+                    state.stamina <= 25 ? 'text-rose-400 animate-pulse' : state.stamina <= 55 ? 'text-amber-400' : 'text-emerald-400'
+                }`;
+                staminaFill.style.width = `${Math.max(0, Math.min(100, state.stamina))}%`;
+                staminaFill.className = `h-full transition-all duration-150 ${
+                    state.stamina <= 25 ? 'bg-rose-500' : state.stamina <= 55 ? 'bg-amber-400' : 'bg-emerald-400'
+                }`;
+            }
+        }
+
+        function startOutdoorMeterTimer() {
+            stopOutdoorMeterTimer();
+            state.outdoorTimerId = setInterval(() => {
+                if (!state.outdoorMode || !state.outdoorClimbActive || state.outdoorModalOpen) return;
+                const drainPerSec = getStaminaDrainPerSec();
+                const stressPerSec = getStressGainPerSec();
+
+                state.stamina = Math.max(0, state.stamina - drainPerSec * 0.1);
+                state.stress = Math.min(100, state.stress + stressPerSec * 0.1);
+                if (state.stress > state.pitchPeakStress) {
+                    state.pitchPeakStress = state.stress;
+                }
+                updateOutdoorHUD();
+
+                if (state.stress >= 100) {
+                    triggerOutdoorGameOver('MAX_STRESS');
+                } else if (state.stamina <= 0) {
+                    triggerOutdoorGameOver('METER_EMPTY');
+                }
+            }, 100);
+        }
+
+        function stopOutdoorMeterTimer() {
+            if (state.outdoorTimerId) {
+                clearInterval(state.outdoorTimerId);
+                state.outdoorTimerId = null;
+            }
+        }
+
+        function triggerOutdoorGameOver(reason) {
+            state.outdoorModalOpen = true;
+            state.outdoorClimbActive = false;
+            if (state.autoAdvanceTimerId) {
+                clearTimeout(state.autoAdvanceTimerId);
+                state.autoAdvanceTimerId = null;
+            }
+            const modal = document.getElementById('outdoorModal');
+            const icon = document.getElementById('outdoorModalIcon');
+            const title = document.getElementById('outdoorModalTitle');
+            const desc = document.getElementById('outdoorModalDesc');
+            const primaryBtn = document.getElementById('outdoorModalPrimaryBtn');
+            const pitchBox = document.getElementById('outdoorModalPitchBox');
+            const modalPitchSelect = document.getElementById('modalPitchCountSelect');
+
+            renderOutdoorSessionScoreBox(false);
+            if (pitchBox) pitchBox.classList.remove('hidden');
+            if (modalPitchSelect) modalPitchSelect.value = String(state.totalPitches);
+
+            const runout = Math.max(0, state.climberHeightM - state.lastProHeightM);
+            const whip = (runout * 2 + 2.0).toFixed(1);
+
+            icon.textContent = '🪂';
+            if (reason === 'METER_EMPTY') {
+                title.textContent = 'GAME OVER • GRIP METER RAN OUT!';
+                desc.textContent = `Your Grip Meter hit 0% at ${state.climberHeightM.toFixed(1)}m on Pitch ${state.currentPitch} (Lead Stress: ${Math.round(state.stress)}%)! You pumped out and took a ${whip}m whipper back to your last solid piece.`;
+            } else {
+                title.textContent = 'GAME OVER • LEADER FALL!';
+                desc.textContent = `Your Lead Stress maxed out at 100% on Pitch ${state.currentPitch} at ${state.climberHeightM.toFixed(1)}m (${runout.toFixed(1)}m above last pro)! You panicked and took a ${whip}m whipper.`;
+            }
+
+            primaryBtn.textContent = 'Restart Route (Pitch 1)';
+            primaryBtn.onclick = () => {
+                if (modalPitchSelect) {
+                    state.totalPitches = parseInt(modalPitchSelect.value, 10) || state.totalPitches;
+                    const setupPitchSelect = document.getElementById('pitchCountSelect');
+                    if (setupPitchSelect) setupPitchSelect.value = String(state.totalPitches);
+                }
+                state.currentPitch = 1;
+                state.climberHeightM = 0;
+                state.lastProHeightM = 0;
+                state.stress = 0;
+                state.stamina = 100;
+                resetOutdoorGearCounts();
+                state.outdoorModalOpen = false;
+                state.outdoorClimbActive = true;
+                updateOutdoorHUD();
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                generateCrack();
+            };
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function checkPitchTopOut() {
+            if (state.climberHeightM < 35.0) return false;
+
+            state.outdoorModalOpen = true;
+            state.outdoorClimbActive = false;
+            if (state.autoAdvanceTimerId) {
+                clearTimeout(state.autoAdvanceTimerId);
+                state.autoAdvanceTimerId = null;
+            }
+            const modal = document.getElementById('outdoorModal');
+            const icon = document.getElementById('outdoorModalIcon');
+            const title = document.getElementById('outdoorModalTitle');
+            const desc = document.getElementById('outdoorModalDesc');
+            const primaryBtn = document.getElementById('outdoorModalPrimaryBtn');
+            const pitchBox = document.getElementById('outdoorModalPitchBox');
+            const modalPitchSelect = document.getElementById('modalPitchCountSelect');
+
+            const dropReport = rollFollowerDroppedGear();
+            const droppedHtml = dropReport.droppedNames.length > 0
+                ? `<div class="mt-3 p-2.5 rounded-xl bg-amber-950/80 border border-amber-500/50 text-amber-200 text-xs text-left">
+                    <div class="font-extrabold text-amber-400 flex items-center justify-between">
+                        <span>🔔 Follower Dropped Gear!</span>
+                        <span class="mono text-[10px]">Follower Fear (10x): ${dropReport.followerStressPct}%</span>
+                    </div>
+                    <p class="mt-1 text-slate-200">Gripped from the exposure while cleaning the pitch, your follower fumbled and dropped <strong>${dropReport.droppedNames.join(', ')}</strong> (${dropReport.droppedNames.length} ${dropReport.droppedNames.length === 1 ? 'piece' : 'pieces'}) down the wall!</p>
+                   </div>`
+                : `<div class="mt-2.5 text-[11px] text-slate-400 mono">Follower cleaned all gear safely (Follower 10x Fear: ${dropReport.followerStressPct}%)</div>`;
+
+            if (state.currentPitch >= state.totalPitches) {
+                renderOutdoorSessionScoreBox(true);
+                if (pitchBox) pitchBox.classList.remove('hidden');
+                if (modalPitchSelect) modalPitchSelect.value = String(state.totalPitches);
+
+                icon.textContent = '🏆';
+                title.textContent = 'CRAGGING MODE SUCCESS • SUMMIT REACHED!';
+                const formattedScore = Number.isInteger(state.score) ? state.score : state.score.toFixed(1);
+                desc.innerHTML = `You successfully led all ${state.totalPitches} pitches (${state.totalPitches * 35}m of trad climbing) with a session score of ${formattedScore} / ${state.attempts}!${droppedHtml}`;
+                primaryBtn.textContent = 'Climb Again (Pitch 1)';
+                primaryBtn.onclick = () => {
+                    if (modalPitchSelect) {
+                        state.totalPitches = parseInt(modalPitchSelect.value, 10) || state.totalPitches;
+                        const setupPitchSelect = document.getElementById('pitchCountSelect');
+                        if (setupPitchSelect) setupPitchSelect.value = String(state.totalPitches);
+                    }
+                    state.currentPitch = 1;
+                    state.climberHeightM = 0;
+                    state.lastProHeightM = 0;
+                    state.stress = 0;
+                    state.stamina = 100;
+                    resetOutdoorGearCounts(true);
+                    state.outdoorModalOpen = false;
+                    state.outdoorClimbActive = true;
+                    updateOutdoorHUD();
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    generateCrack();
+                };
+            } else {
+                const scoreBox = document.getElementById('outdoorModalScoreBox');
+                if (scoreBox) scoreBox.classList.add('hidden');
+                if (pitchBox) pitchBox.classList.add('hidden');
+
+                icon.textContent = '⚓';
+                title.textContent = `Pitch ${state.currentPitch} Anchor Reached!`;
+                const totalElevM = state.currentPitch * 35;
+                desc.innerHTML = `Solid belay stance built at ${totalElevM}m total elevation! Resting at the belay reset your Lead Stress to 0% and Grip Meter to 100% for Pitch ${state.currentPitch + 1}.${droppedHtml}`;
+                primaryBtn.textContent = `Lead Pitch ${state.currentPitch + 1}`;
+                primaryBtn.onclick = () => {
+                    state.currentPitch++;
+                    state.climberHeightM = 0;
+                    state.lastProHeightM = 0;
+                    state.stress = 0;
+                    state.stamina = 100;
+                    resetOutdoorGearCounts(false);
+                    state.outdoorModalOpen = false;
+                    state.outdoorClimbActive = true;
+                    updateOutdoorHUD();
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    generateCrack();
+                };
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            return true;
+        }
+
+        function advanceOutdoorPitchOnPlacement(isMarginal = false, marginalStressPenalty = 10) {
+            const climbStep = +(5.5 + Math.random() * 2.2).toFixed(1);
+            state.climberHeightM = Math.min(35.0, +(state.climberHeightM + climbStep).toFixed(1));
+            state.lastProHeightM = state.climberHeightM;
+
+            if (isMarginal) {
+                state.stress = Math.min(100, state.stress + marginalStressPenalty);
+            } else {
+                state.stress = Math.max(0, state.stress - 16);
+                state.stamina = Math.min(100, state.stamina + 7);
+            }
+            if (state.stress > state.pitchPeakStress) {
+                state.pitchPeakStress = state.stress;
+            }
+
+            updateOutdoorHUD();
+
+            if (state.stress >= 100) {
+                triggerOutdoorGameOver('MAX_STRESS');
+                return true;
+            }
+            return checkPitchTopOut();
+        }
+
+        function skipPlacement() {
+            if (state.evaluated) return;
+
+            if (!state.outdoorMode) {
+                generateCrack();
+                return;
+            }
+
+            const wasForcedSkip = state.crack && state.crack.isForcedSkip;
+            const climbStep = +(5.0 + Math.random() * 2.0).toFixed(1);
+            state.climberHeightM = Math.min(35.0, +(state.climberHeightM + climbStep).toFixed(1));
+            const runout = Math.max(0, state.climberHeightM - state.lastProHeightM);
+            const stressPenalty = Math.round(12 + runout * 0.9);
+            state.stress = Math.min(100, state.stress + stressPenalty);
+
+            updateOutdoorHUD();
+
+            if (state.stress >= 100) {
+                triggerOutdoorGameOver('MAX_STRESS');
+                return;
+            }
+
+            if (checkPitchTopOut()) {
+                return;
+            }
+
+            generateCrack();
+            const stressRate = getStressGainPerSec();
+            document.getElementById('statusPrompt').innerHTML = `
+                <span class="inline-block w-2 h-2 rounded-full ${wasForcedSkip ? 'bg-amber-400' : 'bg-rose-400'}"></span>
+                <span>${wasForcedSkip ? 'Good eye skipping an unprotectable section!' : 'Skipped placement!'} Runout is now <strong>${runout.toFixed(1)}m</strong> (+${stressPenalty}% Stress — Stress now rising at <strong>+${stressRate}%/s</strong>).</span>
+            `;
+        }
+
+        function populateSpecsTable() {
+            const tbody = document.getElementById('specsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = ALL_GEAR.map(g => `
+                <tr class="hover:bg-slate-800/50">
+                    <td class="py-2 px-2 font-bold text-white flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full inline-block" style="background:${g.hex}"></span>
+                        <span>${g.name}</span>
+                    </td>
+                    <td class="py-2 px-2 text-slate-400">${g.axle}</td>
+                    <td class="py-2 px-2 text-sky-400 font-semibold">${g.rMin} – ${g.rMax} mm</td>
+                    <td class="py-2 px-2 text-emerald-400 font-semibold">${g.sweetMin} – ${g.sweetMax} mm</td>
+                    <td class="py-2 px-2 text-amber-400 font-bold">${g.kN} kN</td>
+                </tr>
+            `).join('');
+        }
+
+        function initAppEvents() {
+            window.addEventListener('resize', resizeCanvas);
+
+            const testPullBtn = document.getElementById('testPullBtn');
+            if (testPullBtn) testPullBtn.addEventListener('click', runPlacementTest);
+
+            const skipPlacementBtn = document.getElementById('skipPlacementBtn');
+            if (skipPlacementBtn) skipPlacementBtn.addEventListener('click', skipPlacement);
+
+            const nextCrackBtn = document.getElementById('nextCrackBtn');
+            if (nextCrackBtn) nextCrackBtn.addEventListener('click', generateCrack);
+
+            const outdoorBtn = document.getElementById('toggleOutdoorModeBtn');
+            const outdoorHud = document.getElementById('outdoorHud');
+            const modeBadge = document.getElementById('modeBadge');
+            const outdoorSetupModal = document.getElementById('outdoorSetupModal');
+
+            function renderOutdoorSetupGearGrid() {
+                const grid = document.getElementById('outdoorSetupGearGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+
+                const totalCount = state.outdoorSelectedIds.length * state.outdoorRackMultiplier;
+                const setupSelectedCountText = document.getElementById('setupSelectedCountText');
+                if (setupSelectedCountText) {
+                    setupSelectedCountText.textContent = `${totalCount} Pieces on Harness (${state.outdoorSelectedIds.length} sizes × ${state.outdoorRackMultiplier})`;
+                }
+
+                ALL_GEAR.forEach(gear => {
+                    const selected = state.outdoorSelectedIds.includes(gear.id);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = `p-2 rounded-xl border text-left transition flex flex-col justify-between ${
+                        selected
+                            ? 'bg-emerald-950/50 border-emerald-500/70 text-white shadow'
+                            : 'bg-slate-900/60 border-slate-800 text-slate-500 opacity-60 hover:opacity-90'
+                    }`;
+                    btn.innerHTML = `
+                        <div class="flex items-center justify-between w-full gap-1">
+                            <span class="text-[11px] font-bold mono truncate">${gear.name}</span>
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${gear.hex}"></span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 text-[10px] mono">
+                            <span class="${selected ? 'text-emerald-300 font-bold' : 'text-slate-500'}">${selected ? `✓ ${state.outdoorRackMultiplier}x` : 'Off'}</span>
+                            <span class="text-slate-400">${gear.rMin}–${gear.rMax}</span>
+                        </div>
+                    `;
+                    btn.addEventListener('click', () => {
+                        if (state.outdoorSelectedIds.includes(gear.id)) {
+                            if (state.outdoorSelectedIds.length > 1) {
+                                state.outdoorSelectedIds = state.outdoorSelectedIds.filter(id => id !== gear.id);
+                            }
+                        } else {
+                            state.outdoorSelectedIds.push(gear.id);
+                        }
+                        renderOutdoorSetupGearGrid();
+                    });
+                    grid.appendChild(btn);
+                });
+            }
+
+            function openOutdoorSetupModal() {
+                state.outdoorClimbActive = false;
+                state.outdoorModalOpen = true;
+                renderOutdoorSetupGearGrid();
+                if (outdoorSetupModal) {
+                    outdoorSetupModal.classList.remove('hidden');
+                    outdoorSetupModal.classList.add('flex');
+                }
+            }
+
+            function closeOutdoorSetupModal() {
+                if (outdoorSetupModal) {
+                    outdoorSetupModal.classList.add('hidden');
+                    outdoorSetupModal.classList.remove('flex');
+                }
+                state.outdoorModalOpen = false;
+                if (state.outdoorMode) {
+                    state.outdoorClimbActive = true;
+                }
+            }
+
+            function setOutdoorMode(enabled) {
+                if (enabled) {
+                    openOutdoorSetupModal();
+                } else {
+                    stopOutdoorMeterTimer();
+                    if (state.autoAdvanceTimerId) {
+                        clearTimeout(state.autoAdvanceTimerId);
+                        state.autoAdvanceTimerId = null;
+                    }
+                    state.outdoorMode = false;
+                    state.outdoorClimbActive = false;
+                    state.outdoorModalOpen = false;
+                    if (outdoorHud) outdoorHud.classList.add('hidden');
+                    if (modeBadge) {
+                        modeBadge.textContent = 'Ground School';
+                        modeBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold';
+                    }
+                    if (outdoorBtn) outdoorBtn.innerHTML = '<span>⛰️ Switch to Cragging Mode</span>';
+                    const skipBtn = document.getElementById('skipPlacementBtn');
+                    if (skipBtn) skipBtn.classList.add('hidden');
+                    updateSelectedSpecUI();
+                    generateCrack();
+                }
+            }
+
+            if (outdoorBtn) outdoorBtn.addEventListener('click', () => setOutdoorMode(!state.outdoorMode));
+            
+            const openOutdoorSetupBtn = document.getElementById('openOutdoorSetupBtn');
+            if (openOutdoorSetupBtn) openOutdoorSetupBtn.addEventListener('click', openOutdoorSetupModal);
+
+            const cancelOutdoorSetupBtn = document.getElementById('cancelOutdoorSetupBtn');
+            if (cancelOutdoorSetupBtn) cancelOutdoorSetupBtn.addEventListener('click', closeOutdoorSetupModal);
+
+            const cancelOutdoorSetupTopBtn = document.getElementById('cancelOutdoorSetupTopBtn');
+            if (cancelOutdoorSetupTopBtn) cancelOutdoorSetupTopBtn.addEventListener('click', closeOutdoorSetupModal);
+
+            const singleQtyBtn = document.getElementById('rackQtySingleBtn');
+            const doubleQtyBtn = document.getElementById('rackQtyDoubleBtn');
+            if (singleQtyBtn && doubleQtyBtn) {
+                singleQtyBtn.addEventListener('click', () => {
+                    state.outdoorRackMultiplier = 1;
+                    singleQtyBtn.className = 'px-3 py-2 rounded-lg font-bold border transition bg-amber-500 text-slate-950 border-amber-400';
+                    doubleQtyBtn.className = 'px-3 py-2 rounded-lg font-bold border transition bg-slate-900 text-slate-300 border-slate-700 hover:text-white';
+                    renderOutdoorSetupGearGrid();
+                });
+                doubleQtyBtn.addEventListener('click', () => {
+                    state.outdoorRackMultiplier = 2;
+                    doubleQtyBtn.className = 'px-3 py-2 rounded-lg font-bold border transition bg-amber-500 text-slate-950 border-amber-400';
+                    singleQtyBtn.className = 'px-3 py-2 rounded-lg font-bold border transition bg-slate-900 text-slate-300 border-slate-700 hover:text-white';
+                    renderOutdoorSetupGearGrid();
+                });
+            }
+
+            document.querySelectorAll('.outdoor-preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const preset = btn.dataset.outpreset;
+                    document.querySelectorAll('.outdoor-preset-btn').forEach(b => {
+                        b.className = 'outdoor-preset-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition';
+                    });
+                    btn.className = 'outdoor-preset-btn px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-slate-950 transition';
+
+                    if (preset === 'std_rack_nuts') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => (g.category === 'c4' && g.rMax <= 90) || g.category === 'stoppers').map(g => g.id);
+                    } else if (preset === 'std_rack_only') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'c4' && g.rMax <= 90).map(g => g.id);
+                    } else if (preset === 'extended_trad') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'z4' || (g.category === 'c4' && g.rMax <= 115) || g.category === 'stoppers').map(g => g.id);
+                    } else if (preset === 'micros_fingers_nuts') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'z4' || g.category === 'stoppers').map(g => g.id);
+                    } else if (preset === 'all') {
+                        state.outdoorSelectedIds = ALL_GEAR.map(g => g.id);
+                    } else if (preset === 'cams_only') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'z4' || g.category === 'c4').map(g => g.id);
+                    } else if (preset === 'creek_fingers_hands') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => (g.category === 'z4' || g.category === 'c4') && g.rMax <= 90 && g.rMin >= 8.5).map(g => g.id);
+                    } else if (preset === 'offsets_aid') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'offsets' || g.category === 'offset_nuts').map(g => g.id);
+                    } else if (preset === 'offwidth') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.rMax >= 65).map(g => g.id);
+                    } else if (preset === 'nuts_only') {
+                        state.outdoorSelectedIds = ALL_GEAR.filter(g => g.category === 'stoppers' || g.category === 'offset_nuts').map(g => g.id);
+                    }
+                    renderOutdoorSetupGearGrid();
+                });
+            });
+
+            const startOutdoorClimbBtn = document.getElementById('startOutdoorClimbBtn');
+            if (startOutdoorClimbBtn) {
+                startOutdoorClimbBtn.addEventListener('click', () => {
+                    const pitchCountSelect = document.getElementById('pitchCountSelect');
+                    state.totalPitches = pitchCountSelect ? (parseInt(pitchCountSelect.value, 10) || 3) : 3;
+                    const modalPitchSelect = document.getElementById('modalPitchCountSelect');
+                    if (modalPitchSelect) modalPitchSelect.value = String(state.totalPitches);
+                    state.outdoorMode = true;
+                    state.outdoorClimbActive = true;
+                    state.outdoorModalOpen = false;
+                    state.currentPitch = 1;
+                    state.climberHeightM = 0;
+                    state.lastProHeightM = 0;
+                    state.stress = 0;
+                    state.stamina = 100;
+                    resetOutdoorGearCounts();
+
+                    if (outdoorSetupModal) {
+                        outdoorSetupModal.classList.add('hidden');
+                        outdoorSetupModal.classList.remove('flex');
+                    }
+                    if (outdoorHud) outdoorHud.classList.remove('hidden');
+                    if (modeBadge) {
+                        modeBadge.textContent = 'Cragging Mode';
+                        modeBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold';
+                    }
+                    if (outdoorBtn) outdoorBtn.innerHTML = '<span>🏫 Switch to Ground School</span>';
+
+                    updateOutdoorHUD();
+                    startOutdoorMeterTimer();
+                    generateCrack();
+                });
+            }
+
+            const modalPitchCountSelect = document.getElementById('modalPitchCountSelect');
+            if (modalPitchCountSelect) {
+                modalPitchCountSelect.addEventListener('change', (e) => {
+                    state.totalPitches = parseInt(e.target.value, 10) || 3;
+                    const setupPitchSelect = document.getElementById('pitchCountSelect');
+                    if (setupPitchSelect) setupPitchSelect.value = String(state.totalPitches);
+                });
+            }
+
+            const outdoorModalSetupBtn = document.getElementById('outdoorModalSetupBtn');
+            if (outdoorModalSetupBtn) {
+                outdoorModalSetupBtn.addEventListener('click', () => {
+                    const outdoorModal = document.getElementById('outdoorModal');
+                    if (outdoorModal) {
+                        outdoorModal.classList.add('hidden');
+                        outdoorModal.classList.remove('flex');
+                    }
+                    openOutdoorSetupModal();
+                });
+            }
+
+            const outdoorModalExitBtn = document.getElementById('outdoorModalExitBtn');
+            if (outdoorModalExitBtn) {
+                outdoorModalExitBtn.addEventListener('click', () => {
+                    const outdoorModal = document.getElementById('outdoorModal');
+                    if (outdoorModal) {
+                        outdoorModal.classList.add('hidden');
+                        outdoorModal.classList.remove('flex');
+                    }
+                    setOutdoorMode(false);
+                });
+            }
+
+            const toggleGridBtn = document.getElementById('toggleGridBtn');
+            if (toggleGridBtn) {
+                toggleGridBtn.addEventListener('click', () => {
+                    state.showGrid = !state.showGrid;
+                    drawViewport();
+                });
+            }
+
+            const toggleJamBtn = document.getElementById('toggleJamBtn');
+            if (toggleJamBtn) {
+                toggleJamBtn.addEventListener('click', () => {
+                    state.showJamGauge = !state.showJamGauge;
+                    drawViewport();
+                });
+            }
+
+            const jamSelect = document.getElementById('jamSelect');
+            if (jamSelect) {
+                jamSelect.addEventListener('change', (e) => {
+                    state.jamGaugeMode = e.target.value;
+                    state.showJamGauge = true;
+                    drawViewport();
+                });
+            }
+
+            const toggleCardOverlayBtn = document.getElementById('toggleCardOverlayBtn');
+            if (toggleCardOverlayBtn) {
+                toggleCardOverlayBtn.addEventListener('click', () => {
+                    state.showCardOverlay = !state.showCardOverlay;
+                    drawViewport();
+                });
+            }
+
+            const rawEyeBtn = document.getElementById('rawEyeBtn');
+            if (rawEyeBtn) {
+                rawEyeBtn.addEventListener('click', () => {
+                    const anyOn = state.showGrid || state.showJamGauge || state.showCardOverlay;
+                    state.showGrid = !anyOn;
+                    state.showJamGauge = !anyOn;
+                    state.showCardOverlay = false;
+                    drawViewport();
+                });
+            }
+
+            const stdBtn = document.getElementById('orientStandardBtn');
+            const flipBtn = document.getElementById('orientFlipBtn');
+            if (stdBtn && flipBtn) {
+                stdBtn.addEventListener('click', () => {
+                    state.orientation = 'standard';
+                    stdBtn.className = 'px-2 py-1 rounded-md font-bold bg-amber-500 text-slate-950 transition';
+                    flipBtn.className = 'px-2 py-1 rounded-md font-bold text-slate-400 hover:text-white transition';
+                    updateSelectedSpecUI();
+                    renderGearRack();
+                    drawViewport();
+                });
+                flipBtn.addEventListener('click', () => {
+                    state.orientation = 'alternate';
+                    flipBtn.className = 'px-2 py-1 rounded-md font-bold bg-amber-500 text-slate-950 transition';
+                    stdBtn.className = 'px-2 py-1 rounded-md font-bold text-slate-400 hover:text-white transition';
+                    updateSelectedSpecUI();
+                    renderGearRack();
+                    drawViewport();
+                });
+            }
+
+            const scaleBtn = document.getElementById('scaleModeToggleBtn');
+            if (scaleBtn) {
+                scaleBtn.addEventListener('click', () => {
+                    state.scaleLock1to1 = !state.scaleLock1to1;
+                    scaleBtn.textContent = state.scaleLock1to1 ? '1:1 Scale Lock' : 'Auto-Fit Zoom';
+                    const viewportModeLabel = document.getElementById('viewportModeLabel');
+                    if (viewportModeLabel) {
+                        viewportModeLabel.textContent = state.scaleLock1to1
+                            ? 'Target Zone: Crack Constriction (1:1 Scale)'
+                            : 'Target Zone: Crack Constriction (Auto-Fit)';
+                    }
+                    drawViewport();
+                });
+            }
+
+            document.querySelectorAll('.type-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.typeFilter = btn.dataset.typefilter;
+                    document.querySelectorAll('.type-filter-btn').forEach(b => {
+                        b.className = 'type-filter-btn px-2.5 py-1 rounded-md font-bold text-slate-400 hover:text-white transition';
+                    });
+                    btn.className = 'type-filter-btn px-2.5 py-1 rounded-md font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 transition';
+                    renderGearRack();
+                });
+            });
+
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.rackPreset = btn.dataset.preset;
+                    document.querySelectorAll('.preset-btn').forEach(b => {
+                        b.className = 'preset-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition';
+                    });
+                    btn.className = 'preset-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition';
+                    generateCrack();
+                });
+            });
+
+            const rackMmBtn = document.getElementById('toggleRackMmBtn');
+            if (rackMmBtn) {
+                rackMmBtn.addEventListener('click', () => {
+                    state.showRackMm = !state.showRackMm;
+                    rackMmBtn.textContent = state.showRackMm ? 'Hide mm' : 'Show mm';
+                    renderGearRack();
+                });
+            }
+
+            const calibModal = document.getElementById('calibModal');
+            const calibSlider = document.getElementById('calibSlider');
+            const calibCardBox = document.getElementById('calibCardBox');
+
+            function syncCalibBox(val) {
+                const pxMm = parseFloat(val);
+                if (calibSlider) calibSlider.value = pxMm;
+                if (calibCardBox) {
+                    calibCardBox.style.width = `${Math.round(85.60 * pxMm)}px`;
+                    calibCardBox.style.height = `${Math.round(53.98 * pxMm)}px`;
+                }
+                const calibPxPerMmText = document.getElementById('calibPxPerMmText');
+                if (calibPxPerMmText) calibPxPerMmText.textContent = `${pxMm.toFixed(2)} px/mm`;
+                const calibPpiText = document.getElementById('calibPpiText');
+                if (calibPpiText) calibPpiText.textContent = `${Math.round(pxMm * 25.4)} PPI`;
+            }
+
+            const openCalibBtn = document.getElementById('openCalibBtn');
+            if (openCalibBtn) {
+                openCalibBtn.addEventListener('click', () => {
+                    syncCalibBox(state.pxPerMm);
+                    if (calibModal) {
+                        calibModal.classList.remove('hidden');
+                        calibModal.classList.add('flex');
+                    }
+                });
+            }
+
+            const closeCalibModalBtn = document.getElementById('closeCalibModalBtn');
+            if (closeCalibModalBtn) {
+                closeCalibModalBtn.addEventListener('click', () => {
+                    if (calibModal) {
+                        calibModal.classList.add('hidden');
+                        calibModal.classList.remove('flex');
+                    }
+                });
+            }
+
+            if (calibSlider) calibSlider.addEventListener('input', (e) => syncCalibBox(e.target.value));
+            
+            const calibMinusBtn = document.getElementById('calibMinusBtn');
+            if (calibMinusBtn && calibSlider) {
+                calibMinusBtn.addEventListener('click', () => syncCalibBox(Math.max(2.2, parseFloat(calibSlider.value) - 0.05)));
+            }
+
+            const calibPlusBtn = document.getElementById('calibPlusBtn');
+            if (calibPlusBtn && calibSlider) {
+                calibPlusBtn.addEventListener('click', () => syncCalibBox(Math.min(7.5, parseFloat(calibSlider.value) + 0.05)));
+            }
+
+            const resetCalibBtn = document.getElementById('resetCalibBtn');
+            if (resetCalibBtn) resetCalibBtn.addEventListener('click', () => syncCalibBox(3.78));
+
+            const saveCalibBtn = document.getElementById('saveCalibBtn');
+            if (saveCalibBtn && calibSlider) {
+                saveCalibBtn.addEventListener('click', () => {
+                    state.pxPerMm = parseFloat(calibSlider.value);
+                    localStorage.setItem('bd_trad_px_per_mm', state.pxPerMm);
+                    if (calibModal) {
+                        calibModal.classList.add('hidden');
+                        calibModal.classList.remove('flex');
+                    }
+                    drawViewport();
+                });
+            }
+
+            const specsModal = document.getElementById('specsModal');
+            const openSpecsBtn = document.getElementById('openSpecsBtn');
+            if (openSpecsBtn) {
+                openSpecsBtn.addEventListener('click', () => {
+                    if (state.outdoorMode) return;
+                    if (specsModal) {
+                        specsModal.classList.remove('hidden');
+                        specsModal.classList.add('flex');
+                    }
+                });
+            }
+
+            const closeSpecsModalBtn = document.getElementById('closeSpecsModalBtn');
+            if (closeSpecsModalBtn) {
+                closeSpecsModalBtn.addEventListener('click', () => {
+                    if (specsModal) {
+                        specsModal.classList.add('hidden');
+                        specsModal.classList.remove('flex');
+                    }
+                });
+            }
+        }
+
+        window.onload = function () {
+            populateSpecsTable();
+            initAppEvents();
+            generateCrack();
+            resizeCanvas();
+        };
+    </script>
+</body>
+</html>
