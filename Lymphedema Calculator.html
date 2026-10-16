@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>June Bug Massage, LLC | Lymphedema Volume & Garment Sizing Calculator</title>
+  <style>
+    :root {
+      --bg-beige: #F5EEE8;
+      --bg-card: #FCF9F6;
+      --bg-white: #FFFFFF;
+      --forest: #4C655E;
+      --forest-dark: #374B45;
+      --forest-light: #648279;
+      --sage-btn: #D7DAD7;
+      --sage-light: #E8ECE8;
+      --sage-highlight: #D4E4DD;
+      --gold-highlight: #F3E3C3;
+      --gold-border: #C99E5A;
+      --text-main: #2C3A36;
+      --text-muted: #5C6F69;
+      --border-soft: #DCD6CF;
+      --accent-pos: #2E6F40;
+      --accent-warn: #9E582F;
+      --shadow-sm: 0 2px 8px rgba(76, 101, 94, 0.08);
+      --shadow-md: 0 6px 20px rgba(76, 101, 94, 0.12);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-beige);
+      color: var(--text-main);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding-bottom: 3rem;
+    }
+
+    /* Header & Branding */
+    header {
+      background: linear-gradient(180deg, #EFE6DD 0%, var(--bg-beige) 100%);
+      border-bottom: 2px solid var(--sage-btn);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .logo-container {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--bg-beige);
+      border: 2px solid var(--forest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(76, 101, 94, 0.15);
+      position: relative;
+    }
+
+    .brand-text h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.6rem;
+      color: var(--forest);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-text p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .unit-pill {
+      display: inline-flex;
+      background: var(--sage-btn);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid var(--forest-light);
+    }
+
+    .unit-pill button {
+      border: none;
+      background: transparent;
+      color: var(--forest-dark);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .unit-pill button.active {
+      background: var(--forest);
+      color: #fff;
+    }
+
+    .btn {
+      background: var(--sage-btn);
+      color: var(--forest-dark);
+      border: 1px solid #C2C8C2;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.18s ease;
+    }
+
+    .btn:hover {
+      background: #C8CFC8;
+    }
+
+    .btn-primary {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest-dark);
+    }
+
+    .btn-primary:hover {
+      background: var(--forest-dark);
+    }
+
+    /* Navigation Tabs */
+    .nav-bar {
+      max-width: 1440px;
+      margin: 1rem auto 0;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--border-soft);
+    }
+
+    .tab-btn {
+      background: var(--sage-light);
+      color: var(--forest-dark);
+      border: 1px solid var(--border-soft);
+      border-bottom: none;
+      padding: 0.7rem 1.25rem;
+      border-radius: 10px 10px 0 0;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .tab-btn:hover {
+      background: var(--sage-btn);
+    }
+
+    .tab-btn.active {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest);
+    }
+
+    .tab-badge {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.22);
+      color: inherit;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1440px;
+      margin: 1.25rem auto;
+      padding: 0 2rem;
+    }
+
+    /* Persistent Live Landmark Sync Bar */
+    .sync-banner {
+      background: var(--bg-card);
+      border: 1.5px solid var(--forest-light);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sync-banner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .sync-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--forest);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sync-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .sync-item {
+      background: var(--bg-white);
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      padding: 0.45rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sync-item label {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.2rem;
+    }
+
+    .sync-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .sync-input-wrap input {
+      width: 100%;
+      border: 1px solid var(--sage-btn);
+      border-radius: 5px;
+      padding: 0.25rem 0.4rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      background: #FAF8F5;
+    }
+
+    .sync-input-wrap input:focus {
+      outline: 2px solid var(--forest);
+      background: #fff;
+    }
+
+    .sync-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* Cards & Layout */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .grid-sizing {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1080px) {
+      .grid-2, .grid-sizing {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1.5px solid var(--sage-btn);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-header h2 {
+      font-family: Georgia, serif;
+      font-size: 1.2rem;
+      color: var(--forest);
+    }
+
+    /* Summary KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-soft);
+      border-left: 4px solid var(--forest);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .kpi-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin: 0.2rem 0;
+    }
+
+    .kpi-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .kpi-pos {
+      color: var(--accent-pos);
+      font-weight: 700;
+    }
+
+    .kpi-warn {
+      color: var(--accent-warn);
+      font-weight: 700;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      background: var(--bg-white);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid var(--border-soft);
+      padding: 0.45rem 0.55rem;
+      text-align: center;
+    }
+
+    th {
+      background: var(--forest);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    tr.sub-header th {
+      background: var(--sage-btn);
+      color: var(--forest-dark);
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background: #FAF7F4;
+    }
+
+    td.landmark-row {
+      background: #EFF5F2 !important;
+    }
+
+    .cell-input {
+      width: 68px;
+      padding: 0.25rem 0.35rem;
+      border: 1px solid #C6CEC9;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.86rem;
+      color: var(--text-main);
+      background: #fff;
+    }
+
+    .cell-input:focus {
+      outline: 2px solid var(--forest);
+    }
+
+    .note-input {
+      width: 95px;
+      padding: 0.22rem 0.35rem;
+      border: 1px solid #D5DBD7;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+
+    .jobst-select {
+      padding: 0.22rem 0.3rem;
+      border: 1px solid var(--forest-light);
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--forest-dark);
+      background: var(--sage-light);
+      font-size: 0.8rem;
+    }
+
+    /* Sizing Matrix Highlighting */
+    td.size-match {
+      background: var(--sage-highlight) !important;
+      color: var(--forest-dark) !important;
+      font-weight: 800;
+      border: 2px solid var(--forest) !important;
+      position: relative;
+    }
+
+    .match-pill {
+      display: inline-block;
+      background: var(--forest);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 0.1rem;
+    }
+
+    /* Arm Diagram Card */
+    .diagram-box {
+      background: var(--bg-white);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .diagram-box svg {
+      max-width: 230px;
+      height: auto;
+    }
+
+    /* Cross-Brand Summary Table */
+    .converter-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .brand-result-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--forest-light);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-result-card h3 {
+      color: var(--forest);
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--sage-btn);
+      padding-bottom: 0.45rem;
+      margin-bottom: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer {
+      max-width: 1440px;
+      margin: 2rem auto 0;
+      padding: 1.25rem 2rem;
+      border-top: 1px solid var(--border-soft);
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--forest);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media print {
+      header, .nav-bar, .no-print {
+        display: none !important;
+      }
+      .tab-panel {
+        display: block !important;
+        page-break-after: always;
+      }
+      body {
+        background: #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand-block">
+      <div class="logo-container">
+        <!-- Stylized June Bug & Botanical Leaves Emblem in #4C655E -->
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" fill="#F5EEE8" stroke="#4C655E" stroke-width="3.5"/>
+          <circle cx="60" cy="60" r="48" fill="none" stroke="#4C655E" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- Left & Right Botanical Renewal Leaves -->
+          <path d="M26 78 C18 56, 28 34, 46 28 C38 45, 34 62, 26 78 Z" fill="#D7DAD7" stroke="#4C655E" stroke-width="2.2"/>
+          <path d="M94 78 C102 56, 92 34, 74 28 C82 45, 86 62, 94 78 Z" fill="#D7DAD7" stroke="#4C655E" stroke-width="2.2"/>
+          <!-- June Bug Antennae & Head -->
+          <path d="M53 33 C48 25, 43 24, 40 26" fill="none" stroke="#4C655E" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M67 33 C72 25, 77 24, 80 26" fill="none" stroke="#4C655E" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse cx="60" cy="36" rx="8" ry="5.5" fill="#4C655E"/>
+          <!-- Pronotum / Thorax -->
+          <path d="M46 44 C46 37, 74 37, 74 44 L77 51 C60 49, 60 49, 43 51 Z" fill="#4C655E"/>
+          <!-- Beetle Elytra (Leaf-shaped Wings) -->
+          <path d="M42 52 C40 74, 49 91, 59 95 L59 51 Z" fill="#4C655E"/>
+          <path d="M78 52 C80 74, 71 91, 61 95 L61 51 Z" fill="#4C655E"/>
+          <!-- Subtle Leaf Veins on Elytra -->
+          <path d="M58 56 L48 66 M58 68 L47 78 M62 56 L72 66 M62 68 L73 78" stroke="#F5EEE8" stroke-width="1.6" stroke-linecap="round"/>
+          <!-- Gentle Legs -->
+          <path d="M44 47 L35 43 M42 60 L32 60 M44 74 L35 80" stroke="#4C655E" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M76 47 L85 43 M78 60 L88 60 M76 74 L85 80" stroke="#4C655E" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>June Bug Massage, LLC</h1>
+        <p>Specialized Massage Therapy for People with Cancer or Lymphedema &bull; Clinical Volume &amp; Sizing Suite</p>
+      </div>
+    </div>
+
+    <div class="header-controls no-print">
+      <div class="unit-pill" title="Auto-convert all measurements and sizing tables between cm and inches">
+        <button id="unitCmBtn" class="active" onclick="setUnit('cm')">Metric (cm)</button>
+        <button id="unitInBtn" onclick="setUnit('in')">Imperial (in)</button>
+      </div>
+
+      <button class="btn" onclick="resetAllMeasurements()" title="Clear all measurements to blank for a new patient">
+        &#8635; Reset / New Patient
+      </button>
+      <button class="btn" onclick="exportCSV()">
+        &#128190; Export CSV
+      </button>
+      <button class="btn btn-primary" onclick="window.print()">
+        &#128424; Print Report
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation Tabs -->
+<nav class="nav-bar no-print">
+  <button class="tab-btn active" onclick="switchTab('volume', this)">
+    1. Arm Volume Calculator <span class="tab-badge" id="badgeVol">0 mL</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('converter', this)">
+    2. All-Brand Sizing Converter <span class="tab-badge">Auto-Sync</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('medi', this)">
+    3. Medi Sizing <span class="tab-badge" id="badgeMedi">—</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('juzo', this)">
+    4. Juzo Sizing <span class="tab-badge" id="badgeJuzo">—</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('circaid', this)">
+    5. CircAid Sizing <span class="tab-badge" id="badgeCirc">—</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('bmi', this)">
+    6. BMI Calculator
+  </button>
+</nav>
+
+<main>
+  <!-- PERSISTENT AUTO-CONVERSION LANDMARK BAR (syncs across Volume + Medi + Juzo + CircAid) -->
+  <section class="sync-banner">
+    <div class="sync-banner-header">
+      <div class="sync-title">
+        <span>&#128260; Live Garment Landmark Auto-Converter (Synced Across All Sizing Pages)</span>
+      </div>
+      <div style="display:flex; gap:0.5rem; align-items:center; font-size:0.8rem;">
+        <span>Active Source:</span>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('current')">Pull Current (R)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('prior')">Pull Prior (R)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('left')">Pull Left (Ref)</button>
+      </div>
+    </div>
+    <div class="sync-grid">
+      <div class="sync-item">
+        <label>Point A / cB (5th MCP / Hand)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.1" min="0" id="syncA" value="" oninput="onSyncLandmarkEdit('A', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncASub">0.00 in</div>
+      </div>
+      <div class="sync-item">
+        <label>Point C (Wrist)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.1" min="0" id="syncC" value="" oninput="onSyncLandmarkEdit('C', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncCSub">0.00 in</div>
+      </div>
+      <div class="sync-item">
+        <label>Point E (Elbow)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.1" min="0" id="syncE" value="" oninput="onSyncLandmarkEdit('E', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncESub">0.00 in</div>
+      </div>
+      <div class="sync-item">
+        <label>Point F / cF (Mid-Upper Arm)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.1" min="0" id="syncF" value="" oninput="onSyncLandmarkEdit('F', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncFSub">0.00 in</div>
+      </div>
+      <div class="sync-item">
+        <label>Point G (Axilla / Top Arm)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.1" min="0" id="syncG" value="" oninput="onSyncLandmarkEdit('G', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncGSub">0.00 in</div>
+      </div>
+      <div class="sync-item">
+        <label>Length C–G (Wrist to Axilla)</label>
+        <div class="sync-input-wrap">
+          <input type="number" step="0.5" min="0" id="syncLenCG" value="" oninput="onSyncLandmarkEdit('LenCG', this.value)" />
+          <span class="unit-label">cm</span>
+        </div>
+        <div class="sync-sub" id="syncLenCGSub">0.00 in</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 1: ARM VOLUME CALCULATOR -->
+  <section id="tab-volume" class="tab-panel active">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Current Right Arm Vol</div>
+        <div class="kpi-value" id="kpiRightVol">0.0 mL</div>
+        <div class="kpi-sub" id="kpiRightSub">Current Session</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Left Arm (Baseline) Vol</div>
+        <div class="kpi-value" id="kpiLeftVol">0.0 mL</div>
+        <div class="kpi-sub">Contralateral Reference</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Right vs. Left Difference</div>
+        <div class="kpi-value" id="kpiDiffRL">0.0 mL</div>
+        <div class="kpi-sub" id="kpiDiffRLPct">0.00% Volume Difference</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Change vs. Prior Visit</div>
+        <div class="kpi-value" id="kpiDiffPrior">0.0 mL</div>
+        <div class="kpi-sub" id="kpiDiffPriorSub">vs. 0.0 mL (0.00%)</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 17-Point Circumference Table -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Hand &amp; Proximal Arm Circumference Measurements (4 cm Intervals)</h2>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Formula:</label>
+            <select id="formulaMode" class="jobst-select" onchange="recalculateAll()">
+              <option value="excel">Excel Cylinder (&#931; C&#178; / 3.14)</option>
+              <option value="frustum">Clinical Frustum (Truncated Cone)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pt #</th>
+                <th>Marking</th>
+                <th>RIGHT (Current)<br><input type="date" id="dateRightCur" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;" onchange="recalculateAll()"/></th>
+                <th>LEFT (Ref)<br><input type="date" id="dateLeftCur" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
+                <th>RIGHT (Prior)<br><input type="date" id="dateRightPrior" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
+                <th>RIGHT (Initial)<br><input type="date" id="dateRightOrig" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
+                <th>Anatomical Note</th>
+                <th>Garment Pt</th>
+                <th id="colAltUnitHeader">Inches (R)</th>
+                <th>Seg &#916; Vol<br>(Cur vs Prior)</th>
+              </tr>
+            </thead>
+            <tbody id="measurementTableBody"></tbody>
+            <tfoot>
+              <tr class="sub-header">
+                <th colspan="2">Total Volume (mL)</th>
+                <th id="footVolRCur">0.00</th>
+                <th id="footVolLCur">0.00</th>
+                <th id="footVolRPrior">0.00</th>
+                <th id="footVolROrig">0.00</th>
+                <th colspan="3" id="footDiffSummary">Diff (R vs L): 0.00 mL (0.00%)</th>
+                <th id="footSegDiffTotal">0.00 mL</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right Column: Visual Limb Profile & Hand / Finger Measurements -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <h2>Limb Circumference &amp; Volume Profile</h2>
+          </div>
+          <canvas id="profileChart" width="460" height="290" style="width:100%; height:auto; background:#fff; border-radius:8px; border:1px solid var(--border-soft);"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Hand &amp; Finger Measurements</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Digit / Point</th>
+                  <th>Measurement (<span class="unit-label">cm</span>)</th>
+                  <th>Converted</th>
+                </tr>
+              </thead>
+              <tbody id="fingerTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: ALL-BRAND SIZING CONVERTER (SIDE-BY-SIDE AUTO CONVERSION) -->
+  <section id="tab-converter" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <h2>Cross-Brand Garment Sizing Auto-Converter (Medi &bull; Juzo &bull; CircAid)</h2>
+        <span style="font-size:0.84rem; color:var(--text-muted);">Automatically translates active patient measurements across all 3 manufacturer sizing charts</span>
+      </div>
+
+      <div class="converter-cards">
+        <!-- Medi Summary Card -->
+        <div class="brand-result-card">
+          <h3>
+            <span>Medi Compression</span>
+            <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.75rem;" onclick="switchTab('medi', document.querySelectorAll('.tab-btn')[2])">Open Chart &rarr;</button>
+          </h3>
+          <div id="convMediSummary"></div>
+        </div>
+
+        <!-- Juzo Summary Card -->
+        <div class="brand-result-card">
+          <h3>
+            <span>Juzo Compression Sleeve</span>
+            <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.75rem;" onclick="switchTab('juzo', document.querySelectorAll('.tab-btn')[3])">Open Chart &rarr;</button>
+          </h3>
+          <div id="convJuzoSummary"></div>
+        </div>
+
+        <!-- CircAid Summary Card -->
+        <div class="brand-result-card">
+          <h3>
+            <span>circAid Reduction Kit</span>
+            <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.75rem;" onclick="switchTab('circaid', document.querySelectorAll('.tab-btn')[4])">Open Chart &rarr;</button>
+          </h3>
+          <div id="convCircSummary"></div>
+        </div>
+      </div>
+
+      <!-- Dynamic Session-to-Session Comparison Table (Prior vs. Current) -->
+      <div class="card-header" style="margin-top:1rem;">
+        <h2>Session-to-Session Sizing Progression (Prior Visit vs. Current Visit)</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Landmark Point</th>
+              <th>Prior (R) Measurement</th>
+              <th>Prior Medi Match</th>
+              <th>Prior Juzo Match</th>
+              <th>Current (R) Measurement</th>
+              <th>Current Medi Match</th>
+              <th>Current Juzo Match</th>
+            </tr>
+          </thead>
+          <tbody id="progressionComparisonBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: MEDI SIZING -->
+  <section id="tab-medi" class="tab-panel">
+    <div class="grid-sizing">
+      <div class="diagram-box">
+        <h3 style="color:var(--forest); font-family:Georgia,serif; font-size:1rem; margin-bottom:0.5rem;">Medi Measurement Points</h3>
+        <svg viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55 20 C62 60, 68 110, 72 150 C82 195, 98 235, 112 262 C125 265, 138 275, 142 282 C135 286, 124 282, 118 278 C122 292, 128 308, 120 312 C110 315, 100 302, 92 285 C82 260, 52 210, 42 160 C34 115, 25 65, 20 20" fill="#F2ECE4" stroke="#4C655E" stroke-width="2.2"/>
+          <ellipse cx="48" cy="75" rx="23" ry="7" fill="none" stroke="#D81B60" stroke-width="3"/>
+          <text x="78" y="79" fill="#D81B60" font-weight="bold" font-size="13">cG</text>
+          <ellipse cx="57" cy="145" rx="20" ry="6" fill="none" stroke="#D81B60" stroke-width="3"/>
+          <text x="84" y="149" fill="#D81B60" font-weight="bold" font-size="13">cE</text>
+          <ellipse cx="86" cy="222" rx="16" ry="5" fill="none" stroke="#D81B60" stroke-width="2.5"/>
+          <text x="108" y="224" fill="#D81B60" font-weight="bold" font-size="12">cC1</text>
+          <ellipse cx="97" cy="248" rx="14" ry="5" fill="none" stroke="#D81B60" stroke-width="3"/>
+          <text x="117" y="252" fill="#D81B60" font-weight="bold" font-size="13">cC</text>
+          <ellipse cx="108" cy="278" rx="15" ry="5" fill="none" stroke="#D81B60" stroke-width="3"/>
+          <text x="129" y="282" fill="#D81B60" font-weight="bold" font-size="13">cA</text>
+          <line x1="145" y1="72" x2="185" y2="245" stroke="#D81B60" stroke-width="1.8"/>
+          <line x1="135" y1="72" x2="155" y2="72" stroke="#D81B60" stroke-width="1.8"/>
+          <line x1="175" y1="245" x2="195" y2="245" stroke="#D81B60" stroke-width="1.8"/>
+          <text x="168" y="155" fill="#D81B60" font-weight="bold" font-size="12">l C–G</text>
+        </svg>
+        <div id="mediDiagramLiveReadout" style="text-align:left; font-size:0.82rem; margin-top:0.75rem; background:#FAF7F4; padding:0.65rem; border-radius:8px; border:1px solid var(--border-soft);"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Medi Compression Arm Sleeve &amp; Gauntlet Sizing Matrix</h2>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Green highlighted cells match active measurements</span>
+        </div>
+        <div class="table-wrap">
+          <table id="mediTable"></table>
+        </div>
+        <div id="mediLengthBox" style="margin-top:1rem; display:grid; grid-template-columns: 1fr 1fr; gap:1rem;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 4: JUZO SIZING -->
+  <section id="tab-juzo" class="tab-panel">
+    <div class="grid-sizing">
+      <div class="diagram-box">
+        <h3 style="color:var(--forest); font-family:Georgia,serif; font-size:1rem; margin-bottom:0.5rem;">Juzo Sleeve Landmarks</h3>
+        <svg viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
+          <path d="M95 30 C82 70, 72 115, 68 150 C66 190, 72 225, 76 255 L70 295 L102 295 L100 255 C106 220, 108 185, 106 150 C112 115, 122 80, 130 50" fill="#D9DDD9" stroke="#4C655E" stroke-width="2.2"/>
+          <line x1="38" y1="68" x2="122" y2="68" stroke="#2C3A36" stroke-width="2"/>
+          <circle cx="26" cy="68" r="13" fill="#005BBF"/>
+          <text x="26" y="73" fill="#fff" font-weight="bold" font-size="13" text-anchor="middle">G</text>
+          <line x1="38" y1="150" x2="108" y2="150" stroke="#2C3A36" stroke-width="2"/>
+          <circle cx="26" cy="150" r="13" fill="#005BBF"/>
+          <text x="26" y="155" fill="#fff" font-weight="bold" font-size="13" text-anchor="middle">E</text>
+          <line x1="38" y1="248" x2="102" y2="248" stroke="#2C3A36" stroke-width="2"/>
+          <circle cx="26" cy="248" r="13" fill="#005BBF"/>
+          <text x="26" y="253" fill="#fff" font-weight="bold" font-size="13" text-anchor="middle">C</text>
+          <line x1="162" y1="68" x2="162" y2="248" stroke="#2C3A36" stroke-width="2.5"/>
+          <polyline points="156,76 162,68 168,76" fill="none" stroke="#2C3A36" stroke-width="2.5"/>
+          <polyline points="156,240 162,248 168,240" fill="none" stroke="#2C3A36" stroke-width="2.5"/>
+          <text x="180" y="165" fill="#2C3A36" font-weight="bold" font-size="13" transform="rotate(-90 180,165)" text-anchor="middle">length C–G</text>
+        </svg>
+        <div id="juzoDiagramLiveReadout" style="text-align:left; font-size:0.82rem; margin-top:0.75rem; background:#FAF7F4; padding:0.65rem; border-radius:8px; border:1px solid var(--border-soft);"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Juzo Compression Sleeve Sizing (Sizes I – VI | Regular &amp; Max)</h2>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Displays both cm &amp; inches with live auto-matching</span>
+        </div>
+        <div class="table-wrap">
+          <table id="juzoTable"></table>
+        </div>
+        <div id="juzoLengthBox" style="margin-top:1rem;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 5: CIRCAID SIZING -->
+  <section id="tab-circaid" class="tab-panel">
+    <div class="grid-sizing">
+      <div class="diagram-box">
+        <h3 style="color:var(--forest); font-family:Georgia,serif; font-size:1rem; margin-bottom:0.5rem;">circAid Reduction Kit</h3>
+        <svg viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
+          <path d="M95 25 C80 65, 74 115, 72 155 C68 195, 65 230, 62 252 L50 285 L98 292 L95 252 C102 220, 108 185, 112 155 C118 115, 126 75, 130 40" fill="#E6EAE7" stroke="#4C655E" stroke-width="2.2"/>
+          <ellipse cx="99" cy="95" rx="28" ry="7" fill="none" stroke="#E91E63" stroke-width="2.8"/>
+          <text x="135" y="99" fill="#E91E63" font-weight="bold" font-size="14">cF</text>
+          <line x1="106" y1="68" x2="76" y2="248" stroke="#E91E63" stroke-width="2.5"/>
+          <rect x="80" y="140" width="24" height="32" fill="#E91E63" rx="3"/>
+          <text x="92" y="160" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">l C-G</text>
+          <ellipse cx="74" cy="274" rx="24" ry="6" fill="none" stroke="#E91E63" stroke-width="2.8"/>
+          <text x="105" y="279" fill="#E91E63" font-weight="bold" font-size="14">cB</text>
+        </svg>
+        <div id="circDiagramLiveReadout" style="text-align:left; font-size:0.82rem; margin-top:0.75rem; background:#FAF7F4; padding:0.65rem; border-radius:8px; border:1px solid var(--border-soft);"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>circAid Reduction Kit Sizing &amp; Auto-Evaluation</h2>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Automatically linked to cF, cB, and Length C–G</span>
+        </div>
+        <div class="table-wrap">
+          <table id="circaidTable"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 6: BMI CALCULATOR -->
+  <section id="tab-bmi" class="tab-panel">
+    <div class="card" style="max-width:820px; margin:0 auto;">
+      <div class="card-header">
+        <h2>Clinical BMI Calculator (Bidirectional Imperial &harr; Metric Auto-Conversion)</h2>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-bottom:1.25rem;">
+        <!-- Imperial Box -->
+        <div style="background:#fff; padding:1.1rem; border-radius:10px; border:1.5px solid var(--forest-light);">
+          <h3 style="color:var(--forest); margin-bottom:0.8rem; font-family:Georgia,serif;">Imperial Input</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.25rem;">Weight (pounds)</label>
+            <input type="number" step="0.1" min="0" id="bmiLbs" value="" class="cell-input" style="width:100%; text-align:left; padding:0.45rem;" oninput="updateBMI('imperial')" />
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.65rem;">
+            <div>
+              <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.25rem;">Height (feet)</label>
+              <input type="number" step="1" min="0" id="bmiFt" value="" class="cell-input" style="width:100%; text-align:left; padding:0.45rem;" oninput="updateBMI('imperial')" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.25rem;">Height (inches)</label>
+              <input type="number" step="0.5" min="0" id="bmiIn" value="" class="cell-input" style="width:100%; text-align:left; padding:0.45rem;" oninput="updateBMI('imperial')" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Box -->
+        <div style="background:#fff; padding:1.1rem; border-radius:10px; border:1.5px solid var(--forest-light);">
+          <h3 style="color:var(--forest); margin-bottom:0.8rem; font-family:Georgia,serif;">Metric Input</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.25rem;">Weight (kg)</label>
+            <input type="number" step="0.1" min="0" id="bmiKg" value="" class="cell-input" style="width:100%; text-align:left; padding:0.45rem;" oninput="updateBMI('metric')" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.25rem;">Height (cm)</label>
+            <input type="number" step="0.5" min="0" id="bmiCm" value="" class="cell-input" style="width:100%; text-align:left; padding:0.45rem;" oninput="updateBMI('metric')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="text-align:center; background:#FAF6F2;">
+        <div class="kpi-label">Calculated Body Mass Index (BMI)</div>
+        <div class="kpi-value" id="bmiResultValue" style="font-size:2.1rem;">0.0 kg/m&sup2;</div>
+        <div class="kpi-sub" id="bmiCategoryLabel" style="font-weight:700; color:var(--forest);">Formula: BMI = Weight[kg] / (Height[m] &times; Height[m]) = 703 &times; Weight[lb] / (Height[in])&sup2;</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><strong>June Bug Massage, LLC</strong> &bull; Specialized Massage Therapy for People with Cancer or Lymphedema &bull; <a href="https://www.junebugmassage.com/" target="_blank" rel="noopener">www.junebugmassage.com</a></p>
+  <p style="margin-top:0.25rem;">VBON License #0019020227 &bull; MDH License #M07260 &bull; DC Health License #MT200001532</p>
+</footer>
+
+<script>
+  let currentUnit = 'cm';
+
+  function createZeroState() {
+    return {
+      dateRightCur: '',
+      dateLeftCur: '',
+      dateRightPrior: '',
+      dateRightOrig: '',
+      lenCG_cm: 0,
+      fingers: [0, 0, 0, 0, 0],
+      rows: [
+        { pt: 1,  mark: 0,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 2,  mark: 4,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 3,  mark: 8,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 4,  mark: 12, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 5,  mark: 16, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 6,  mark: 20, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 7,  mark: 24, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 8,  mark: 28, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 9,  mark: 32, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 10, mark: 36, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 11, mark: 40, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 12, mark: 44, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 13, mark: 48, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 14, mark: 52, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 15, mark: 56, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 16, mark: 60, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
+        { pt: 17, mark: 64, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' }
+      ]
+    };
+  }
+
+  let state = createZeroState();
+  let landmarksCm = { A: 0, C: 0, E: 0, F: 0, G: 0, LenCG: 0 };
+
+  const MEDI_SIZES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+  const MEDI_CHART = {
+    G_Reg: [[25,28], [27.5,31], [29.5,33.5], [31.5,36], [33,37.5], [35.5,40.5], [37.5,42.5], [40,45.5]],
+    G_EW:  [[28,31], [30,34], [32.5,36.5], [34.5,39.5], [36.5,41.5], [39,44], [41,46.5], [45.5,50.5]],
+    E_Reg: [[23,25], [24,27], [25.5,29], [27,31], [28.5,32.5], [30,34.5], [32,36.5], [34.5,39.5]],
+    E_EW:  [[24,26.5], [26,29.5], [28,31.5], [29.5,34], [31,35.5], [33,37.5], [35,40], [38,43]],
+    C:     [[13.5,14.5], [14,16], [15.5,18], [17,20], [18.5,21.5], [20,23.5], [22,25.5], [24.5,28.5]],
+    A:     [[15,18], [15.5,19.5], [16.5,20.5], [18.5,23], [19.5,24], [21.5,26], [23.5,28], [25.5,30]]
+  };
+
+  const JUZO_SIZES = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+  const JUZO_CHART = {
+    G_Max_cm: [[26.5,33], [28.5,35], [30.5,37.5], [32.5,39.5], [34,42], [36,44]],
+    G_Max_in: ['10.5-13', '11.25-13.75', '12-14.75', '12.75-15.5', '13.5-16.5', '14.5-17.5'],
+    G_Reg_cm: [[21.5,26], [23.5,28.5], [25,31], [27,33], [29,35], [30.5,37.5]],
+    G_Reg_in: ['8.5-10.5', '9.25-11.25', '9.75-12.25', '10.5-13', '11.5-13.75', '12-14.75'],
+    E_Max_cm: [[22.5,27.5], [24.5,29.5], [26,32], [27.5,33.5], [29,35], [30,37]],
+    E_Max_in: ['8.75-10.75', '9.75-11.5', '10.25-12.5', '10.75-13.25', '11.5-13.75', '11.75-14.5'],
+    E_Reg_cm: [[20.5,25.5], [22,27], [23.5,28.5], [25,30], [26,32], [27.5,33.5]],
+    E_Reg_in: ['8-10', '8.75-10.75', '9.25-11.25', '9.75-11.75', '10.25-12.5', '10.75-13.25'],
+    C_cm:     [[14,15.5], [15.5,17], [17,18.5], [18.5,20], [20,21.5], [21.5,23]],
+    C_in:     ['5.5-6', '6-6.75', '6.75-7.25', '7.25-7.75', '7.75-8.5', '8.5-9']
+  };
+
+  function toDisplayUnit(valCm) {
+    if (!valCm || isNaN(valCm)) return 0;
+    return currentUnit === 'cm' ? +(valCm).toFixed(2) : +(valCm / 2.54).toFixed(2);
+  }
+
+  function toInputString(valCm) {
+    if (!valCm || isNaN(valCm) || valCm <= 0) return '';
+    return String(toDisplayUnit(valCm));
+  }
+
+  function fromDisplayUnit(valDisp) {
+    const num = parseFloat(valDisp);
+    if (isNaN(num) || num < 0) return 0;
+    return currentUnit === 'cm' ? num : +(num * 2.54).toFixed(3);
+  }
+
+  function formatRange(loCm, hiCm) {
+    if (currentUnit === 'cm') {
+      return `${loCm} – ${hiCm} cm`;
+    } else {
+      return `${(loCm / 2.54).toFixed(1)} – ${(hiCm / 2.54).toFixed(1)} in`;
+    }
+  }
+
+  function setUnit(unit) {
+    currentUnit = unit;
+    document.getElementById('unitCmBtn').classList.toggle('active', unit === 'cm');
+    document.getElementById('unitInBtn').classList.toggle('active', unit === 'in');
+    document.querySelectorAll('.unit-label').forEach(el => el.textContent = unit);
+    document.getElementById('colAltUnitHeader').textContent = unit === 'cm' ? 'Inches (R)' : 'cm (R)';
+    renderMeasurementTable();
+    renderSyncBanner();
+    recalculateAll();
+  }
+
+  function resetAllMeasurements() {
+    state = createZeroState();
+    landmarksCm = { A: 0, C: 0, E: 0, F: 0, G: 0, LenCG: 0 };
+    document.getElementById('dateRightCur').value = '';
+    document.getElementById('dateLeftCur').value = '';
+    document.getElementById('dateRightPrior').value = '';
+    document.getElementById('dateRightOrig').value = '';
+
+    document.getElementById('bmiLbs').value = '';
+    document.getElementById('bmiFt').value = '';
+    document.getElementById('bmiIn').value = '';
+    document.getElementById('bmiKg').value = '';
+    document.getElementById('bmiCm').value = '';
+    updateBMI('imperial');
+
+    renderMeasurementTable();
+    renderSyncBanner();
+    recalculateAll();
+  }
+
+  function getLandmarksForCol(colKey = 'rCur') {
+    const L = { A: 0, C: 0, E: 0, F: 0, G: 0, LenCG: state.lenCG_cm || 0 };
+    let markC = null, markG = null;
+    state.rows.forEach(r => {
+      const val = r[colKey] || 0;
+      if (r.jobst === 'A' || r.jobst === 'B') L.A = val;
+      if (r.jobst === 'C') { L.C = val; if (val > 0) markC = r.mark; }
+      if (r.jobst === 'E') L.E = val;
+      if (r.jobst === 'F') L.F = val;
+      if (r.jobst === 'G') { L.G = val; if (val > 0) markG = r.mark; }
+    });
+    if (!L.LenCG && markC !== null && markG !== null && markG > markC) {
+      L.LenCG = markG - markC;
+    }
+    return L;
+  }
+
+  function extractLandmarksFromTable(colKey = 'rCur') {
+    const L = getLandmarksForCol(colKey);
+    landmarksCm = { ...L };
+  }
+
+  function pullLandmarksFromSession(which) {
+    if (which === 'current') extractLandmarksFromTable('rCur');
+    if (which === 'prior') extractLandmarksFromTable('rPrior');
+    if (which === 'left') extractLandmarksFromTable('lCur');
+    renderSyncBanner();
+    recalculateAll();
+  }
+
+  function onSyncLandmarkEdit(pointKey, rawVal) {
+    const valCm = fromDisplayUnit(rawVal);
+    landmarksCm[pointKey] = valCm;
+    if (pointKey === 'LenCG') {
+      state.lenCG_cm = valCm;
+    } else {
+      state.rows.forEach(r => {
+        if (r.jobst === pointKey || (pointKey === 'A' && r.jobst === 'B')) {
+          r.rCur = valCm;
+        }
+      });
+      renderMeasurementTable();
+    }
+    updateSyncSubtexts();
+    recalculateAll();
+  }
+
+  function renderSyncBanner() {
+    document.getElementById('syncA').value = toInputString(landmarksCm.A);
+    document.getElementById('syncC').value = toInputString(landmarksCm.C);
+    document.getElementById('syncE').value = toInputString(landmarksCm.E);
+    document.getElementById('syncF').value = toInputString(landmarksCm.F);
+    document.getElementById('syncG').value = toInputString(landmarksCm.G);
+    document.getElementById('syncLenCG').value = toInputString(landmarksCm.LenCG);
+    updateSyncSubtexts();
+  }
+
+  function updateSyncSubtexts() {
+    const altText = (cmVal) => currentUnit === 'cm'
+      ? `${(cmVal / 2.54).toFixed(2)} in`
+      : `${cmVal.toFixed(1)} cm`;
+    document.getElementById('syncASub').textContent = altText(landmarksCm.A);
+    document.getElementById('syncCSub').textContent = altText(landmarksCm.C);
+    document.getElementById('syncESub').textContent = altText(landmarksCm.E);
+    document.getElementById('syncFSub').textContent = altText(landmarksCm.F);
+    document.getElementById('syncGSub').textContent = altText(landmarksCm.G);
+    document.getElementById('syncLenCGSub').textContent = altText(landmarksCm.LenCG);
+  }
+
+  function renderMeasurementTable() {
+    const tbody = document.getElementById('measurementTableBody');
+    tbody.innerHTML = '';
+
+    state.rows.forEach((row, idx) => {
+      const tr = document.createElement('tr');
+      const isLandmark = ['A','B','C','D','E','F','G'].includes(row.jobst);
+      const tdClass = isLandmark ? 'landmark-row' : '';
+
+      const altVal = currentUnit === 'cm'
+        ? (row.rCur > 0 ? (row.rCur / 2.54).toFixed(2) + ' in' : '0.00 in')
+        : (row.rCur > 0 ? row.rCur.toFixed(1) + ' cm' : '0.0 cm');
+
+      const segDiff = ((row.rCur * row.rCur) - (row.rPrior * row.rPrior)) / 3.14;
+      const segDiffStr = (row.rCur === 0 && row.rPrior === 0)
+        ? '0.0'
+        : (segDiff > 0 ? `+${segDiff.toFixed(1)}` : segDiff.toFixed(1));
+      const segColor = segDiff < -0.05 ? 'var(--accent-pos)' : (segDiff > 0.05 ? 'var(--accent-warn)' : 'var(--text-muted)');
+
+      tr.innerHTML = `
+        <td class="${tdClass}"><strong>${row.pt}</strong></td>
+        <td class="${tdClass}">${row.mark} cm</td>
+        <td class="${tdClass}">
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rCur)}"
+            oninput="onTableCellInput(${idx}, 'rCur', this.value)" />
+        </td>
+        <td class="${tdClass}">
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.lCur)}"
+            oninput="onTableCellInput(${idx}, 'lCur', this.value)" />
+        </td>
+        <td class="${tdClass}">
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rPrior)}"
+            oninput="onTableCellInput(${idx}, 'rPrior', this.value)" />
+        </td>
+        <td class="${tdClass}">
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rOrig)}"
+            oninput="onTableCellInput(${idx}, 'rOrig', this.value)" />
+        </td>
+        <td class="${tdClass}">
+          <input type="text" class="note-input" value="${row.note}"
+            oninput="state.rows[${idx}].note = this.value" />
+        </td>
+        <td class="${tdClass}">
+          <select class="jobst-select" onchange="onJobstChange(${idx}, this.value)">
+            <option value="" ${row.jobst===''?'selected':''}>—</option>
+            <option value="A" ${row.jobst==='A'||row.jobst==='B'?'selected':''}>A / cB (Hand)</option>
+            <option value="C" ${row.jobst==='C'?'selected':''}>C (Wrist)</option>
+            <option value="D" ${row.jobst==='D'?'selected':''}>D</option>
+            <option value="E" ${row.jobst==='E'?'selected':''}>E (Elbow)</option>
+            <option value="F" ${row.jobst==='F'?'selected':''}>F / cF (Mid-Up)</option>
+            <option value="G" ${row.jobst==='G'?'selected':''}>G (Axilla)</option>
+          </select>
+        </td>
+        <td class="${tdClass}" id="altCell-${idx}" style="font-weight:600; color:var(--text-muted);">${altVal}</td>
+        <td class="${tdClass}" id="segDiffCell-${idx}" style="font-weight:700; color:${segColor};">${segDiffStr} mL</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const fBody = document.getElementById('fingerTableBody');
+    fBody.innerHTML = '';
+    state.fingers.forEach((fVal, fIdx) => {
+      const tr = document.createElement('tr');
+      const altFinger = currentUnit === 'cm'
+        ? `${(fVal / 2.54).toFixed(2)} in`
+        : `${fVal.toFixed(2)} cm`;
+      tr.innerHTML = `
+        <td><strong>Digit ${fIdx + 1}</strong></td>
+        <td><input type="number" step="0.05" min="0" class="cell-input" value="${toInputString(fVal)}"
+          oninput="onFingerCellInput(${fIdx}, this.value)" /></td>
+        <td id="fingerAlt-${fIdx}" style="color:var(--text-muted);">${altFinger}</td>
+      `;
+      fBody.appendChild(tr);
+    });
+  }
+
+  function onFingerCellInput(fIdx, rawVal) {
+    const valCm = fromDisplayUnit(rawVal);
+    state.fingers[fIdx] = valCm;
+    const altEl = document.getElementById(`fingerAlt-${fIdx}`);
+    if (altEl) {
+      altEl.textContent = currentUnit === 'cm'
+        ? `${(valCm / 2.54).toFixed(2)} in`
+        : `${valCm.toFixed(2)} cm`;
+    }
+  }
+
+  function onTableCellInput(rowIdx, colKey, rawVal) {
+    state.rows[rowIdx][colKey] = fromDisplayUnit(rawVal);
+    if (colKey === 'rCur') {
+      const r = state.rows[rowIdx];
+      const altEl = document.getElementById(`altCell-${rowIdx}`);
+      if (altEl) {
+        altEl.textContent = currentUnit === 'cm'
+          ? (r.rCur > 0 ? (r.rCur / 2.54).toFixed(2) + ' in' : '0.00 in')
+          : (r.rCur > 0 ? r.rCur.toFixed(1) + ' cm' : '0.0 cm');
+      }
+      extractLandmarksFromTable('rCur');
+      renderSyncBanner();
+    }
+    const r = state.rows[rowIdx];
+    const segDiff = ((r.rCur * r.rCur) - (r.rPrior * r.rPrior)) / 3.14;
+    const segEl = document.getElementById(`segDiffCell-${rowIdx}`);
+    if (segEl) {
+      segEl.textContent = `${segDiff > 0 ? '+' : ''}${segDiff.toFixed(1)} mL`;
+      segEl.style.color = segDiff < -0.05 ? 'var(--accent-pos)' : (segDiff > 0.05 ? 'var(--accent-warn)' : 'var(--text-muted)');
+    }
+    recalculateAll();
+  }
+
+  function onJobstChange(rowIdx, newJobst) {
+    state.rows[rowIdx].jobst = newJobst;
+    extractLandmarksFromTable('rCur');
+    renderMeasurementTable();
+    renderSyncBanner();
+    recalculateAll();
+  }
+
+  function calcLimbVolume(colKey) {
+    const mode = document.getElementById('formulaMode').value;
+    const vals = state.rows.map(r => r[colKey] || 0);
+    if (mode === 'excel') {
+      const sumSq = vals.reduce((acc, c) => acc + (c * c), 0);
+      return sumSq / 3.14;
+    } else {
+      const nonZero = vals.filter(c => c > 0);
+      let total = 0;
+      for (let i = 0; i < nonZero.length - 1; i++) {
+        const c1 = nonZero[i], c2 = nonZero[i + 1];
+        total += (4.0 / (12.0 * Math.PI)) * (c1*c1 + c2*c2 + c1*c2);
+      }
+      return total;
+    }
+  }
+
+  function recalculateAll() {
+    const volRCur   = calcLimbVolume('rCur');
+    const volLCur   = calcLimbVolume('lCur');
+    const volRPrior = calcLimbVolume('rPrior');
+    const volROrig  = calcLimbVolume('rOrig');
+
+    const diffRL = Math.max(volRCur, volLCur) - Math.min(volRCur, volLCur);
+    const minRL  = Math.min(volRCur, volLCur);
+    const pctRL  = minRL > 0 ? (diffRL / minRL) * 100 : 0;
+
+    const diffPrior = (volRCur > 0 && volRPrior > 0) ? (volRCur - volRPrior) : 0;
+    const pctPrior  = (volRCur > 0 && volRPrior > 0) ? (diffPrior / volRPrior) * 100 : 0;
+
+    const curDateVal = document.getElementById('dateRightCur').value;
+    document.getElementById('kpiRightVol').textContent = `${volRCur.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+    document.getElementById('kpiRightSub').textContent = curDateVal ? `Session: ${curDateVal}` : 'Current Session';
+    document.getElementById('kpiLeftVol').textContent  = `${volLCur.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+
+    const rlSign = diffRL > 0 ? '+' : '';
+    const kpiDiffRLEl = document.getElementById('kpiDiffRL');
+    kpiDiffRLEl.textContent = `${rlSign}${diffRL.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+    kpiDiffRLEl.className = 'kpi-value ' + (diffRL > 0 ? 'kpi-warn' : '');
+    document.getElementById('kpiDiffRLPct').textContent = `${rlSign}${pctRL.toFixed(2)}% vs. Unaffected Limb`;
+
+    const priorSign = diffPrior > 0 ? '+' : '';
+    const kpiPriorEl = document.getElementById('kpiDiffPrior');
+    kpiPriorEl.textContent = `${priorSign}${diffPrior.toFixed(1)} mL`;
+    kpiPriorEl.className = 'kpi-value ' + (diffPrior < 0 ? 'kpi-pos' : (diffPrior > 0 ? 'kpi-warn' : ''));
+    document.getElementById('kpiDiffPriorSub').textContent = `vs. ${volRPrior.toFixed(1)} mL (${priorSign}${pctPrior.toFixed(2)}%)`;
+
+    document.getElementById('footVolRCur').textContent   = volRCur.toFixed(2);
+    document.getElementById('footVolLCur').textContent   = volLCur.toFixed(2);
+    document.getElementById('footVolRPrior').textContent = volRPrior.toFixed(2);
+    document.getElementById('footVolROrig').textContent  = volROrig.toFixed(2);
+    document.getElementById('footDiffSummary').textContent = `Diff (R vs L): ${diffRL.toFixed(2)} mL (${pctRL.toFixed(2)}%)`;
+    document.getElementById('footSegDiffTotal').textContent = `${priorSign}${diffPrior.toFixed(2)} mL`;
+
+    document.getElementById('badgeVol').textContent = `${Math.round(volRCur).toLocaleString()} mL`;
+
+    drawProfileChart();
+    renderAllSizingPages();
+  }
+
+  function drawProfileChart() {
+    const canvas = document.getElementById('profileChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const activeRows = state.rows.slice(0, 13);
+    const padL = 46, padR = 20, padT = 28, padB = 38;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    const minY = 0, maxY = 50;
+    const xPos = (i) => padL + (i / (activeRows.length - 1)) * plotW;
+    const yPos = (valCm) => padT + plotH - ((Math.min(Math.max(valCm, minY), maxY) - minY) / (maxY - minY)) * plotH;
+
+    ctx.strokeStyle = '#EAE4DC';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#5C6F69';
+    ctx.font = '11px sans-serif';
+    for (let v = 0; v <= 50; v += 10) {
+      const y = yPos(v);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+      const label = currentUnit === 'cm' ? `${v}` : `${(v/2.54).toFixed(0)}"`;
+      ctx.fillText(label, 10, y + 4);
+    }
+
+    activeRows.forEach((r, i) => {
+      const x = xPos(i);
+      ctx.fillStyle = '#5C6F69';
+      ctx.fillText(`${r.mark}`, x - 6, H - 18);
+      if (r.jobst) {
+        ctx.fillStyle = '#4C655E';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.fillText(r.jobst, x - 4, H - 5);
+        ctx.font = '11px sans-serif';
+      }
+    });
+
+    const drawSeries = (key, color, dashed = false) => {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      if (dashed) ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      activeRows.forEach((r, i) => {
+        const x = xPos(i), y = yPos(r[key] || 0);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      activeRows.forEach((r, i) => {
+        const x = xPos(i), y = yPos(r[key] || 0);
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.restore();
+    };
+
+    drawSeries('rPrior', '#C99E5A', true);
+    drawSeries('rCur', '#4C655E', false);
+    drawSeries('lCur', '#8FA89E', false);
+
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillStyle = '#4C655E'; ctx.fillText('● Right (Current)', padL, 16);
+    ctx.fillStyle = '#C99E5A'; ctx.fillText('● Right (Prior)', padL + 130, 16);
+    ctx.fillStyle = '#8FA89E'; ctx.fillText('● Left (Ref)', padL + 250, 16);
+  }
+
+  function evaluateMedi(L) {
+    const matchesA = [], matchesC = [], matchesE = [], matchesG = [];
+    MEDI_SIZES.forEach((sz, i) => {
+      if (L.A > 0 && L.A >= MEDI_CHART.A[i][0] && L.A <= MEDI_CHART.A[i][1]) matchesA.push(sz);
+      if (L.C > 0 && L.C >= MEDI_CHART.C[i][0] && L.C <= MEDI_CHART.C[i][1]) matchesC.push(sz);
+
+      const eReg = L.E > 0 && L.E >= MEDI_CHART.E_Reg[i][0] && L.E <= MEDI_CHART.E_Reg[i][1];
+      const eEW  = L.E > 0 && L.E >= MEDI_CHART.E_EW[i][0]  && L.E <= MEDI_CHART.E_EW[i][1];
+      if (eReg && eEW) matchesE.push(`${sz} Reg/EW`);
+      else if (eReg)   matchesE.push(`${sz} Reg`);
+      else if (eEW)    matchesE.push(`${sz} Extra-Wide`);
+
+      const gReg = L.G > 0 && L.G >= MEDI_CHART.G_Reg[i][0] && L.G <= MEDI_CHART.G_Reg[i][1];
+      const gEW  = L.G > 0 && L.G >= MEDI_CHART.G_EW[i][0]  && L.G <= MEDI_CHART.G_EW[i][1];
+      if (gReg && gEW) matchesG.push(`${sz} Reg/EW`);
+      else if (gReg)   matchesG.push(`${sz} Reg`);
+      else if (gEW)    matchesG.push(`${sz} Extra-Wide`);
+    });
+    const lengthLabel = L.LenCG <= 0
+      ? '—'
+      : (L.LenCG <= 44 ? 'Standard Length (< 44 cm / 17.25")' : 'Long Length (> 44 cm / 17.25")');
+    return { matchesA, matchesC, matchesE, matchesG, lengthLabel };
+  }
+
+  function evaluateJuzo(L) {
+    const matchesC = [], matchesE = [], matchesG = [];
+    JUZO_SIZES.forEach((sz, i) => {
+      if (L.C > 0 && L.C >= JUZO_CHART.C_cm[i][0] && L.C <= JUZO_CHART.C_cm[i][1]) matchesC.push(sz);
+
+      const eReg = L.E > 0 && L.E >= JUZO_CHART.E_Reg_cm[i][0] && L.E <= JUZO_CHART.E_Reg_cm[i][1];
+      const eMax = L.E > 0 && L.E >= JUZO_CHART.E_Max_cm[i][0] && L.E <= JUZO_CHART.E_Max_cm[i][1];
+      if (eReg && eMax) matchesE.push(`${sz} Reg/Max`);
+      else if (eReg)    matchesE.push(`${sz} Reg`);
+      else if (eMax)    matchesE.push(`${sz} Max`);
+
+      const gReg = L.G > 0 && L.G >= JUZO_CHART.G_Reg_cm[i][0] && L.G <= JUZO_CHART.G_Reg_cm[i][1];
+      const gMax = L.G > 0 && L.G >= JUZO_CHART.G_Max_cm[i][0] && L.G <= JUZO_CHART.G_Max_cm[i][1];
+      if (gReg && gMax) matchesG.push(`${sz} Reg/Max`);
+      else if (gReg)    matchesG.push(`${sz} Reg`);
+      else if (gMax)    matchesG.push(`${sz} Max`);
+    });
+    if (matchesE.length === 0 && L.E > 37) matchesE.push('VI Max (>37 cm / Custom)');
+    const lengthLabel = L.LenCG <= 0
+      ? '—'
+      : (L.LenCG <= 43 ? 'Regular (< 43 cm / < 17 in)' : 'Long (> 43 cm / > 17 in)');
+    return { matchesC, matchesE, matchesG, lengthLabel };
+  }
+
+  function evaluateCircAid(L) {
+    const cF_width = L.F <= 0 ? '—' : (L.F < 50 ? 'Regular (< 50 cm)' : (L.F <= 65 ? 'Wide (50–65 cm)' : 'Extra-Wide (65–80 cm)'));
+    const cB_width = L.A <= 0 ? '—' : (L.A < 30 ? 'Regular (< 30 cm)' : 'Custom (> 30 cm)');
+    const lengthFit = L.LenCG <= 0 ? '—' : (L.LenCG < 45 ? 'Standard (< 45 cm)' : 'Long (> 45 cm)');
+    return { cF_width, cB_width, lengthFit };
+  }
+
+  function renderAllSizingPages() {
+    const mediRes = evaluateMedi(landmarksCm);
+    const juzoRes = evaluateJuzo(landmarksCm);
+    const circRes = evaluateCircAid(landmarksCm);
+
+    document.getElementById('badgeMedi').textContent = mediRes.matchesC.join('/') || '—';
+    document.getElementById('badgeJuzo').textContent = juzoRes.matchesC.join('/') || '—';
+    document.getElementById('badgeCirc').textContent = circRes.cF_width === '—' ? '—' : circRes.cF_width.split(' ')[0];
+
+    const mTable = document.getElementById('mediTable');
+    let mHtml = `<thead><tr><th rowspan="2">Landmark</th>`;
+    MEDI_SIZES.forEach(sz => mHtml += `<th colspan="2">Size ${sz}</th>`);
+    mHtml += `<th>Active Match</th></tr><tr class="sub-header">`;
+    MEDI_SIZES.forEach(() => mHtml += `<th>Regular</th><th>Extra-Wide</th>`);
+    mHtml += `<th>Patient (${currentUnit})</th></tr></thead><tbody>`;
+
+    mHtml += `<tr><td><strong>G (Upper Arm)</strong></td>`;
+    MEDI_SIZES.forEach((sz, i) => {
+      const mReg = landmarksCm.G > 0 && landmarksCm.G >= MEDI_CHART.G_Reg[i][0] && landmarksCm.G <= MEDI_CHART.G_Reg[i][1];
+      const mEW  = landmarksCm.G > 0 && landmarksCm.G >= MEDI_CHART.G_EW[i][0]  && landmarksCm.G <= MEDI_CHART.G_EW[i][1];
+      mHtml += `<td class="${mReg?'size-match':''}">${formatRange(MEDI_CHART.G_Reg[i][0], MEDI_CHART.G_Reg[i][1])}</td>`;
+      mHtml += `<td class="${mEW?'size-match':''}">${formatRange(MEDI_CHART.G_EW[i][0], MEDI_CHART.G_EW[i][1])}</td>`;
+    });
+    mHtml += `<td><strong>${toDisplayUnit(landmarksCm.G)} ${currentUnit}</strong><br>${mediRes.matchesG.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+
+    mHtml += `<tr><td><strong>E (Elbow)</strong></td>`;
+    MEDI_SIZES.forEach((sz, i) => {
+      const mReg = landmarksCm.E > 0 && landmarksCm.E >= MEDI_CHART.E_Reg[i][0] && landmarksCm.E <= MEDI_CHART.E_Reg[i][1];
+      const mEW  = landmarksCm.E > 0 && landmarksCm.E >= MEDI_CHART.E_EW[i][0]  && landmarksCm.E <= MEDI_CHART.E_EW[i][1];
+      mHtml += `<td class="${mReg?'size-match':''}">${formatRange(MEDI_CHART.E_Reg[i][0], MEDI_CHART.E_Reg[i][1])}</td>`;
+      mHtml += `<td class="${mEW?'size-match':''}">${formatRange(MEDI_CHART.E_EW[i][0], MEDI_CHART.E_EW[i][1])}</td>`;
+    });
+    mHtml += `<td><strong>${toDisplayUnit(landmarksCm.E)} ${currentUnit}</strong><br>${mediRes.matchesE.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+
+    mHtml += `<tr><td><strong>C (Wrist)</strong></td>`;
+    MEDI_SIZES.forEach((sz, i) => {
+      const mC = landmarksCm.C > 0 && landmarksCm.C >= MEDI_CHART.C[i][0] && landmarksCm.C <= MEDI_CHART.C[i][1];
+      mHtml += `<td colspan="2" class="${mC?'size-match':''}">${formatRange(MEDI_CHART.C[i][0], MEDI_CHART.C[i][1])}</td>`;
+    });
+    mHtml += `<td><strong>${toDisplayUnit(landmarksCm.C)} ${currentUnit}</strong><br>${mediRes.matchesC.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+
+    mHtml += `<tr><td><strong>A (Hand / MCP)</strong></td>`;
+    MEDI_SIZES.forEach((sz, i) => {
+      const mA = landmarksCm.A > 0 && landmarksCm.A >= MEDI_CHART.A[i][0] && landmarksCm.A <= MEDI_CHART.A[i][1];
+      mHtml += `<td colspan="2" class="${mA?'size-match':''}">${formatRange(MEDI_CHART.A[i][0], MEDI_CHART.A[i][1])}</td>`;
+    });
+    mHtml += `<td><strong>${toDisplayUnit(landmarksCm.A)} ${currentUnit}</strong><br>${mediRes.matchesA.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+    mHtml += `</tbody>`;
+    mTable.innerHTML = mHtml;
+
+    document.getElementById('mediLengthBox').innerHTML = `
+      <div class="kpi-card">
+        <div class="kpi-label">Medi Arm Length (C–G)</div>
+        <div class="kpi-value" style="font-size:1.15rem;">${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit} &rarr; ${mediRes.lengthLabel}</div>
+        <div class="kpi-sub">Standard: &lt; 44 cm (17.25") &bull; Long: &gt; 44 cm (17.25")</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Medi Summary Match</div>
+        <div style="margin-top:0.35rem; font-size:0.85rem;">
+          <strong>A:</strong> ${mediRes.matchesA.join(', ') || '—'} &bull;
+          <strong>C:</strong> ${mediRes.matchesC.join(', ') || '—'} &bull;
+          <strong>E:</strong> ${mediRes.matchesE.join(', ') || '—'} &bull;
+          <strong>G:</strong> ${mediRes.matchesG.join(', ') || '—'}
+        </div>
+      </div>
+    `;
+
+    document.getElementById('mediDiagramLiveReadout').innerHTML = `
+      <div><strong>cG (Upper Arm):</strong> ${toDisplayUnit(landmarksCm.G)} ${currentUnit}</div>
+      <div><strong>cE (Elbow):</strong> ${toDisplayUnit(landmarksCm.E)} ${currentUnit}</div>
+      <div><strong>cC (Wrist):</strong> ${toDisplayUnit(landmarksCm.C)} ${currentUnit}</div>
+      <div><strong>cA (Hand):</strong> ${toDisplayUnit(landmarksCm.A)} ${currentUnit}</div>
+      <div><strong>l C–G (Length):</strong> ${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit}</div>
+    `;
+
+    const jTable = document.getElementById('juzoTable');
+    let jHtml = `<thead><tr><th>Point</th><th>Variant</th><th>Unit</th>`;
+    JUZO_SIZES.forEach(sz => jHtml += `<th>Size ${sz}</th>`);
+    jHtml += `<th>Active Patient (${toDisplayUnit(landmarksCm.G)} / ${toDisplayUnit(landmarksCm.E)} / ${toDisplayUnit(landmarksCm.C)} ${currentUnit})</th></tr></thead><tbody>`;
+
+    const addJuzoRowGroup = (ptLabel, cmMaxArr, inMaxArr, cmRegArr, inRegArr, valCm, matchArr) => {
+      jHtml += `<tr><td rowspan="4"><strong>${ptLabel}</strong></td><td rowspan="2"><strong>Max</strong></td><td>cm</td>`;
+      JUZO_SIZES.forEach((sz, i) => {
+        const hit = valCm > 0 && valCm >= cmMaxArr[i][0] && valCm <= cmMaxArr[i][1];
+        jHtml += `<td class="${hit?'size-match':''}">${cmMaxArr[i][0]}–${cmMaxArr[i][1]}</td>`;
+      });
+      jHtml += `<td rowspan="4"><strong>${valCm.toFixed(1)} cm (${(valCm/2.54).toFixed(2)} in)</strong><br>${matchArr.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+
+      jHtml += `<tr><td>in</td>`;
+      JUZO_SIZES.forEach((sz, i) => {
+        const hit = valCm > 0 && valCm >= cmMaxArr[i][0] && valCm <= cmMaxArr[i][1];
+        jHtml += `<td class="${hit?'size-match':''}">${inMaxArr[i]}</td>`;
+      });
+      jHtml += `</tr>`;
+
+      jHtml += `<tr><td rowspan="2"><strong>Reg</strong></td><td>cm</td>`;
+      JUZO_SIZES.forEach((sz, i) => {
+        const hit = valCm > 0 && valCm >= cmRegArr[i][0] && valCm <= cmRegArr[i][1];
+        jHtml += `<td class="${hit?'size-match':''}">${cmRegArr[i][0]}–${cmRegArr[i][1]}</td>`;
+      });
+      jHtml += `</tr>`;
+
+      jHtml += `<tr><td>in</td>`;
+      JUZO_SIZES.forEach((sz, i) => {
+        const hit = valCm > 0 && valCm >= cmRegArr[i][0] && valCm <= cmRegArr[i][1];
+        jHtml += `<td class="${hit?'size-match':''}">${inRegArr[i]}</td>`;
+      });
+      jHtml += `</tr>`;
+    };
+
+    addJuzoRowGroup('G (Upper Arm)', JUZO_CHART.G_Max_cm, JUZO_CHART.G_Max_in, JUZO_CHART.G_Reg_cm, JUZO_CHART.G_Reg_in, landmarksCm.G, juzoRes.matchesG);
+    addJuzoRowGroup('E (Elbow)',     JUZO_CHART.E_Max_cm, JUZO_CHART.E_Max_in, JUZO_CHART.E_Reg_cm, JUZO_CHART.E_Reg_in, landmarksCm.E, juzoRes.matchesE);
+
+    jHtml += `<tr><td rowspan="2"><strong>C (Wrist)</strong></td><td rowspan="2"><strong>Std</strong></td><td>cm</td>`;
+    JUZO_SIZES.forEach((sz, i) => {
+      const hit = landmarksCm.C > 0 && landmarksCm.C >= JUZO_CHART.C_cm[i][0] && landmarksCm.C <= JUZO_CHART.C_cm[i][1];
+      jHtml += `<td class="${hit?'size-match':''}">${JUZO_CHART.C_cm[i][0]}–${JUZO_CHART.C_cm[i][1]}</td>`;
+    });
+    jHtml += `<td rowspan="2"><strong>${landmarksCm.C.toFixed(1)} cm (${(landmarksCm.C/2.54).toFixed(2)} in)</strong><br>${juzoRes.matchesC.map(m=>`<span class="match-pill">${m}</span>`).join('') || '—'}</td></tr>`;
+
+    jHtml += `<tr><td>in</td>`;
+    JUZO_SIZES.forEach((sz, i) => {
+      const hit = landmarksCm.C > 0 && landmarksCm.C >= JUZO_CHART.C_cm[i][0] && landmarksCm.C <= JUZO_CHART.C_cm[i][1];
+      jHtml += `<td class="${hit?'size-match':''}">${JUZO_CHART.C_in[i]}</td>`;
+    });
+    jHtml += `</tr></tbody>`;
+    jTable.innerHTML = jHtml;
+
+    document.getElementById('juzoLengthBox').innerHTML = `
+      <div class="kpi-card">
+        <div class="kpi-label">Juzo Length C–G &amp; Compression Recommendation</div>
+        <div class="kpi-value" style="font-size:1.15rem;">Length C–G: ${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit} &rarr; ${juzoRes.lengthLabel}</div>
+        <div class="kpi-sub">Regular: &lt; 43 cm (&lt; 17 in) &bull; Long: &gt; 43 cm (&gt; 17 in) &bull; Standard Rx: 20–30 mmHg</div>
+      </div>
+    `;
+
+    document.getElementById('juzoDiagramLiveReadout').innerHTML = `
+      <div><strong>G (Axilla):</strong> ${toDisplayUnit(landmarksCm.G)} ${currentUnit}</div>
+      <div><strong>E (Elbow):</strong> ${toDisplayUnit(landmarksCm.E)} ${currentUnit}</div>
+      <div><strong>C (Wrist):</strong> ${toDisplayUnit(landmarksCm.C)} ${currentUnit}</div>
+      <div><strong>Length C–G:</strong> ${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit}</div>
+    `;
+
+    const cTable = document.getElementById('circaidTable');
+    const cfReg  = landmarksCm.F > 0 && landmarksCm.F < 50;
+    const cfWide = landmarksCm.F >= 50 && landmarksCm.F <= 65;
+    const cfEW   = landmarksCm.F > 65;
+    const cbReg  = landmarksCm.A > 0 && landmarksCm.A < 30;
+    const lenStd = landmarksCm.LenCG > 0 && landmarksCm.LenCG < 45;
+    const lenLng = landmarksCm.LenCG >= 45;
+
+    cTable.innerHTML = `
+      <thead>
+        <tr>
+          <th>circAid Width Parameter</th>
+          <th>Regular</th>
+          <th>Wide</th>
+          <th>Extra-Wide</th>
+          <th>Active Patient (${currentUnit})</th>
+          <th>Auto-Evaluated Fit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Width (cF — Mid-Upper Arm)</strong></td>
+          <td class="${cfReg?'size-match':''}">${currentUnit==='cm'?'< 50 cm':'< 19.7 in'}</td>
+          <td class="${cfWide?'size-match':''}">${formatRange(50, 65)}</td>
+          <td class="${cfEW?'size-match':''}">${formatRange(65, 80)}</td>
+          <td><strong>${toDisplayUnit(landmarksCm.F)} ${currentUnit}</strong></td>
+          <td>${circRes.cF_width === '—' ? '—' : `<span class="match-pill">${circRes.cF_width}</span>`}</td>
+        </tr>
+        <tr>
+          <td><strong>Width (cB — Hand / 5th MCP)</strong></td>
+          <td class="${cbReg?'size-match':''}">${currentUnit==='cm'?'< 30 cm':'< 11.8 in'}</td>
+          <td class="${cbReg?'size-match':''}">${currentUnit==='cm'?'< 30 cm':'< 11.8 in'}</td>
+          <td class="${cbReg?'size-match':''}">${currentUnit==='cm'?'< 30 cm':'< 11.8 in'}</td>
+          <td><strong>${toDisplayUnit(landmarksCm.A)} ${currentUnit}</strong></td>
+          <td>${circRes.cB_width === '—' ? '—' : `<span class="match-pill">${circRes.cB_width}</span>`}</td>
+        </tr>
+        <tr class="sub-header">
+          <th>circAid Length Parameter</th>
+          <th>Standard</th>
+          <th>Long</th>
+          <th>—</th>
+          <th>Active Length C–G</th>
+          <th>Auto-Evaluated Length</th>
+        </tr>
+        <tr>
+          <td><strong>Length (C–G)</strong></td>
+          <td class="${lenStd?'size-match':''}">${currentUnit==='cm'?'< 45 cm':'< 17.7 in'}</td>
+          <td class="${lenLng?'size-match':''}">${currentUnit==='cm'?'> 45 cm':'> 17.7 in'}</td>
+          <td>—</td>
+          <td><strong>${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit}</strong></td>
+          <td>${circRes.lengthFit === '—' ? '—' : `<span class="match-pill">${circRes.lengthFit}</span>`}</td>
+        </tr>
+      </tbody>
+    `;
+
+    document.getElementById('circDiagramLiveReadout').innerHTML = `
+      <div><strong>cF (Upper Arm):</strong> ${toDisplayUnit(landmarksCm.F)} ${currentUnit}</div>
+      <div><strong>cB (Hand/MCP):</strong> ${toDisplayUnit(landmarksCm.A)} ${currentUnit}</div>
+      <div><strong>Length (C–G):</strong> ${toDisplayUnit(landmarksCm.LenCG)} ${currentUnit}</div>
+    `;
+
+    document.getElementById('convMediSummary').innerHTML = `
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>A (Hand):</strong> ${mediRes.matchesA.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>C (Wrist):</strong> ${mediRes.matchesC.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>E (Elbow):</strong> ${mediRes.matchesE.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>G (Axilla):</strong> ${mediRes.matchesG.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed var(--border-soft);"><strong>Length:</strong> ${mediRes.lengthLabel}</p>
+    `;
+
+    document.getElementById('convJuzoSummary').innerHTML = `
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>C (Wrist):</strong> ${juzoRes.matchesC.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>E (Elbow):</strong> ${juzoRes.matchesE.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>G (Axilla):</strong> ${juzoRes.matchesG.map(m=>`<span class="match-pill">${m}</span>`).join(' ') || '—'}</p>
+      <p style="font-size:0.84rem; margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed var(--border-soft);"><strong>Length:</strong> ${juzoRes.lengthLabel}</p>
+    `;
+
+    document.getElementById('convCircSummary').innerHTML = `
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>Width (cF):</strong> ${circRes.cF_width === '—' ? '—' : `<span class="match-pill">${circRes.cF_width}</span>`}</p>
+      <p style="font-size:0.84rem; margin-bottom:0.4rem;"><strong>Width (cB):</strong> ${circRes.cB_width === '—' ? '—' : `<span class="match-pill">${circRes.cB_width}</span>`}</p>
+      <p style="font-size:0.84rem; margin-top:0.5rem; padding-top:0.4rem; border-top:1px dashed var(--border-soft);"><strong>Length (C–G):</strong> ${circRes.lengthFit === '—' ? '—' : `<span class="match-pill">${circRes.lengthFit}</span>`}</p>
+    `;
+
+    const L_Prior = getLandmarksForCol('rPrior');
+    const L_Cur   = landmarksCm;
+    const mPrior  = evaluateMedi(L_Prior), jPrior = evaluateJuzo(L_Prior);
+    const mCur    = evaluateMedi(L_Cur),   jCur   = evaluateJuzo(L_Cur);
+
+    const fmtDelta = (curCm, priorCm) => {
+      if (!curCm || !priorCm) return '';
+      const diff = toDisplayUnit(curCm) - toDisplayUnit(priorCm);
+      if (Math.abs(diff) < 0.01) return '';
+      const sign = diff > 0 ? '+' : '';
+      const color = diff < 0 ? 'var(--accent-pos)' : 'var(--accent-warn)';
+      return ` <span style="color:${color};">(${sign}${diff.toFixed(1)} ${currentUnit})</span>`;
+    };
+
+    document.getElementById('progressionComparisonBody').innerHTML = `
+      <tr>
+        <td><strong>A / cB (Hand / 5th MCP)</strong></td>
+        <td>${toDisplayUnit(L_Prior.A)} ${currentUnit}</td>
+        <td>${mPrior.matchesA.join(', ') || '—'}</td>
+        <td>—</td>
+        <td><strong>${toDisplayUnit(L_Cur.A)} ${currentUnit}</strong>${fmtDelta(L_Cur.A, L_Prior.A)}</td>
+        <td><strong>${mCur.matchesA.join(', ') || '—'}</strong></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>C (Wrist)</strong></td>
+        <td>${toDisplayUnit(L_Prior.C)} ${currentUnit}</td>
+        <td>${mPrior.matchesC.join(', ') || '—'}</td>
+        <td>${jPrior.matchesC.join(', ') || '—'}</td>
+        <td><strong>${toDisplayUnit(L_Cur.C)} ${currentUnit}</strong>${fmtDelta(L_Cur.C, L_Prior.C)}</td>
+        <td><strong>${mCur.matchesC.join(', ') || '—'}</strong></td>
+        <td><strong>${jCur.matchesC.join(', ') || '—'}</strong></td>
+      </tr>
+      <tr>
+        <td><strong>E (Elbow)</strong></td>
+        <td>${toDisplayUnit(L_Prior.E)} ${currentUnit}</td>
+        <td>${mPrior.matchesE.join(', ') || '—'}</td>
+        <td>${jPrior.matchesE.join(', ') || '—'}</td>
+        <td><strong>${toDisplayUnit(L_Cur.E)} ${currentUnit}</strong>${fmtDelta(L_Cur.E, L_Prior.E)}</td>
+        <td><strong>${mCur.matchesE.join(', ') || '—'}</strong></td>
+        <td><strong>${jCur.matchesE.join(', ') || '—'}</strong></td>
+      </tr>
+      <tr>
+        <td><strong>G (Upper Arm / Axilla)</strong></td>
+        <td>${toDisplayUnit(L_Prior.G)} ${currentUnit}</td>
+        <td>${mPrior.matchesG.join(', ') || '—'}</td>
+        <td>${jPrior.matchesG.join(', ') || '—'}</td>
+        <td><strong>${toDisplayUnit(L_Cur.G)} ${currentUnit}</strong>${fmtDelta(L_Cur.G, L_Prior.G)}</td>
+        <td><strong>${mCur.matchesG.join(', ') || '—'}</strong></td>
+        <td><strong>${jCur.matchesG.join(', ') || '—'}</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Length (C–G)</strong></td>
+        <td>${toDisplayUnit(L_Prior.LenCG)} ${currentUnit}</td>
+        <td>${mPrior.lengthLabel}</td>
+        <td>${jPrior.lengthLabel}</td>
+        <td><strong>${toDisplayUnit(L_Cur.LenCG)} ${currentUnit}</strong></td>
+        <td><strong>${mCur.lengthLabel}</strong></td>
+        <td><strong>${jCur.lengthLabel}</strong></td>
+      </tr>
+    `;
+  }
+
+  function updateBMI(source) {
+    const lbsEl = document.getElementById('bmiLbs');
+    const ftEl  = document.getElementById('bmiFt');
+    const inEl  = document.getElementById('bmiIn');
+    const kgEl  = document.getElementById('bmiKg');
+    const cmEl  = document.getElementById('bmiCm');
+
+    let bmi = 0;
+    if (source === 'imperial') {
+      const lbs = parseFloat(lbsEl.value) || 0;
+      const totalIn = (parseFloat(ftEl.value) || 0) * 12 + (parseFloat(inEl.value) || 0);
+      kgEl.value = lbs > 0 ? +(lbs / 2.20462262).toFixed(1) : '';
+      cmEl.value = totalIn > 0 ? +(totalIn * 2.54).toFixed(1) : '';
+      if (lbs > 0 && totalIn > 0) bmi = (lbs * 703) / (totalIn * totalIn);
+    } else {
+      const kg = parseFloat(kgEl.value) || 0;
+      const cm = parseFloat(cmEl.value) || 0;
+      const lbs = kg * 2.20462262;
+      const totalIn = cm / 2.54;
+      const ft = Math.floor(totalIn / 12);
+      const remIn = +(totalIn - ft * 12).toFixed(1);
+      lbsEl.value = kg > 0 ? +lbs.toFixed(1) : '';
+      ftEl.value = cm > 0 ? ft : '';
+      inEl.value = cm > 0 ? remIn : '';
+      if (kg > 0 && cm > 0) bmi = kg / Math.pow(cm / 100, 2);
+    }
+
+    const resEl = document.getElementById('bmiResultValue');
+    const catEl = document.getElementById('bmiCategoryLabel');
+    if (bmi > 0 && isFinite(bmi)) {
+      let cat = 'Normal weight (18.5–24.9)';
+      if (bmi < 18.5) cat = 'Underweight (< 18.5)';
+      else if (bmi >= 25 && bmi < 30) cat = 'Overweight (25.0–29.9)';
+      else if (bmi >= 30) cat = 'Obesity (≥ 30.0)';
+      resEl.textContent = `${bmi.toFixed(1)} kg/m²`;
+      catEl.textContent = `Category: ${cat} • Formula: 703 × Weight[lb] / Height[in]² = Weight[kg] / Height[m]²`;
+    } else {
+      resEl.textContent = '0.0 kg/m²';
+      catEl.textContent = 'Formula: BMI = Weight[kg] / (Height[m] × Height[m]) = 703 × Weight[lb] / (Height[in])²';
+    }
+  }
+
+  function switchTab(tabId, btnEl) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+    if (btnEl) btnEl.classList.add('active');
+    if (tabId === 'volume') drawProfileChart();
+  }
+
+  function exportCSV() {
+    let csv = 'Point,Marking (cm),Right Current (cm),Left Current (cm),Right Prior (cm),Right Initial (cm),Note,Garment Point,Right Inches\n';
+    state.rows.forEach(r => {
+      csv += `${r.pt},${r.mark},${r.rCur},${r.lCur},${r.rPrior},${r.rOrig},"${r.note}",${r.jobst},${(r.rCur/2.54).toFixed(2)}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const sessionDate = document.getElementById('dateRightCur').value || 'Session';
+    a.download = `JuneBug_Lymphedema_Volume_${sessionDate}.csv`;
+    a.click();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    resetAllMeasurements();
+  });
+</script>
+</body>
+</html>
