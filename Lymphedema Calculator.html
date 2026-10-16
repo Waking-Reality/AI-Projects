@@ -432,6 +432,33 @@
       background: #EFF5F2 !important;
     }
 
+    .header-date-input {
+      font-size: 0.72rem;
+      padding: 1px 3px;
+      border-radius: 4px;
+      border: none;
+      background: #fff;
+      color: var(--text-main);
+    }
+
+    .header-date-locked {
+      font-size: 0.72rem;
+      padding: 1px 4px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: #E8ECE9;
+      color: var(--forest-dark);
+      font-weight: 600;
+      pointer-events: none;
+      user-select: none;
+      cursor: default;
+    }
+
+    .header-date-locked::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+
     .cell-input {
       width: 68px;
       padding: 0.25rem 0.35rem;
@@ -602,7 +629,11 @@
       <button class="btn" onclick="resetAllMeasurements()" title="Clear all measurements to blank for a new patient">
         &#8635; Reset / New Patient
       </button>
-      <button class="btn" onclick="exportCSV()">
+      <input type="file" id="csvFileInput" accept=".csv" style="display:none;" onchange="importCSV(this)" />
+      <button class="btn" onclick="document.getElementById('csvFileInput').click()" title="Import a previously exported CSV into the Prior columns">
+        &#128194; Import CSV
+      </button>
+      <button class="btn" onclick="exportCSV()" title="Export current session measurements to CSV">
         &#128190; Export CSV
       </button>
       <button class="btn btn-primary" onclick="window.print()">
@@ -615,7 +646,7 @@
 <!-- Navigation Tabs -->
 <nav class="nav-bar no-print">
   <button class="tab-btn active" onclick="switchTab('volume', this)">
-    1. Arm Volume Calculator <span class="tab-badge" id="badgeVol">0 mL</span>
+    1. Arm Volume Calculator <span class="tab-badge" id="badgeVol">0.00 mL</span>
   </button>
   <button class="tab-btn" onclick="switchTab('converter', this)">
     2. All-Brand Sizing Converter <span class="tab-badge">Auto-Sync</span>
@@ -643,9 +674,10 @@
       </div>
       <div style="display:flex; gap:0.5rem; align-items:center; font-size:0.8rem;">
         <span>Active Source:</span>
-        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('current')">Pull Current (R)</button>
-        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('prior')">Pull Prior (R)</button>
-        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('left')">Pull Left (Ref)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('current')">Pull Right (Current)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('prior')">Pull Right (Prior)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('left')">Pull Left (Current)</button>
+        <button class="btn" style="padding:0.2rem 0.55rem; font-size:0.76rem;" onclick="pullLandmarksFromSession('leftPrior')">Pull Left (Prior)</button>
       </div>
     </div>
     <div class="sync-grid">
@@ -705,23 +737,23 @@
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-label">Current Right Arm Vol</div>
-        <div class="kpi-value" id="kpiRightVol">0.0 mL</div>
+        <div class="kpi-value" id="kpiRightVol">0.00 mL</div>
         <div class="kpi-sub" id="kpiRightSub">Current Session</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Left Arm (Baseline) Vol</div>
-        <div class="kpi-value" id="kpiLeftVol">0.0 mL</div>
-        <div class="kpi-sub">Contralateral Reference</div>
+        <div class="kpi-label">Current Left Arm Vol</div>
+        <div class="kpi-value" id="kpiLeftVol">0.00 mL</div>
+        <div class="kpi-sub" id="kpiLeftSub">Contralateral Reference</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Right vs. Left Difference</div>
-        <div class="kpi-value" id="kpiDiffRL">0.0 mL</div>
+        <div class="kpi-value" id="kpiDiffRL">0.00 mL</div>
         <div class="kpi-sub" id="kpiDiffRLPct">0.00% Volume Difference</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Change vs. Prior Visit</div>
-        <div class="kpi-value" id="kpiDiffPrior">0.0 mL</div>
-        <div class="kpi-sub" id="kpiDiffPriorSub">vs. 0.0 mL (0.00%)</div>
+        <div class="kpi-label">Change vs. Prior Visit (R)</div>
+        <div class="kpi-value" id="kpiDiffPrior">0.00 mL</div>
+        <div class="kpi-sub" id="kpiDiffPriorSub">vs. 0.00 mL (0.00%)</div>
       </div>
     </div>
 
@@ -743,27 +775,27 @@
           <table>
             <thead>
               <tr>
-                <th>Pt #</th>
+                <th>PT</th>
+                <th>Right (Current)<br><input type="date" id="dateRightCur" class="header-date-input" onchange="onCurrentDateChange('right', this.value)"/></th>
+                <th>Right (Prior)<br><input type="date" id="dateRightPrior" class="header-date-locked" readonly tabindex="-1" title="Populated automatically via CSV Import"/></th>
+                <th>Left (Current)<br><input type="date" id="dateLeftCur" class="header-date-input" onchange="onCurrentDateChange('left', this.value)"/></th>
+                <th>Left (Prior)<br><input type="date" id="dateLeftPrior" class="header-date-locked" readonly tabindex="-1" title="Populated automatically via CSV Import"/></th>
                 <th>Marking</th>
-                <th>RIGHT (Current)<br><input type="date" id="dateRightCur" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;" onchange="recalculateAll()"/></th>
-                <th>LEFT (Ref)<br><input type="date" id="dateLeftCur" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
-                <th>RIGHT (Prior)<br><input type="date" id="dateRightPrior" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
-                <th>RIGHT (Initial)<br><input type="date" id="dateRightOrig" style="font-size:0.72rem; padding:1px 3px; border-radius:4px; border:none;"/></th>
                 <th>Anatomical Note</th>
-                <th>Garment Pt</th>
+                <th>Garment PT</th>
                 <th id="colAltUnitHeader">Inches (R)</th>
-                <th>Seg &#916; Vol<br>(Cur vs Prior)</th>
+                <th>Seg Vol</th>
               </tr>
             </thead>
             <tbody id="measurementTableBody"></tbody>
             <tfoot>
               <tr class="sub-header">
-                <th colspan="2">Total Volume (mL)</th>
+                <th>Total Volume (mL)</th>
                 <th id="footVolRCur">0.00</th>
-                <th id="footVolLCur">0.00</th>
                 <th id="footVolRPrior">0.00</th>
-                <th id="footVolROrig">0.00</th>
-                <th colspan="3" id="footDiffSummary">Diff (R vs L): 0.00 mL (0.00%)</th>
+                <th id="footVolLCur">0.00</th>
+                <th id="footVolLPrior">0.00</th>
+                <th colspan="4" id="footDiffSummary">Diff (R vs L): 0.00 mL (0.00%)</th>
                 <th id="footSegDiffTotal">0.00 mL</th>
               </tr>
             </tfoot>
@@ -1026,29 +1058,29 @@
   function createZeroState() {
     return {
       dateRightCur: '',
-      dateLeftCur: '',
       dateRightPrior: '',
-      dateRightOrig: '',
+      dateLeftCur: '',
+      dateLeftPrior: '',
       lenCG_cm: 0,
       fingers: [0, 0, 0, 0, 0],
       rows: [
-        { pt: 1,  mark: 0,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 2,  mark: 4,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 3,  mark: 8,  rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 4,  mark: 12, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 5,  mark: 16, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 6,  mark: 20, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 7,  mark: 24, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 8,  mark: 28, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 9,  mark: 32, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 10, mark: 36, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 11, mark: 40, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 12, mark: 44, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 13, mark: 48, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 14, mark: 52, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 15, mark: 56, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 16, mark: 60, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' },
-        { pt: 17, mark: 64, rCur: 0, lCur: 0, rPrior: 0, rOrig: 0, note: '', jobst: '' }
+        { pt: 1,  mark: 0,  rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 2,  mark: 4,  rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 3,  mark: 8,  rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 4,  mark: 12, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 5,  mark: 16, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 6,  mark: 20, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 7,  mark: 24, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 8,  mark: 28, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 9,  mark: 32, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 10, mark: 36, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 11, mark: 40, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 12, mark: 44, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 13, mark: 48, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 14, mark: 52, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 15, mark: 56, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 16, mark: 60, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' },
+        { pt: 17, mark: 64, rCur: 0, rPrior: 0, lCur: 0, lPrior: 0, note: '', jobst: '' }
       ]
     };
   }
@@ -1104,6 +1136,25 @@
     }
   }
 
+  function onCurrentDateChange(side, val) {
+    if (side === 'right') {
+      state.dateRightCur = val;
+      const leftEl = document.getElementById('dateLeftCur');
+      if (val && !leftEl.value) {
+        leftEl.value = val;
+        state.dateLeftCur = val;
+      }
+    } else {
+      state.dateLeftCur = val;
+      const rightEl = document.getElementById('dateRightCur');
+      if (val && !rightEl.value) {
+        rightEl.value = val;
+        state.dateRightCur = val;
+      }
+    }
+    recalculateAll();
+  }
+
   function setUnit(unit) {
     currentUnit = unit;
     document.getElementById('unitCmBtn').classList.toggle('active', unit === 'cm');
@@ -1119,9 +1170,9 @@
     state = createZeroState();
     landmarksCm = { A: 0, C: 0, E: 0, F: 0, G: 0, LenCG: 0 };
     document.getElementById('dateRightCur').value = '';
-    document.getElementById('dateLeftCur').value = '';
     document.getElementById('dateRightPrior').value = '';
-    document.getElementById('dateRightOrig').value = '';
+    document.getElementById('dateLeftCur').value = '';
+    document.getElementById('dateLeftPrior').value = '';
 
     document.getElementById('bmiLbs').value = '';
     document.getElementById('bmiFt').value = '';
@@ -1161,6 +1212,7 @@
     if (which === 'current') extractLandmarksFromTable('rCur');
     if (which === 'prior') extractLandmarksFromTable('rPrior');
     if (which === 'left') extractLandmarksFromTable('lCur');
+    if (which === 'leftPrior') extractLandmarksFromTable('lPrior');
     renderSyncBanner();
     recalculateAll();
   }
@@ -1204,6 +1256,19 @@
     document.getElementById('syncLenCGSub').textContent = altText(landmarksCm.LenCG);
   }
 
+  function getRowSegVolDisplay(row) {
+    if (row.rCur > 0 && row.rPrior > 0) {
+      const segDiff = ((row.rCur * row.rCur) - (row.rPrior * row.rPrior)) / 3.14;
+      const str = `${segDiff > 0 ? '+' : ''}${segDiff.toFixed(2)} mL`;
+      const color = segDiff < -0.005 ? 'var(--accent-pos)' : (segDiff > 0.005 ? 'var(--accent-warn)' : 'var(--text-muted)');
+      return { str, color };
+    } else if (row.rCur > 0) {
+      const segVol = (row.rCur * row.rCur) / 3.14;
+      return { str: `${segVol.toFixed(2)} mL`, color: 'var(--text-main)' };
+    }
+    return { str: '0.00 mL', color: 'var(--text-muted)' };
+  }
+
   function renderMeasurementTable() {
     const tbody = document.getElementById('measurementTableBody');
     tbody.innerHTML = '';
@@ -1217,31 +1282,27 @@
         ? (row.rCur > 0 ? (row.rCur / 2.54).toFixed(2) + ' in' : '0.00 in')
         : (row.rCur > 0 ? row.rCur.toFixed(1) + ' cm' : '0.0 cm');
 
-      const segDiff = ((row.rCur * row.rCur) - (row.rPrior * row.rPrior)) / 3.14;
-      const segDiffStr = (row.rCur === 0 && row.rPrior === 0)
-        ? '0.0'
-        : (segDiff > 0 ? `+${segDiff.toFixed(1)}` : segDiff.toFixed(1));
-      const segColor = segDiff < -0.05 ? 'var(--accent-pos)' : (segDiff > 0.05 ? 'var(--accent-warn)' : 'var(--text-muted)');
+      const segInfo = getRowSegVolDisplay(row);
 
       tr.innerHTML = `
         <td class="${tdClass}"><strong>${row.pt}</strong></td>
-        <td class="${tdClass}">${row.mark} cm</td>
         <td class="${tdClass}">
           <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rCur)}"
             oninput="onTableCellInput(${idx}, 'rCur', this.value)" />
-        </td>
-        <td class="${tdClass}">
-          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.lCur)}"
-            oninput="onTableCellInput(${idx}, 'lCur', this.value)" />
         </td>
         <td class="${tdClass}">
           <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rPrior)}"
             oninput="onTableCellInput(${idx}, 'rPrior', this.value)" />
         </td>
         <td class="${tdClass}">
-          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.rOrig)}"
-            oninput="onTableCellInput(${idx}, 'rOrig', this.value)" />
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.lCur)}"
+            oninput="onTableCellInput(${idx}, 'lCur', this.value)" />
         </td>
+        <td class="${tdClass}">
+          <input type="number" step="0.1" min="0" class="cell-input" value="${toInputString(row.lPrior)}"
+            oninput="onTableCellInput(${idx}, 'lPrior', this.value)" />
+        </td>
+        <td class="${tdClass}">${row.mark} cm</td>
         <td class="${tdClass}">
           <input type="text" class="note-input" value="${row.note}"
             oninput="state.rows[${idx}].note = this.value" />
@@ -1258,7 +1319,7 @@
           </select>
         </td>
         <td class="${tdClass}" id="altCell-${idx}" style="font-weight:600; color:var(--text-muted);">${altVal}</td>
-        <td class="${tdClass}" id="segDiffCell-${idx}" style="font-weight:700; color:${segColor};">${segDiffStr} mL</td>
+        <td class="${tdClass}" id="segDiffCell-${idx}" style="font-weight:700; color:${segInfo.color};">${segInfo.str}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -1305,11 +1366,11 @@
       renderSyncBanner();
     }
     const r = state.rows[rowIdx];
-    const segDiff = ((r.rCur * r.rCur) - (r.rPrior * r.rPrior)) / 3.14;
+    const segInfo = getRowSegVolDisplay(r);
     const segEl = document.getElementById(`segDiffCell-${rowIdx}`);
     if (segEl) {
-      segEl.textContent = `${segDiff > 0 ? '+' : ''}${segDiff.toFixed(1)} mL`;
-      segEl.style.color = segDiff < -0.05 ? 'var(--accent-pos)' : (segDiff > 0.05 ? 'var(--accent-warn)' : 'var(--text-muted)');
+      segEl.textContent = segInfo.str;
+      segEl.style.color = segInfo.color;
     }
     recalculateAll();
   }
@@ -1341,9 +1402,9 @@
 
   function recalculateAll() {
     const volRCur   = calcLimbVolume('rCur');
-    const volLCur   = calcLimbVolume('lCur');
     const volRPrior = calcLimbVolume('rPrior');
-    const volROrig  = calcLimbVolume('rOrig');
+    const volLCur   = calcLimbVolume('lCur');
+    const volLPrior = calcLimbVolume('lPrior');
 
     const diffRL = Math.max(volRCur, volLCur) - Math.min(volRCur, volLCur);
     const minRL  = Math.min(volRCur, volLCur);
@@ -1353,30 +1414,36 @@
     const pctPrior  = (volRCur > 0 && volRPrior > 0) ? (diffPrior / volRPrior) * 100 : 0;
 
     const curDateVal = document.getElementById('dateRightCur').value;
-    document.getElementById('kpiRightVol').textContent = `${volRCur.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+    const leftDateVal = document.getElementById('dateLeftCur').value;
+    const priorDateVal = document.getElementById('dateRightPrior').value;
+    document.getElementById('kpiRightVol').textContent = `${volRCur.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL`;
     document.getElementById('kpiRightSub').textContent = curDateVal ? `Session: ${curDateVal}` : 'Current Session';
-    document.getElementById('kpiLeftVol').textContent  = `${volLCur.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+    document.getElementById('kpiLeftVol').textContent  = `${volLCur.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL`;
+    document.getElementById('kpiLeftSub').textContent  = leftDateVal ? `Session: ${leftDateVal}` : 'Contralateral Reference';
 
     const rlSign = diffRL > 0 ? '+' : '';
     const kpiDiffRLEl = document.getElementById('kpiDiffRL');
-    kpiDiffRLEl.textContent = `${rlSign}${diffRL.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1})} mL`;
+    kpiDiffRLEl.textContent = `${rlSign}${diffRL.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL`;
     kpiDiffRLEl.className = 'kpi-value ' + (diffRL > 0 ? 'kpi-warn' : '');
     document.getElementById('kpiDiffRLPct').textContent = `${rlSign}${pctRL.toFixed(2)}% vs. Unaffected Limb`;
 
     const priorSign = diffPrior > 0 ? '+' : '';
     const kpiPriorEl = document.getElementById('kpiDiffPrior');
-    kpiPriorEl.textContent = `${priorSign}${diffPrior.toFixed(1)} mL`;
+    kpiPriorEl.textContent = `${priorSign}${diffPrior.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL`;
     kpiPriorEl.className = 'kpi-value ' + (diffPrior < 0 ? 'kpi-pos' : (diffPrior > 0 ? 'kpi-warn' : ''));
-    document.getElementById('kpiDiffPriorSub').textContent = `vs. ${volRPrior.toFixed(1)} mL (${priorSign}${pctPrior.toFixed(2)}%)`;
+    const priorDateLabel = priorDateVal ? ` (${priorDateVal})` : '';
+    document.getElementById('kpiDiffPriorSub').textContent = `vs. ${volRPrior.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL${priorDateLabel} (${priorSign}${pctPrior.toFixed(2)}%)`;
 
     document.getElementById('footVolRCur').textContent   = volRCur.toFixed(2);
-    document.getElementById('footVolLCur').textContent   = volLCur.toFixed(2);
     document.getElementById('footVolRPrior').textContent = volRPrior.toFixed(2);
-    document.getElementById('footVolROrig').textContent  = volROrig.toFixed(2);
+    document.getElementById('footVolLCur').textContent   = volLCur.toFixed(2);
+    document.getElementById('footVolLPrior').textContent = volLPrior.toFixed(2);
     document.getElementById('footDiffSummary').textContent = `Diff (R vs L): ${diffRL.toFixed(2)} mL (${pctRL.toFixed(2)}%)`;
-    document.getElementById('footSegDiffTotal').textContent = `${priorSign}${diffPrior.toFixed(2)} mL`;
+    document.getElementById('footSegDiffTotal').textContent = (volRCur > 0 && volRPrior > 0)
+      ? `${priorSign}${diffPrior.toFixed(2)} mL`
+      : `${volRCur.toFixed(2)} mL`;
 
-    document.getElementById('badgeVol').textContent = `${Math.round(volRCur).toLocaleString()} mL`;
+    document.getElementById('badgeVol').textContent = `${volRCur.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} mL`;
 
     drawProfileChart();
     renderAllSizingPages();
@@ -1390,7 +1457,7 @@
     ctx.clearRect(0, 0, W, H);
 
     const activeRows = state.rows.slice(0, 13);
-    const padL = 46, padR = 20, padT = 28, padB = 38;
+    const padL = 42, padR = 16, padT = 32, padB = 38;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
@@ -1406,7 +1473,7 @@
       const y = yPos(v);
       ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
       const label = currentUnit === 'cm' ? `${v}` : `${(v/2.54).toFixed(0)}"`;
-      ctx.fillText(label, 10, y + 4);
+      ctx.fillText(label, 8, y + 4);
     }
 
     activeRows.forEach((r, i) => {
@@ -1424,7 +1491,7 @@
     const drawSeries = (key, color, dashed = false) => {
       ctx.save();
       ctx.strokeStyle = color;
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 2.2;
       if (dashed) ctx.setLineDash([5, 4]);
       ctx.beginPath();
       activeRows.forEach((r, i) => {
@@ -1436,19 +1503,22 @@
       activeRows.forEach((r, i) => {
         const x = xPos(i), y = yPos(r[key] || 0);
         ctx.fillStyle = color;
-        ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
       });
       ctx.restore();
     };
 
+    // Plot all 4 series: Right (Current), Right (Prior), Left (Current), Left (Prior)
+    drawSeries('lPrior', '#9E6B55', true);
     drawSeries('rPrior', '#C99E5A', true);
-    drawSeries('rCur', '#4C655E', false);
-    drawSeries('lCur', '#8FA89E', false);
+    drawSeries('lCur',   '#6B9080', false);
+    drawSeries('rCur',   '#374B45', false);
 
-    ctx.font = 'bold 11px sans-serif';
-    ctx.fillStyle = '#4C655E'; ctx.fillText('● Right (Current)', padL, 16);
-    ctx.fillStyle = '#C99E5A'; ctx.fillText('● Right (Prior)', padL + 130, 16);
-    ctx.fillStyle = '#8FA89E'; ctx.fillText('● Left (Ref)', padL + 250, 16);
+    ctx.font = 'bold 10.5px sans-serif';
+    ctx.fillStyle = '#374B45'; ctx.fillText('● Right (Current)', 14, 17);
+    ctx.fillStyle = '#C99E5A'; ctx.fillText('● Right (Prior)', 130, 17);
+    ctx.fillStyle = '#6B9080'; ctx.fillText('● Left (Current)', 236, 17);
+    ctx.fillStyle = '#9E6B55'; ctx.fillText('● Left (Prior)', 344, 17);
   }
 
   function evaluateMedi(L) {
@@ -1844,18 +1914,167 @@
     if (tabId === 'volume') drawProfileChart();
   }
 
+  function parseCSVLine(line) {
+    const result = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (ch === ',' && !inQuotes) {
+        result.push(cur);
+        cur = '';
+      } else {
+        cur += ch;
+      }
+    }
+    result.push(cur);
+    return result;
+  }
+
+  function normalizeDateToISO(rawStr) {
+    if (!rawStr) return '';
+    const s = String(rawStr).trim().replace(/^["']|["']$/g, '');
+    if (!s) return '';
+
+    // Already YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
+    // YYYY/M/D or YYYY-M-D
+    let m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+    if (m) {
+      return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
+    }
+
+    // M/D/YYYY or M-D-YYYY or M/D/YY (e.g. Excel reformatted dates)
+    m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if (m) {
+      let yr = m[3];
+      if (yr.length === 2) yr = (parseInt(yr, 10) > 50 ? '19' : '20') + yr;
+      return `${yr}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+    }
+
+    const parsed = new Date(s);
+    if (!isNaN(parsed.getTime())) {
+      const yr = parsed.getFullYear();
+      const mo = String(parsed.getMonth() + 1).padStart(2, '0');
+      const da = String(parsed.getDate()).padStart(2, '0');
+      return `${yr}-${mo}-${da}`;
+    }
+    return '';
+  }
+
   function exportCSV() {
-    let csv = 'Point,Marking (cm),Right Current (cm),Left Current (cm),Right Prior (cm),Right Initial (cm),Note,Garment Point,Right Inches\n';
+    const today = new Date().toISOString().split('T')[0];
+    const rawRDate = document.getElementById('dateRightCur').value.trim();
+    const rawLDate = document.getElementById('dateLeftCur').value.trim();
+    const rDate = rawRDate || rawLDate || today;
+    const lDate = rawLDate || rawRDate || today;
+
+    let csv = 'PT,Right (Current),Left (Current),Marking,Anatomical Note,Garment PT,Inches (R),Seg Vol,Right Date,Left Date\n';
     state.rows.forEach(r => {
-      csv += `${r.pt},${r.mark},${r.rCur},${r.lCur},${r.rPrior},${r.rOrig},"${r.note}",${r.jobst},${(r.rCur/2.54).toFixed(2)}\n`;
+      const rCurStr = r.rCur > 0 ? r.rCur : '';
+      const lCurStr = r.lCur > 0 ? r.lCur : '';
+      const rInStr  = r.rCur > 0 ? (r.rCur / 2.54).toFixed(2) : '';
+      const segVol  = r.rCur > 0 ? ((r.rCur * r.rCur) / 3.14).toFixed(2) : '';
+      const escapedNote = (r.note || '').replace(/"/g, '""');
+      csv += `${r.pt},${rCurStr},${lCurStr},${r.mark},"${escapedNote}",${r.jobst},${rInStr},${segVol},${rDate},${lDate}\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const sessionDate = document.getElementById('dateRightCur').value || 'Session';
+    const sessionDate = rDate || 'Session';
     a.download = `JuneBug_Lymphedema_Volume_${sessionDate}.csv`;
     a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importCSV(inputEl) {
+    const file = inputEl.files && inputEl.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result || '';
+      const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+      if (lines.length < 2) {
+        inputEl.value = '';
+        return;
+      }
+
+      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const ptIdx     = headers.findIndex(h => h === 'pt' || h === 'point' || h === 'pt #');
+      const rCurIdx   = headers.findIndex(h => h.includes('right (current)') || h.includes('right current'));
+      const lCurIdx   = headers.findIndex(h => h.includes('left (current)') || h.includes('left current') || h.includes('left (ref)'));
+      const noteIdx   = headers.findIndex(h => h.includes('note'));
+      const jobstIdx  = headers.findIndex(h => h.includes('garment'));
+      const rDateIdx  = headers.findIndex(h => h.includes('right date') || h.includes('right (current) date') || h === 'date');
+      const lDateIdx  = headers.findIndex(h => h.includes('left date') || h.includes('left (current) date'));
+
+      let importedRDate = '';
+      let importedLDate = '';
+
+      for (let i = 1; i < lines.length; i++) {
+        const cols = parseCSVLine(lines[i]);
+        const ptNum = parseInt(cols[ptIdx !== -1 ? ptIdx : 0], 10);
+        if (isNaN(ptNum) || ptNum < 1 || ptNum > state.rows.length) continue;
+
+        const targetRow = state.rows[ptNum - 1];
+
+        const rawR = cols[rCurIdx !== -1 ? rCurIdx : 1];
+        const rawL = cols[lCurIdx !== -1 ? lCurIdx : 2];
+        const parsedR = parseFloat(rawR);
+        const parsedL = parseFloat(rawL);
+
+        targetRow.rPrior = (!isNaN(parsedR) && parsedR > 0) ? parsedR : 0;
+        targetRow.lPrior = (!isNaN(parsedL) && parsedL > 0) ? parsedL : 0;
+
+        if (noteIdx !== -1 && cols[noteIdx] !== undefined) {
+          const noteVal = cols[noteIdx].trim();
+          if (noteVal && !targetRow.note) targetRow.note = noteVal;
+        }
+        if (jobstIdx !== -1 && cols[jobstIdx] !== undefined) {
+          const jobstVal = cols[jobstIdx].trim();
+          if (jobstVal && !targetRow.jobst) targetRow.jobst = jobstVal;
+        }
+        if (rDateIdx !== -1 && cols[rDateIdx] && !importedRDate) {
+          importedRDate = normalizeDateToISO(cols[rDateIdx]);
+        }
+        if (lDateIdx !== -1 && cols[lDateIdx] && !importedLDate) {
+          importedLDate = normalizeDateToISO(cols[lDateIdx]);
+        }
+      }
+
+      // Fallback: extract date from filename if importing a CSV without date columns
+      if (!importedRDate && !importedLDate && file.name) {
+        const fnMatch = file.name.match(/(\d{4}-\d{2}-\d{2}|\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/);
+        if (fnMatch) {
+          importedRDate = normalizeDateToISO(fnMatch[1]);
+        }
+      }
+
+      const finalRDate = importedRDate || importedLDate || '';
+      const finalLDate = importedLDate || importedRDate || '';
+
+      state.dateRightPrior = finalRDate;
+      state.dateLeftPrior = finalLDate;
+      document.getElementById('dateRightPrior').value = finalRDate;
+      document.getElementById('dateLeftPrior').value = finalLDate;
+
+      extractLandmarksFromTable('rCur');
+      renderMeasurementTable();
+      renderSyncBanner();
+      recalculateAll();
+      inputEl.value = '';
+    };
+    reader.readAsText(file);
   }
 
   window.addEventListener('DOMContentLoaded', () => {
