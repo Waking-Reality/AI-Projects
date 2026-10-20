@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>June Bug Massage, LLC • In-Person Continuing Education Finder</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Cormorant Garamond for botanical headings, Plus Jakarta Sans for clean clinical data -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FAF7F2',
+            oat: '#F3EFE6',
+            oatDark: '#E5DEC9',
+            beetle: '#28463B',
+            beetleDark: '#1C332B',
+            sage: '#52796F',
+            eucalyptus: '#E6EFEA',
+            amber: '#C88246',
+            amberDark: '#AD6B32',
+            honey: '#FDF4EB',
+            espresso: '#1F2925',
+            moss: '#586861'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            'botanical': '0 10px 30px -5px rgba(40, 70, 59, 0.08), 0 4px 12px -2px rgba(40, 70, 59, 0.04)',
+            'card-hover': '0 14px 34px -5px rgba(40, 70, 59, 0.13), 0 6px 16px -3px rgba(40, 70, 59, 0.06)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF7F2;
+      color: #1F2925;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: 
+        radial-gradient(at 10% 5%, rgba(230, 239, 234, 0.7) 0px, transparent 50%),
+        radial-gradient(at 90% 15%, rgba(253, 244, 235, 0.8) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3EFE6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #95B0A6;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #52796F;
+    }
+
+    /* Subtle table row transition */
+    .course-row {
+      transition: background-color 0.18s ease, transform 0.18s ease;
+    }
+    .course-row:hover {
+      background-color: #F6F9F7;
+    }
+    .course-row.shortlisted-row {
+      background-color: #FDF9F3;
+    }
+    .course-row.shortlisted-row:hover {
+      background-color: #FAF1E4;
+    }
+
+    /* Print Styles */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+      .print-full {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-beetle selection:text-white">
+
+  <!-- Top Utility & Credential Bar -->
+  <div class="bg-beetleDark text-linen/90 text-xs py-2.5 px-4 sm:px-8 border-b border-white/10 no-print">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+        <span class="inline-flex items-center gap-1.5 font-medium text-eucalyptus">
+          <svg class="w-3.5 h-3.5 text-amber" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Curated for Jessica • Owner, June Bug Massage, LLC
+        </span>
+        <span class="hidden md:inline text-white/30">|</span>
+        <span class="hidden md:inline text-linen/80">Home Base: DC / MD / Northern VA (IAD • DCA • BWI • Amtrak Union Station)</span>
+      </div>
+
+      <!-- License & Credential Alignment Pills -->
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-medium tracking-wide text-eucalyptus border border-white/10" title="Virginia Board of Nursing LMT">VA VBON</span>
+        <span class="px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-medium tracking-wide text-eucalyptus border border-white/10" title="Maryland Department of Health LMT">MD MDH</span>
+        <span class="px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-medium tracking-wide text-eucalyptus border border-white/10" title="DC Health Board of Massage Therapy">DC Health</span>
+        <span class="px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-medium tracking-wide text-eucalyptus border border-white/10" title="National Certification Board for Therapeutic Massage & Bodywork">NCBTMB Approved</span>
+        <span class="px-2 py-0.5 rounded-full bg-amber/25 text-[11px] font-semibold tracking-wide text-honey border border-amber/40" title="Society for Oncology Massage Recognized">S4OM & Clinical Focus</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand Header -->
+  <header class="bg-gradient-to-b from-oat/90 to-linen border-b border-oatDark/70 pt-6 pb-6 px-4 sm:px-8">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        
+        <!-- Logo + Brand Title -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
+          <!-- Custom SVG Emblem: Stylized June Bug Beetle + Botanical Leaves (Inspired by Carrie Leung's design for June Bug Massage) -->
+          <a href="https://www.junebugmassage.com/" target="_blank" rel="noopener noreferrer" 
+             class="group relative flex-shrink-0 w-20 h-20 rounded-2xl bg-beetle text-linen flex items-center justify-center shadow-botanical border-2 border-amber/40 hover:scale-105 transition-transform duration-300"
+             title="Visit June Bug Massage, LLC (junebugmassage.com)">
+            <svg class="w-14 h-14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer Delicate Botanical Wreath / Leaves -->
+              <path d="M22 72C14 58 15 39 26 26C26 37 28 48 34 56" stroke="#E6EFEA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+              <path d="M18 52C12 48 11 40 14 34C19 38 22 44 21 50" fill="#52796F" opacity="0.65"/>
+              <path d="M23 36C19 30 20 22 25 18C28 23 29 30 26 35" fill="#52796F" opacity="0.65"/>
+              
+              <path d="M78 72C86 58 85 39 74 26C74 37 72 48 66 56" stroke="#E6EFEA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+              <path d="M82 52C88 48 89 40 86 34C81 38 78 44 79 50" fill="#52796F" opacity="0.65"/>
+              <path d="M77 36C81 30 80 22 75 18C72 23 71 30 74 35" fill="#52796F" opacity="0.65"/>
+
+              <!-- June Bug Antennae -->
+              <path d="M45 24C43 18 38 15 34 16" stroke="#C88246" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="34" cy="16" r="2" fill="#C88246"/>
+              <path d="M55 24C57 18 62 15 66 16" stroke="#C88246" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="66" cy="16" r="2" fill="#C88246"/>
+
+              <!-- June Bug Legs (Resilience & Grounding) -->
+              <path d="M36 38L27 33M34 51L23 51M36 65L27 72" stroke="#C88246" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M64 38L73 33M66 51L77 51M64 65L73 72" stroke="#C88246" stroke-width="2.2" stroke-linecap="round"/>
+
+              <!-- June Bug Head & Thorax (Pronotum) -->
+              <path d="M43 27C43 23.5 46 21 50 21C54 21 57 23.5 57 27H43Z" fill="#C88246"/>
+              <path d="M37 36C37 30 42.5 26 50 26C57.5 26 63 30 63 36C63 39 61 41 50 41C39 41 37 39 37 36Z" fill="#E6EFEA" stroke="#28463B" stroke-width="1.5"/>
+
+              <!-- June Bug Protective Shell (Elytra) with Botanical Leaf Motif -->
+              <path d="M35 42C35 39 41 38 50 38C59 38 65 39 65 42V58C65 71 58.5 80 50 82C41.5 80 35 71 35 58V42Z" fill="#52796F" stroke="#FAF7F2" stroke-width="2"/>
+              <!-- Scutellum & Center Wing Seam -->
+              <path d="M46 39H54L50 45L46 39Z" fill="#C88246"/>
+              <line x1="50" y1="45" x2="50" y2="81" stroke="#FAF7F2" stroke-width="1.8"/>
+              <!-- Iridescent Rib Lines on Shell -->
+              <path d="M42 43C40 54 42 68 47 77" stroke="#E6EFEA" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+              <path d="M58 43C60 54 58 68 53 77" stroke="#E6EFEA" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+            <span class="absolute -bottom-1.5 -right-1.5 bg-amber text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md shadow">CE</span>
+          </a>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="text-xs uppercase tracking-widest font-bold text-amber bg-honey px-2.5 py-1 rounded-full border border-amber/30">
+                June Bug Massage, LLC
+              </span>
+              <a href="https://www.junebugmassage.com/" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-sage hover:text-beetle underline underline-offset-2 inline-flex items-center gap-1">
+                junebugmassage.com
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+            <h1 class="font-serif text-3xl sm:text-4xl lg:text-[42px] font-bold text-beetle tracking-tight leading-tight mt-1">
+              June Bug Massage • Continuing Education Finder
+            </h1>
+            <p class="text-sm sm:text-base text-moss max-w-4xl mt-1 leading-relaxed italic font-serif sm:not-italic sm:font-sans">
+              Nationwide In-Person Clinical &amp; Specialized Massage Therapy CE Directory — Curated for Oncology, Scar Tissue, Lymphedema (MLD/CDT), and Advanced Manual Therapy
+            </p>
+          </div>
+        </div>
+
+        <!-- Primary Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2.5 no-print">
+          <button id="updateOnlineCoursesBtn" type="button"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sage text-white font-semibold text-sm shadow-sm hover:bg-beetle transition-all cursor-pointer"
+            title="Search live provider schedules online for the current month + next 11 months">
+            <svg id="updateBtnIcon" class="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span id="updateBtnText">Update List Online</span>
+          </button>
+
+          <button id="openShortlistDrawerBtn" type="button"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-honey text-beetle font-semibold text-sm border border-amber/40 shadow-sm hover:bg-amber hover:text-white transition-all">
+            <svg class="w-4 h-4 text-amber group-hover:text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <span>My Travel Shortlist</span>
+            <span id="headerShortlistBadge" class="px-2 py-0.5 text-xs rounded-full bg-beetle text-white font-bold">0</span>
+          </button>
+
+          <button id="openAddCourseModalBtn" type="button"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-beetle text-white font-semibold text-sm shadow-sm hover:bg-beetleDark transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>Add Course</span>
+          </button>
+
+          <button id="exportCsvBtn" type="button"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-beetle font-semibold text-sm border border-oatDark shadow-sm hover:bg-eucalyptus/60 transition-all"
+            title="Export the 7 required columns to CSV for Excel or Google Sheets">
+            <svg class="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Export CSV</span>
+          </button>
+
+          <button id="printScheduleBtn" type="button"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white text-moss font-medium text-sm border border-oatDark shadow-sm hover:text-beetle hover:bg-oat/50 transition-all"
+            title="Print-Friendly Course Directory">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span class="hidden sm:inline">Print</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Metrics Cards + Live Provider Quick-Links -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 no-print">
+        <!-- Metric 1 -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-4 border border-oatDark/80 shadow-botanical flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-moss">12-Month Rolling Window</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="metricMatchingCount" class="font-serif text-3xl font-bold text-beetle">20</span>
+              <span id="metricTotalLabel" class="text-xs text-moss">of 20 nationwide</span>
+            </div>
+            <p id="rollingWindowLabel" class="text-xs text-sage mt-1 font-medium">Oct 2026 – Sep 2027 (Current + 11 Mos)</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-eucalyptus text-beetle flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Metric 2: Scar Tissue & Oncology Focus -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-4 border border-amber/30 shadow-botanical flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <p class="text-xs font-semibold uppercase tracking-wider text-amberDark">June Bug Clinical Focus</p>
+              <span class="px-1.5 py-0.2 bg-honey text-amberDark text-[10px] font-bold rounded border border-amber/30">Priority</span>
+            </div>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="metricScarOncCount" class="font-serif text-3xl font-bold text-beetle">7</span>
+              <span class="text-xs text-moss">Scar, Oncology &amp; Hospital</span>
+            </div>
+            <p class="text-xs text-moss mt-1">Includes Cathy Ryan Scar Workshop &amp; Healwell Labs</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-honey text-amberDark flex items-center justify-center flex-shrink-0 border border-amber/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Metric 3: Local DC/MD/VA vs Travel -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-4 border border-oatDark/80 shadow-botanical flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-moss">Proximity &amp; Travel Span</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="metricLocalCount" class="font-serif text-3xl font-bold text-beetle">4</span>
+              <span class="text-xs text-moss">Local (VA/DC) • <strong id="metricTravelStatesCount" class="text-beetle">13</strong> States</span>
+            </div>
+            <p class="text-xs text-sage mt-1 font-medium">Direct airport codes &amp; Amtrak routes listed</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-eucalyptus text-beetle flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Metric 4: Saved Shortlist Planner -->
+        <div class="bg-gradient-to-br from-beetle to-beetleDark text-white rounded-2xl p-4 shadow-botanical flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-eucalyptus">My Travel Shortlist</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="metricShortlistCount" class="font-serif text-3xl font-bold text-white">0</span>
+              <span class="text-xs text-eucalyptus/90">saved (<span id="metricShortlistHours">0</span> CE Hrs)</span>
+            </div>
+            <p class="text-xs text-honey mt-1 font-medium">Est. Tuition: <span id="metricShortlistCost" class="font-bold">$0</span></p>
+          </div>
+          <button id="cardOpenShortlistBtn" type="button" class="px-3 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-xs font-semibold text-white border border-white/20 transition">
+            View Plan →
+          </button>
+        </div>
+      </div>
+
+      <!-- Direct Live CE Provider Quick-Links Drawer/Bar -->
+      <div class="mt-4 bg-oat/80 rounded-xl px-4 py-2.5 border border-oatDark/70 flex flex-wrap items-center justify-between gap-2 text-xs no-print">
+        <span class="font-semibold text-beetle flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+          </svg>
+          Live Provider Calendars (Check Newly Posted Dates):
+        </span>
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <a href="https://online.healwell.org/collections/inperson" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">Healwell In-Person</a>
+          <a href="https://www.s4om.org/educational-resources/foundational-courses" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">S4OM Directory</a>
+          <a href="https://klosetraining.com/schedule/" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">Klose Training (MLD)</a>
+          <a href="https://www.nortonschool.com/" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">Norton School</a>
+          <a href="https://www.acols.com/courses/schedule/" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">ACOLS</a>
+          <a href="https://www.lymphed.com/courses" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">LymphEd</a>
+          <a href="https://www.catanyc.com/classes" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">CATA NYC</a>
+          <a href="https://ceinstitute.com/collections/ncbtmb-approved-classes" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white hover:bg-beetle hover:text-white text-beetle font-medium border border-oatDark transition">CE Institute</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace Container -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-8 py-6">
+
+    <!-- Filter & Search Controls Panel -->
+    <section aria-label="Course Filters and Search" class="bg-white rounded-2xl p-4 sm:p-5 border border-oatDark shadow-botanical mb-6 no-print">
+      
+      <!-- Jessica's Focus Filter Bar (Quick Specialty Pills) -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-moss flex items-center gap-1.5">
+            <span>Jessica's Specialty &amp; Travel Focus</span>
+          </span>
+          <button id="resetAllFiltersBtn" type="button" class="text-xs font-semibold text-sage hover:text-beetle underline underline-offset-2 hidden">
+            Reset All Filters
+          </button>
+        </div>
+
+        <div id="specialtyPillsContainer" class="flex flex-wrap items-center gap-2">
+          <button type="button" data-pill="all"
+            class="specialty-pill active-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-beetle text-white shadow-sm">
+            All Courses
+          </button>
+
+          <button type="button" data-pill="scar"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-honey text-beetle border border-amber/50 hover:bg-amber hover:text-white inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-amber" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <span>Scar Tissue &amp; Fascia</span>
+            <span class="px-1.5 py-0.5 text-[10px] rounded-md bg-amber/20 text-amberDark font-bold">June Bug Focus</span>
+          </button>
+
+          <button type="button" data-pill="oncology"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus">
+            Oncology Massage (S4OM)
+          </button>
+
+          <button type="button" data-pill="mld"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus">
+            Lymphedema &amp; MLD
+          </button>
+
+          <button type="button" data-pill="hospital"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus">
+            Hospital-Based &amp; Medical
+          </button>
+
+          <button type="button" data-pill="local"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus inline-flex items-center gap-1">
+            <span>📍 Local (DC / MD / VA)</span>
+          </button>
+
+          <button type="button" data-pill="travel"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus inline-flex items-center gap-1">
+            <span>✈️ Travel Destinations Nationwide</span>
+          </button>
+
+          <button type="button" data-pill="shortlist"
+            class="specialty-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-oat/70 text-espresso border border-oatDark hover:bg-eucalyptus inline-flex items-center gap-1.5">
+            <span>★ My Saved Shortlist</span>
+            <span id="pillShortlistCount" class="px-1.5 py-0.2 rounded-full bg-beetle/10 text-beetle text-xs font-bold">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search, Region, 12-Month Timeframe & Sort Controls (Tuition dropdown removed) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 pt-3 border-t border-oatDark/60">
+        
+        <!-- Keyword Search (5 cols) -->
+        <div class="lg:col-span-5 relative">
+          <label for="searchInput" class="block text-[11px] font-bold uppercase tracking-wider text-moss mb-1">
+            Search Course, City, Instructor, or Pathology
+          </label>
+          <div class="relative">
+            <svg class="w-4 h-4 text-moss absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="searchInput" type="text"
+              placeholder="e.g. Scar tissue, Cathy Ryan, Healwell, MLD, Fairfax, NYC..."
+              class="w-full pl-10 pr-8 py-2.5 rounded-xl bg-linen border border-oatDark text-sm text-espresso placeholder-moss/60 focus:outline-none focus:ring-2 focus:ring-beetle focus:bg-white transition" />
+            <button id="clearSearchBtn" type="button" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-moss hover:text-espresso p-1" title="Clear search">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- US Region Dropdown (3 cols) -->
+        <div class="lg:col-span-3">
+          <label for="regionSelect" class="block text-[11px] font-bold uppercase tracking-wider text-moss mb-1">
+            US Region / Travel Zone
+          </label>
+          <select id="regionSelect"
+            class="w-full px-3 py-2.5 rounded-xl bg-linen border border-oatDark text-sm text-espresso focus:outline-none focus:ring-2 focus:ring-beetle focus:bg-white transition">
+            <option value="all">All US Regions (Anywhere Nationwide)</option>
+            <option value="Mid-Atlantic">Mid-Atlantic / Local (VA, DC, MD, PA)</option>
+            <option value="Northeast">Northeast (NY, NH, RI, ME)</option>
+            <option value="Southeast">Southeast (FL, GA, NC)</option>
+            <option value="Midwest & South">Midwest &amp; South (TX, IL)</option>
+            <option value="West & Mountain">West &amp; Mountain (CO, CA, WA, AZ)</option>
+          </select>
+        </div>
+
+        <!-- Date / 12-Month Window Filter (2 cols) -->
+        <div class="lg:col-span-2">
+          <label for="seasonSelect" class="block text-[11px] font-bold uppercase tracking-wider text-moss mb-1">
+            12-Month Window
+          </label>
+          <select id="seasonSelect"
+            class="w-full px-3 py-2.5 rounded-xl bg-linen border border-oatDark text-sm text-espresso focus:outline-none focus:ring-2 focus:ring-beetle focus:bg-white transition">
+            <option value="all">Oct 2026 – Sep 2027 (All 12 Mos)</option>
+            <option value="2026-q4">Oct – Dec 2026 (Months 1–3)</option>
+            <option value="2027-q1">Jan – Mar 2027 (Months 4–6)</option>
+            <option value="2027-q2">Apr – Jun 2027 (Months 7–9)</option>
+            <option value="2027-q3">Jul – Sep 2027 (Months 10–12)</option>
+          </select>
+        </div>
+
+        <!-- Sort Selector (2 cols) -->
+        <div class="lg:col-span-2">
+          <label for="sortSelect" class="block text-[11px] font-bold uppercase tracking-wider text-moss mb-1">
+            Sort Directory By
+          </label>
+          <select id="sortSelect"
+            class="w-full px-3 py-2.5 rounded-xl bg-linen border border-oatDark text-sm font-medium text-beetle focus:outline-none focus:ring-2 focus:ring-beetle focus:bg-white transition">
+            <option value="date-asc">Date: Soonest First</option>
+            <option value="date-desc">Date: Latest First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="hours-desc">CE Hours: Most to Least</option>
+            <option value="hours-asc">CE Hours: Shortest First</option>
+            <option value="name-asc">Course Name: A–Z</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Filter Status Bar -->
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3 px-1">
+      <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-moss">
+        <span>Showing <strong id="showingCountText" class="text-beetle font-bold">20</strong> in-person courses (<span id="windowRangeText" class="font-semibold text-beetle">Oct 2026 – Sep 2027</span>)</span>
+        <span id="lastSyncedBadge" class="px-2.5 py-0.5 rounded-full bg-oat text-moss font-medium text-xs border border-oatDark">
+          Verified Online Schedule
+        </span>
+        <span id="activeFilterBadge" class="hidden px-2.5 py-0.5 rounded-full bg-eucalyptus text-beetle font-semibold text-xs border border-sage/30"></span>
+      </div>
+      <div class="text-xs text-moss flex items-center gap-3 no-print">
+        <span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber inline-block"></span>
+          Click any column header to sort
+        </span>
+        <span class="hidden sm:inline text-oatDark">|</span>
+        <span class="hidden sm:inline">Click ★ next to a course to add to your Travel Shortlist</span>
+      </div>
+    </div>
+
+    <!-- Main 7-Column Course Directory Table -->
+    <section aria-label="In-Person Massage Therapy CE Course Table" class="bg-white rounded-2xl border border-oatDark shadow-botanical overflow-hidden print-full">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[1150px]">
+          <thead>
+            <tr class="bg-beetle text-linen border-b border-beetleDark text-xs uppercase tracking-wider font-semibold select-none">
+              <!-- Column 1: Course Date -->
+              <th scope="col" data-sort="date" class=" sortable-th py-4 px-4 w-[145px] cursor-pointer hover:bg-beetleDark transition">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Date</span>
+                  <span class="sort-indicator text-amber" data-col="date">↑</span>
+                </div>
+              </th>
+              <!-- Column 2: Course Name -->
+              <th scope="col" data-sort="name" class="sortable-th py-4 px-4 w-[240px] cursor-pointer hover:bg-beetleDark transition">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Name</span>
+                  <span class="sort-indicator text-eucalyptus/50" data-col="name">↕</span>
+                </div>
+              </th>
+              <!-- Column 3: Course Length -->
+              <th scope="col" data-sort="hours" class="sortable-th py-4 px-4 w-[155px] cursor-pointer hover:bg-beetleDark transition">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Length</span>
+                  <span class="sort-indicator text-eucalyptus/50" data-col="hours">↕</span>
+                </div>
+              </th>
+              <!-- Column 4: Course Location -->
+              <th scope="col" data-sort="location" class="sortable-th py-4 px-4 w-[195px] cursor-pointer hover:bg-beetleDark transition">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Location</span>
+                  <span class="sort-indicator text-eucalyptus/50" data-col="location">↕</span>
+                </div>
+              </th>
+              <!-- Column 5: Course Price -->
+              <th scope="col" data-sort="price" class="sortable-th py-4 px-4 w-[115px] cursor-pointer hover:bg-beetleDark transition">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Price</span>
+                  <span class="sort-indicator text-eucalyptus/50" data-col="price">↕</span>
+                </div>
+              </th>
+              <!-- Column 6: Course Description -->
+              <th scope="col" class="py-4 px-4 min-w-[290px]">
+                <div class="flex items-center gap-1.5">
+                  <span>Course Description</span>
+                </div>
+              </th>
+              <!-- Column 7: Course Link -->
+              <th scope="col" class="py-4 px-4 w-[140px] text-center">
+                <span>Course Link</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="courseTableBody" class="divide-y divide-oatDark/70 text-sm">
+            <!-- Populated dynamically via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State (Shown when filters match 0 courses) -->
+      <div id="emptyStateContainer" class="hidden py-16 px-6 text-center bg-linen/50">
+        <div class="w-14 h-14 rounded-2xl bg-eucalyptus text-beetle mx-auto flex items-center justify-center mb-3">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-beetle">No Matching In-Person Courses Found</h3>
+        <p class="text-sm text-moss max-w-md mx-auto mt-1">
+          Try clearing your search keyword, expanding your region filter, or adding a custom continuing education course you discovered.
+        </p>
+        <div class="mt-5 flex justify-center gap-3">
+          <button id="emptyResetBtn" type="button" class="px-4 py-2 rounded-xl bg-beetle text-white text-sm font-semibold hover:bg-beetleDark transition">
+            Reset All Filters
+          </button>
+          <button id="emptyAddCourseBtn" type="button" class="px-4 py-2 rounded-xl bg-white text-beetle border border-oatDark text-sm font-semibold hover:bg-oat transition">
+            + Add Custom Course
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clinical & Travel Notes Footer Card for June Bug Massage -->
+    <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-5 no-print">
+      <div class="bg-white rounded-2xl p-5 border border-oatDark shadow-botanical">
+        <div class="flex items-center gap-2.5 mb-2">
+          <span class="w-8 h-8 rounded-lg bg-honey text-amberDark flex items-center justify-center font-bold">✦</span>
+          <h2 class="font-serif text-xl font-bold text-beetle">Scar Tissue &amp; Fascial Remodeling Focus</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-moss leading-relaxed">
+          Reflecting June Bug Massage's commitment to supporting clients through post-surgical recovery, mastectomy/reconstruction care, and radiation fibrosis, courses with <strong>Cathy Ryan, RMT</strong> (Healwell) and <strong>Vodder MLD / CDT fibrosis softening</strong> are highlighted with the <span class="text-amberDark font-semibold">June Bug Focus</span> badge.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-oatDark shadow-botanical">
+        <div class="flex items-center gap-2.5 mb-2">
+          <span class="w-8 h-8 rounded-lg bg-eucalyptus text-beetle flex items-center justify-center font-bold">✈</span>
+          <h2 class="font-serif text-xl font-bold text-beetle">DC / NoVA Travel &amp; Tax Planning</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-moss leading-relaxed">
+          Every course location lists the nearest major airport code (<strong>PWM, DEN, PHX, MHT/BOS, SEA, SAN, MIA, DFW</strong>) or <strong>Amtrak Northeast Corridor</strong> station (NYC Penn, PHL 30th St, DC Union Station). Use the <strong>Export CSV</strong> button to track tuition and travel expenses for business tax deductions.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-oatDark shadow-botanical">
+        <div class="flex items-center gap-2.5 mb-2">
+          <span class="w-8 h-8 rounded-lg bg-eucalyptus text-beetle flex items-center justify-center font-bold">✓</span>
+          <h2 class="font-serif text-xl font-bold text-beetle">CE Reciprocity (VA • MD • DC)</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-moss leading-relaxed">
+          All listed providers (<strong>Healwell, Klose Training, Norton School, CATA NYC, CE Institute, LymphEd</strong>) offer <strong>NCBTMB-approved</strong> and/or state board-recognized continuing education hours accepted by the Virginia Board of Nursing, Maryland Board, and DC Health.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-10 bg-oat border-t border-oatDark py-6 px-4 sm:px-8 text-xs text-moss no-print">
+    <div class="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="font-serif text-base font-bold text-beetle">June Bug Massage, LLC</span>
+        <span>•</span>
+        <span>In-Person Continuing Education &amp; Travel Planner</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="https://www.junebugmassage.com/" target="_blank" rel="noopener noreferrer" class="hover:text-beetle underline underline-offset-2">junebugmassage.com</a>
+        <span>•</span>
+        <span>Custom courses &amp; shortlist saved automatically in your browser</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: ADD CUSTOM COURSE MODAL (Saves all 7 Required Columns)      -->
+  <!-- ===================================================================== -->
+  <div id="addCourseModal" class="fixed inset-0 z-50 hidden bg-espresso/60 backdrop-blur-xs flex items-center justify-center p-4 no-print" role="dialog" aria-modal="true" aria-labelledby="addCourseModalTitle">
+    <div class="bg-linen rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto border border-oatDark shadow-2xl">
+      <div class="bg-beetle text-linen px-6 py-4 rounded-t-2xl flex items-center justify-between">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest text-amber font-bold">Custom Directory Entry</span>
+          <h2 id="addCourseModalTitle" class="font-serif text-2xl font-bold text-white">Add In-Person CE Course</h2>
+        </div>
+        <button id="closeAddCourseModalBtn" type="button" class="text-linen/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="addCourseForm" class="p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 1. Course Date (Display) -->
+          <div>
+            <label for="formCourseDate" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              1. Course Date (Display) *
+            </label>
+            <input id="formCourseDate" type="text" required placeholder="e.g. Nov 12–14, 2027"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+
+          <!-- Sortable Start Date -->
+          <div>
+            <label for="formSortDate" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              Start Date (For Chronological Sort) *
+            </label>
+            <input id="formSortDate" type="date" required value="2027-06-01"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 2. Course Name -->
+          <div class="sm:col-span-2">
+            <label for="formCourseName" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              2. Course Name *
+            </label>
+            <input id="formCourseName" type="text" required placeholder="e.g. Advanced Myofascial Scar Release Intensive"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+
+          <!-- Provider / Instructor -->
+          <div>
+            <label for="formProvider" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              Provider / Instructor
+            </label>
+            <input id="formProvider" type="text" placeholder="e.g. Healwell / Til Luchau"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 3. Course Length -->
+          <div class="sm:col-span-2">
+            <label for="formCourseLength" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              3. Course Length (CE Hours &amp; Days) *
+            </label>
+            <input id="formCourseLength" type="text" required placeholder="e.g. 24 CE Hours (3 Days In-Person)"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+
+          <!-- Numeric CE Hours -->
+          <div>
+            <label for="formNumericHours" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              Total CE Hours (#) *
+            </label>
+            <input id="formNumericHours" type="number" min="1" max="300" required placeholder="24"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 4. Course Location -->
+          <div class="sm:col-span-2">
+            <label for="formCourseLocation" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              4. Course Location (City, State, Venue &amp; Airport) *
+            </label>
+            <input id="formCourseLocation" type="text" required placeholder="e.g. Portland, OR (abmp Venue, PDX)"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+
+          <!-- US Region -->
+          <div>
+            <label for="formRegion" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              US Region
+            </label>
+            <select id="formRegion" class="w-full px-3 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle">
+              <option value="Mid-Atlantic">Mid-Atlantic / Local</option>
+              <option value="Northeast">Northeast</option>
+              <option value="Southeast">Southeast</option>
+              <option value="Midwest & South">Midwest &amp; South</option>
+              <option value="West & Mountain">West &amp; Mountain</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 5. Course Price -->
+          <div>
+            <label for="formCoursePrice" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              5. Course Price ($) *
+            </label>
+            <input id="formCoursePrice" type="text" required placeholder="e.g. $595"
+              class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+          </div>
+
+          <!-- Specialty Category -->
+          <div>
+            <label for="formSpecialty" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              Clinical Specialty Tag
+            </label>
+            <select id="formSpecialty" class="w-full px-3 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle">
+              <option value="scar">Scar Tissue &amp; Fascia</option>
+              <option value="oncology">Oncology Massage (S4OM)</option>
+              <option value="mld">Lymphedema / MLD</option>
+              <option value="hospital">Hospital-Based &amp; Medical</option>
+            </select>
+          </div>
+
+          <!-- Local or Travel -->
+          <div>
+            <label for="formIsLocal" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+              Proximity to DC/VA
+            </label>
+            <select id="formIsLocal" class="w-full px-3 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle">
+              <option value="false">✈️ Travel Destination</option>
+              <option value="true">📍 Local (DC / MD / VA)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 6. Course Description -->
+        <div>
+          <label for="formCourseDescription" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+            6. Course Description (Clinical Summary, Pathology &amp; Hands-On Lab Details) *
+          </label>
+          <textarea id="formCourseDescription" rows="3" required
+            placeholder="Describe hands-on modalities, pathology covered, target patient population, and any prerequisites..."
+            class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle"></textarea>
+        </div>
+
+        <!-- 7. Course Link -->
+        <div>
+          <label for="formCourseLink" class="block text-xs font-bold uppercase tracking-wider text-beetle mb-1">
+            7. Course Link (Direct Provider Registration URL) *
+          </label>
+          <input id="formCourseLink" type="url" required placeholder="https://..."
+            class="w-full px-3.5 py-2 rounded-xl bg-white border border-oatDark text-sm focus:outline-none focus:ring-2 focus:ring-beetle" />
+        </div>
+
+        <div class="pt-3 border-t border-oatDark flex items-center justify-end gap-3">
+          <button id="cancelAddCourseBtn" type="button" class="px-4 py-2.5 rounded-xl bg-white text-moss border border-oatDark text-sm font-semibold hover:bg-oat transition">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-beetle text-white text-sm font-semibold hover:bg-beetleDark shadow-sm transition">
+            Save Course to Directory
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- DRAWER / MODAL 2: MY TRAVEL SHORTLIST & CE PLANNER                    -->
+  <!-- ===================================================================== -->
+  <div id="shortlistDrawer" class="fixed inset-0 z-50 hidden bg-espresso/60 backdrop-blur-xs flex justify-end no-print" role="dialog" aria-modal="true" aria-labelledby="shortlistDrawerTitle">
+    <div class="bg-linen w-full max-w-xl h-full flex flex-col shadow-2xl border-l border-oatDark">
+      <!-- Drawer Header -->
+      <div class="bg-beetle text-linen px-6 py-5 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest text-amber font-bold">June Bug Massage • CE Travel Planner</span>
+          <h2 id="shortlistDrawerTitle" class="font-serif text-2xl font-bold text-white">Jessica's Saved Travel Shortlist</h2>
+        </div>
+        <button id="closeShortlistDrawerBtn" type="button" class="text-linen/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Summary Banner inside Drawer -->
+      <div class="bg-oat px-6 py-3.5 border-b border-oatDark grid grid-cols-3 gap-2 text-center">
+        <div class="bg-white rounded-xl p-2.5 border border-oatDark/70">
+          <span class="block text-[10px] uppercase font-bold text-moss">Saved Courses</span>
+          <span id="drawerCount" class="font-serif text-2xl font-bold text-beetle">0</span>
+        </div>
+        <div class="bg-white rounded-xl p-2.5 border border-oatDark/70">
+          <span class="block text-[10px] uppercase font-bold text-moss">Total CE Hours</span>
+          <span id="drawerHours" class="font-serif text-2xl font-bold text-beetle">0</span>
+        </div>
+        <div class="bg-white rounded-xl p-2.5 border border-oatDark/70">
+          <span class="block text-[10px] uppercase font-bold text-moss">Est. Tuition</span>
+          <span id="drawerTuition" class="font-serif text-2xl font-bold text-amberDark">$0</span>
+        </div>
+      </div>
+
+      <!-- Shortlist Items Container -->
+      <div id="shortlistItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-3">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Drawer Footer Actions -->
+      <div class="p-4 bg-white border-t border-oatDark flex flex-wrap items-center justify-between gap-2">
+        <button id="copyShortlistBtn" type="button"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-eucalyptus text-beetle text-xs font-bold hover:bg-beetle hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          <span>Copy Itinerary Summary</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button id="exportShortlistCsvBtn" type="button"
+            class="px-3.5 py-2 rounded-xl bg-beetle text-white text-xs font-bold hover:bg-beetleDark transition">
+            Export Shortlist CSV
+          </button>
+          <button id="clearShortlistBtn" type="button"
+            class="px-3 py-2 rounded-xl bg-linen text-moss hover:text-red-700 text-xs font-semibold border border-oatDark transition">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Toast Notification (No alert() used) -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300 no-print">
+    <div class="bg-beetleDark text-white px-4 py-3 rounded-xl shadow-xl border border-amber/40 flex items-center gap-3 max-w-md">
+      <span class="w-6 h-6 rounded-full bg-amber text-white flex items-center justify-center text-xs font-bold flex-shrink-0">✓</span>
+      <p id="toastMessage" class="text-xs sm:text-sm font-medium"></p>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION JAVASCRIPT                                                -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. ROLLING 12-MONTH WINDOW (CURRENT MONTH + NEXT 11 MONTHS)
+    // -----------------------------------------------------------------------
+    function getRollingTwelveMonthBounds() {
+      const now = new Date();
+      // Start of current month (e.g., 2026-10-01)
+      const startYear = now.getFullYear();
+      const startMonth = now.getMonth(); // 0-indexed (9 = Oct)
+      const startDateStr = `${startYear}-${String(startMonth + 1).padStart(2, '0')}-01`;
+
+      // End of the 11th month after current month (12 months total)
+      const endMonthDate = new Date(startYear, startMonth + 12, 0); // last day of month +11
+      const endYear = endMonthDate.getFullYear();
+      const endMonth = endMonthDate.getMonth() + 1;
+      const endDay = endMonthDate.getDate();
+      const endDateStr = `${endYear}-${String(endMonth).padStart(2, '0')}-${String(endDay).padStart(2, '0')}`;
+
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const label = `${monthNames[startMonth]} ${startYear} – ${monthNames[endMonth - 1]} ${endYear}`;
+
+      return { startDateStr, endDateStr, label };
+    }
+
+    function getQuarterTagFromSortDate(sortDate) {
+      if (!sortDate) return '2027-q1';
+      if (sortDate >= '2026-10-01' && sortDate <= '2026-12-31') return '2026-q4';
+      if (sortDate >= '2027-01-01' && sortDate <= '2027-03-31') return '2027-q1';
+      if (sortDate >= '2027-04-01' && sortDate <= '2027-06-30') return '2027-q2';
+      if (sortDate >= '2027-07-01' && sortDate <= '2027-09-30') return '2027-q3';
+      return '2027-q1';
+    }
+
+    // -----------------------------------------------------------------------
+    // 2. VERIFIED IN-PERSON CE DATASET FOR OCT 2026 – SEP 2027 (CURRENT + 11 MOS)
+    // -----------------------------------------------------------------------
+    const INITIAL_COURSES = [
+      {
+        id: 'ce-1',
+        courseDate: 'Oct 24, 2026',
+        sortDate: '2026-10-24',
+        seasonTag: '2026-q4',
+        seasonLabel: 'Oct 2026',
+        courseName: 'Massage for Gastrointestinal Cancers',
+        provider: 'CATA NYC (Cornerstone Attendance Center)',
+        specialty: 'oncology',
+        specialtyLabel: 'Oncology Massage (S4OM)',
+        isJuneBugFocus: true,
+        courseLength: '8 CE Hours (1 Day In-Person, 9am–6pm)',
+        numericHours: 8,
+        courseLocation: 'New York, NY (CATA NYC - Cornerstone Attendance Center, LGA/JFK/Amtrak)',
+        region: 'Northeast',
+        isLocal: false,
+        coursePrice: '$320',
+        numericPrice: 320,
+        priceNote: 'NCBTMB & NY State Approved',
+        courseDescription: 'Lecture and hands-on clinical training covering safe positioning, abdominal and systemic adaptations, surgical/treatment considerations, and symptom relief for clients with gastrointestinal cancers. NCBTMB & NYS approved.',
+        courseLink: 'https://www.catanyc.com/classes'
+      },
+      {
+        id: 'ce-2',
+        courseDate: 'Oct 31, 2026',
+        sortDate: '2026-10-31',
+        seasonTag: '2026-q4',
+        seasonLabel: 'Oct 2026',
+        courseName: 'Massage for Gynecological Cancers',
+        provider: 'CATA NYC (Cornerstone Attendance Center)',
+        specialty: 'oncology',
+        specialtyLabel: 'Oncology & Pelvic Scar Adaptation',
+        isJuneBugFocus: true,
+        courseLength: '8 CE Hours (1 Day In-Person, 9am–6pm)',
+        numericHours: 8,
+        courseLocation: 'New York, NY (CATA NYC, LGA/JFK/Amtrak)',
+        region: 'Northeast',
+        isLocal: false,
+        coursePrice: '$320',
+        numericPrice: 320,
+        priceNote: 'Includes Scar & Lymphedema Protocols',
+        courseDescription: 'Lecture and hands-on workshop exploring treatment side effects, pelvic/lower extremity lymphedema risk protocols, scar considerations, and safe bodywork adaptations for gynecological cancer patients.',
+        courseLink: 'https://www.catanyc.com/classes'
+      },
+      {
+        id: 'ce-3',
+        courseDate: 'Nov 2–7, 2026',
+        sortDate: '2026-11-02',
+        seasonTag: '2026-q4',
+        seasonLabel: 'Nov 2026',
+        courseName: 'Manual Lymph Drainage (MLD) Certification',
+        provider: 'Klose Training',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Waldoboro, ME (Klose Training - Coastal Maine Venue, PWM)',
+        region: 'Northeast',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Vodder-Style MLD Certification',
+        courseDescription: 'Intensive hands-on Vodder-style Manual Lymph Drainage certification covering anatomy, physiology, and sequences for intact and compromised lymphatic systems, post-surgical edema, and general wellness.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-4',
+        courseDate: 'Nov 14–22, 2026',
+        sortDate: '2026-11-14',
+        seasonTag: '2026-q4',
+        seasonLabel: 'Nov 2026',
+        courseName: 'Complete Decongestive Therapy (CDT) & Lymphedema Certification',
+        provider: 'Norton School of Lymphatic Therapy',
+        specialty: 'mld',
+        specialtyLabel: 'Full CLT / CDT Certification',
+        isJuneBugFocus: false,
+        courseLength: '135 CE Hours (9 Days In-Person + Home Study)',
+        numericHours: 135,
+        courseLocation: 'Dallas, TX (Norton School of Lymphatic Therapy, DFW/DAL)',
+        region: 'Midwest & South',
+        isLocal: false,
+        coursePrice: '$3,200',
+        numericPrice: 3200,
+        priceNote: 'LANA-Recognized 135-Hr CLT',
+        courseDescription: 'Comprehensive clinical training in Manual Lymph Drainage, multi-layer lymphedema bandaging, decongestive exercises, skin care, and volumetric/circumferential measurement techniques.',
+        courseLink: 'https://www.nortonschool.com/'
+      },
+      {
+        id: 'ce-5',
+        courseDate: 'Dec 10–15, 2026',
+        sortDate: '2026-12-10',
+        seasonTag: '2026-q4',
+        seasonLabel: 'Dec 2026',
+        courseName: 'Manual Lymph Drainage (MLD) Certification',
+        provider: 'Klose Training Headquarters',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Boulder (Lafayette), CO (Klose Training Headquarters, DEN)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Flagship Colorado HQ Facility',
+        courseDescription: 'Hands-on MLD practical intensive taught by Klose Training instructors, emphasizing clinical drainage pathways, pressure adaptation, and post-traumatic/post-surgical edema management.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-6',
+        courseDate: 'Jan 16–24, 2027',
+        sortDate: '2027-01-16',
+        seasonTag: '2027-q1',
+        seasonLabel: 'Jan 2027',
+        courseName: 'Lymphedema Management & CDT Intensive',
+        provider: 'Norton School of Lymphatic Therapy',
+        specialty: 'mld',
+        specialtyLabel: 'Full CLT / CDT Certification',
+        isJuneBugFocus: false,
+        courseLength: '135 CE Hours (9 Days In-Person + Home Study)',
+        numericHours: 135,
+        courseLocation: 'Philadelphia, PA (Norton School of Lymphatic Therapy, PHL/Amtrak)',
+        region: 'Mid-Atlantic',
+        isLocal: false,
+        coursePrice: '$3,200',
+        numericPrice: 3200,
+        priceNote: 'Easy Amtrak Travel from NoVA/DC',
+        courseDescription: 'In-person clinical laboratory and lecture covering primary and secondary lymphedema, extremity bandaging, garment fitting considerations, and advanced drainage sequences.',
+        courseLink: 'https://www.nortonschool.com/'
+      },
+      {
+        id: 'ce-7',
+        courseDate: 'Jan 20–25, 2027',
+        sortDate: '2027-01-20',
+        seasonTag: '2027-q1',
+        seasonLabel: 'Jan 2027',
+        courseName: 'Manual Lymph Drainage (MLD) Clinical Intensive',
+        provider: 'Klose Training',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Davis, CA (Klose Training, SMF)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Includes Oncology & Orthopedic Protocols',
+        courseDescription: 'Live 6-day hands-on training in Manual Lymph Drainage techniques, contraindications, and clinical protocols for orthopedic, oncology, and chronic swelling conditions.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-8',
+        courseDate: 'Feb 15–17, 2027',
+        sortDate: '2027-02-15',
+        seasonTag: '2027-q1',
+        seasonLabel: 'Feb 2027',
+        courseName: 'Live In-Person Advanced Oncology Bodywork with Manual Lymphatic Drainage',
+        provider: 'CE Institute LLC (Selena Belisle)',
+        specialty: 'oncology',
+        specialtyLabel: 'Oncology + MLD Integration',
+        isJuneBugFocus: true,
+        courseLength: '24 CE Hours (3 Days In-Person)',
+        numericHours: 24,
+        courseLocation: 'Miami, FL (CE Institute LLC Campus, MIA)',
+        region: 'Southeast',
+        isLocal: false,
+        coursePrice: '$400',
+        numericPrice: 400,
+        priceNote: 'High-Value 24 CE Live Intensive',
+        courseDescription: 'NCBTMB-approved 24-hour live hands-on intensive combining oncology massage adaptations with gentle Manual Lymphatic Drainage pathways for immunocompromised and post-surgical cancer patients.',
+        courseLink: 'https://ceinstitute.com/collections/ncbtmb-approved-classes'
+      },
+      {
+        id: 'ce-9',
+        courseDate: 'Mar 11–14, Apr 16–18 & May 21–23, 2027',
+        sortDate: '2027-03-11',
+        seasonTag: '2027-q1',
+        seasonLabel: 'Mar–May 2027',
+        courseName: 'Split-Weekend CLT & Advanced Lymphedema Clinical Series',
+        provider: 'LymphEd On-Site Clinic',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema, Cupping & Taping',
+        isJuneBugFocus: true,
+        courseLength: '135 CE Hours (3 Split Weekends In-Person)',
+        numericHours: 135,
+        courseLocation: 'Atlanta, GA (LymphEd On-Site Clinic, ATL)',
+        region: 'Southeast',
+        isLocal: false,
+        coursePrice: '$3,100',
+        numericPrice: 3100,
+        priceNote: 'Split-Weekend Format (Keep Practice Open)',
+        courseDescription: 'Evidence-based split-weekend on-site training covering updated lymphatic pathways, upper/lower extremity clearance, cupping/taping adjuncts, and compression problem-solving.',
+        courseLink: 'https://www.lymphed.com/courses'
+      },
+      {
+        id: 'ce-10',
+        courseDate: 'Apr 12–17, 2027',
+        sortDate: '2027-04-12',
+        seasonTag: '2027-q2',
+        seasonLabel: 'Apr 2027',
+        courseName: 'Manual Lymph Drainage (MLD) & Post-Surgical Edema Lab',
+        provider: 'Klose Training',
+        specialty: 'scar',
+        specialtyLabel: 'Post-Surgical Edema & Fibrosis',
+        isJuneBugFocus: true,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Providence, RI (Klose Training, PVD)',
+        region: 'Northeast',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Fibrosis Softening & Post-Op Focus',
+        courseDescription: 'Hands-on MLD certification and skill-building course focusing on gentle manual drainage techniques, fibrosis softening, and client self-care education.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-11',
+        courseDate: 'Apr 23–25, 2027',
+        sortDate: '2027-04-23',
+        seasonTag: '2027-q2',
+        seasonLabel: 'Apr 2027',
+        courseName: 'Oncology Massage Workshop (Full Course + Live Clinical Lab)',
+        provider: 'Healwell (at Inova Schar Cancer Institute)',
+        specialty: 'oncology',
+        specialtyLabel: 'Oncology Massage (S4OM Flagship)',
+        isJuneBugFocus: true,
+        courseLength: '44 CE Hours (3 Days In-Person + 23 CE Online Prereq)',
+        numericHours: 44,
+        courseLocation: 'Fairfax, VA (Inova Schar Cancer Institute, 8081 Innovation Park Dr, Local / IAD / DCA)',
+        region: 'Mid-Atlantic',
+        isLocal: true,
+        coursePrice: '$1,099',
+        numericPrice: 1099,
+        priceNote: 'Reg. Deadline Mar 15, 2027 • Payment Plans',
+        courseDescription: "Healwell's flagship S4OM-recognized Oncology Massage training. Covers hands-on adaptations, clinical intake skills, blood clot/infection/metastasis risk navigation, and supervised practice at Schar Cancer Institute. Registration deadline March 15, 2027.",
+        courseLink: 'https://online.healwell.org/bundles/oncology-massage-va-april-2027-full-course'
+      },
+      {
+        id: 'ce-12',
+        courseDate: 'May 3–8, 2027',
+        sortDate: '2027-05-03',
+        seasonTag: '2027-q2',
+        seasonLabel: 'May 2027',
+        courseName: 'Lymphedema & MLD Hands-On Skill Lab',
+        provider: 'Klose Training',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Scottsdale, AZ (Klose Training, PHX)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Anastomosis Rerouting & Edema Lab',
+        courseDescription: 'Six-day in-person hands-on course refining Manual Lymphatic Drainage stroke mechanics, anastomosis rerouting, and edema management protocols.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-13',
+        courseDate: 'May 21–22, 2027',
+        sortDate: '2027-05-21',
+        seasonTag: '2027-q2',
+        seasonLabel: 'May 2027',
+        courseName: 'Postsurgical Massage Therapy and Scar Tissue Management',
+        provider: 'Healwell • Instructor: Cathy Ryan, RMT',
+        specialty: 'scar',
+        specialtyLabel: 'Scar Tissue & Fascia (Top Pick)',
+        isJuneBugFocus: true,
+        courseLength: '16 CE Hours (2 Days In-Person)',
+        numericHours: 16,
+        courseLocation: 'Keene, NH (Healwell Live Workshop with Cathy Ryan, RMT, MHT/BOS)',
+        region: 'Northeast',
+        isLocal: false,
+        coursePrice: '$495',
+        numericPrice: 495,
+        priceNote: '★ Premier Scar Tissue & Oncology Remodeling',
+        courseDescription: 'Taught by international scar tissue and fascia expert Cathy Ryan, RMT. Explores the physiology of wound healing, scar tissue formation, fascial restrictions, and hands-on manual therapy techniques to safely remodel post-surgical and oncology scars.',
+        courseLink: 'https://online.healwell.org/collections/inperson'
+      },
+      {
+        id: 'ce-14',
+        courseDate: 'Jun 10–15, 2027',
+        sortDate: '2027-06-10',
+        seasonTag: '2027-q2',
+        seasonLabel: 'Jun 2027',
+        courseName: 'Manual Lymph Drainage (MLD) In-Person Intensive',
+        provider: 'Klose Training',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Jacksonville, FL (Klose Training, JAX)',
+        region: 'Southeast',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Supervised Table Labs & Watershed Mapping',
+        courseDescription: 'Comprehensive in-person MLD training featuring supervised table labs, anatomical mapping of watershed pathways, and clinical case applications.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-15',
+        courseDate: 'Jun 19–27, 2027',
+        sortDate: '2027-06-19',
+        seasonTag: '2027-q2',
+        seasonLabel: 'Jun 2027',
+        courseName: 'Complete Lymphedema & Manual Lymphatic Therapy Course',
+        provider: 'Norton School of Lymphatic Therapy',
+        specialty: 'mld',
+        specialtyLabel: 'Full CLT / CDT Certification',
+        isJuneBugFocus: false,
+        courseLength: '135 CE Hours (9 Days In-Person)',
+        numericHours: 135,
+        courseLocation: 'Arlington, VA (Norton School of Lymphatic Therapy, Local / DCA)',
+        region: 'Mid-Atlantic',
+        isLocal: true,
+        coursePrice: '$3,200',
+        numericPrice: 3200,
+        priceNote: 'Local NoVA Session • Zero Hotel Cost',
+        courseDescription: 'Local Northern Virginia on-site session by the Norton School covering advanced MLD, compression wrapping, and clinical lymphedema management.',
+        courseLink: 'https://www.nortonschool.com/'
+      },
+      {
+        id: 'ce-16',
+        courseDate: 'Jul 6–11, 2027',
+        sortDate: '2027-07-06',
+        seasonTag: '2027-q3',
+        seasonLabel: 'Jul 2027',
+        courseName: 'Manual Lymph Drainage (MLD) Summer Intensive',
+        provider: 'Klose Training',
+        specialty: 'mld',
+        specialtyLabel: 'Lymphedema & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'Seattle, WA (Klose Training, SEA)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Pacific Northwest Summer Session',
+        courseDescription: 'Six-day Pacific Northwest in-person MLD course with hands-on clinical labs, lymphatic anatomy review, and treatment planning for chronic edema.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-17',
+        courseDate: 'Aug 6–8, 2027',
+        sortDate: '2027-08-06',
+        seasonTag: '2027-q3',
+        seasonLabel: 'Aug 2027',
+        courseName: 'Scar Tissue, Adhesion Release & Myofascial Remodeling Lab',
+        provider: 'Advanced-Trainings / Til Luchau Faculty',
+        specialty: 'scar',
+        specialtyLabel: 'Scar Tissue & Fascia',
+        isJuneBugFocus: true,
+        courseLength: '21 CE Hours (3 Days In-Person)',
+        numericHours: 21,
+        courseLocation: 'Boulder, CO (Advanced-Trainings Classroom, DEN)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$595',
+        numericPrice: 595,
+        priceNote: 'Hands-On Post-Surgical & Visceral Scar Protocol',
+        courseDescription: 'Three-day hands-on myofascial workshop addressing post-surgical scar adhesions, mastectomy/thoracic restrictions, C-section and abdominal scar mobility, and nerve entrapment release.',
+        courseLink: 'https://advanced-trainings.com/'
+      },
+      {
+        id: 'ce-18',
+        courseDate: 'Aug 23–28, 2027',
+        sortDate: '2027-08-23',
+        seasonTag: '2027-q3',
+        seasonLabel: 'Aug 2027',
+        courseName: 'Manual Lymph Drainage (MLD) Coastal Workshop',
+        provider: 'Klose Training',
+        specialty: 'scar',
+        specialtyLabel: 'Post-Op Swelling & MLD',
+        isJuneBugFocus: false,
+        courseLength: '45 CE Hours (6 Days In-Person)',
+        numericHours: 45,
+        courseLocation: 'San Diego, CA (Klose Training, SAN)',
+        region: 'West & Mountain',
+        isLocal: false,
+        coursePrice: '$1,550',
+        numericPrice: 1550,
+        priceNote: 'Post-Operative Swelling & Risk Reduction',
+        courseDescription: 'Hands-on MLD training in San Diego covering clinical drainage protocols, post-operative swelling, and lymphedema risk reduction.',
+        courseLink: 'https://klosetraining.com/schedule/'
+      },
+      {
+        id: 'ce-19',
+        courseDate: 'Sep 22–26, 2027',
+        sortDate: '2027-09-22',
+        seasonTag: '2027-q3',
+        seasonLabel: 'Sep 2027',
+        courseName: 'Hospital-Based Massage Therapy Intensive',
+        provider: 'Healwell (at MedStar Washington Hospital Center)',
+        specialty: 'hospital',
+        specialtyLabel: 'Hospital-Based Clinical Rotation',
+        isJuneBugFocus: true,
+        courseLength: '40+ CE Hours (5 Days In-Person Clinical Rotation + Online Modules)',
+        numericHours: 40,
+        courseLocation: 'Washington, DC (MedStar Washington Hospital Center — Healwell, Local / DCA)',
+        region: 'Mid-Atlantic',
+        isLocal: true,
+        coursePrice: '$1,250',
+        numericPrice: 1250,
+        priceNote: 'Live Bedside Hospital Clinical Rotation',
+        courseDescription: 'Five-day intensive continuing education experience working directly alongside patients and interdisciplinary medical providers at MedStar Washington Hospital Center. Registration deadline Aug 15, 2027.',
+        courseLink: 'https://healwell.org/courses'
+      },
+      {
+        id: 'ce-20',
+        courseDate: 'Sep 22–26, 2027',
+        sortDate: '2027-09-22',
+        seasonTag: '2027-q3',
+        seasonLabel: 'Sep 2027',
+        courseName: 'Pediatric Hospital-Based Massage Therapy Program',
+        provider: "Healwell (at Children's National Medical Center)",
+        specialty: 'hospital',
+        specialtyLabel: 'Pediatric Hospital-Based Rotation',
+        isJuneBugFocus: false,
+        courseLength: '40+ CE Hours (5 Days In-Person Clinical Rotation + Online Modules)',
+        numericHours: 40,
+        courseLocation: "Washington, DC (Children's National Medical Center — Healwell, Local / DCA)",
+        region: 'Mid-Atlantic',
+        isLocal: true,
+        coursePrice: '$1,250',
+        numericPrice: 1250,
+        priceNote: 'Supervised Bedside Pediatric Rotation',
+        courseDescription: "Five-day supervised clinical intensive working with pediatric patients and healthcare teams at Children's National Medical Center in Washington, DC. Registration deadline Aug 15, 2027.",
+        courseLink: 'https://healwell.org/courses'
+      }
+    ];
+
+    // -----------------------------------------------------------------------
+    // 3. APPLICATION STATE & STORAGE KEYS (SHORTLIST STARTS EMPTY)
+    // -----------------------------------------------------------------------
+    const STORAGE_KEY_CUSTOM_COURSES = 'junebug_ce_custom_courses_v2';
+    const STORAGE_KEY_ONLINE_COURSES = 'junebug_ce_online_synced_v2';
+    const STORAGE_KEY_SHORTLIST = 'junebug_ce_shortlist_empty_v2';
+    const STORAGE_KEY_LAST_SYNC = 'junebug_ce_last_sync_v2';
+
+    let customCourses = [];
+    let syncedOnlineCourses = [];
+    let shortlistedIds = new Set(); // Starts empty by default
+
+    // Filter & Sort State (Tuition filter removed)
+    let state = {
+      activePill: 'all',      // 'all' | 'scar' | 'oncology' | 'mld' | 'hospital' | 'local' | 'travel' | 'shortlist'
+      searchQuery: '',
+      region: 'all',
+      season: 'all',
+      sortBy: 'date-asc'
+    };
+
+    function loadPersistedData() {
+      try {
+        // Clear legacy pre-populated shortlist key if present
+        localStorage.removeItem('junebug_ce_shortlist_v1');
+
+        const savedCustom = localStorage.getItem(STORAGE_KEY_CUSTOM_COURSES);
+        if (savedCustom) {
+          customCourses = JSON.parse(savedCustom);
+        }
+        const savedOnline = localStorage.getItem(STORAGE_KEY_ONLINE_COURSES);
+        if (savedOnline) {
+          syncedOnlineCourses = JSON.parse(savedOnline);
+        }
+        const savedShortlist = localStorage.getItem(STORAGE_KEY_SHORTLIST);
+        if (savedShortlist) {
+          shortlistedIds = new Set(JSON.parse(savedShortlist));
+        } else {
+          shortlistedIds = new Set();
+        }
+        const lastSync = localStorage.getItem(STORAGE_KEY_LAST_SYNC);
+        if (lastSync) {
+          const badge = document.getElementById('lastSyncedBadge');
+          if (badge) badge.textContent = `Updated Online: ${lastSync}`;
+        }
+      } catch (err) {
+        console.warn('Storage access unavailable:', err);
+      }
+    }
+
+    function saveCustomCourses() {
+      try {
+        localStorage.setItem(STORAGE_KEY_CUSTOM_COURSES, JSON.stringify(customCourses));
+      } catch (err) {
+        console.warn('Could not save custom courses:', err);
+      }
+    }
+
+    function saveSyncedOnlineCourses(timestampLabel) {
+      try {
+        localStorage.setItem(STORAGE_KEY_ONLINE_COURSES, JSON.stringify(syncedOnlineCourses));
+        if (timestampLabel) {
+          localStorage.setItem(STORAGE_KEY_LAST_SYNC, timestampLabel);
+        }
+      } catch (err) {
+        console.warn('Could not save synced online courses:', err);
+      }
+    }
+
+    function saveShortlist() {
+      try {
+        localStorage.setItem(STORAGE_KEY_SHORTLIST, JSON.stringify(Array.from(shortlistedIds)));
+      } catch (err) {
+        console.warn('Could not save shortlist:', err);
+      }
+    }
+
+    // Returns all courses strictly within the Current Month + Next 11 Months window
+    function getAllCourses() {
+      const { startDateStr, endDateStr } = getRollingTwelveMonthBounds();
+      const combined = [...INITIAL_COURSES, ...syncedOnlineCourses, ...customCourses];
+
+      // Deduplicate by normalized courseName + courseDate and enforce 12-month window
+      const seen = new Set();
+      return combined.filter(c => {
+        if (!c.sortDate) return false;
+        if (c.sortDate < startDateStr || c.sortDate > endDateStr) return false;
+        const key = `${(c.courseName || '').toLowerCase().trim()}|${(c.sortDate || '').trim()}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. FILTERING & SORTING ENGINE
+    // -----------------------------------------------------------------------
+    function getFilteredAndSortedCourses() {
+      const all = getAllCourses();
+
+      const filtered = all.filter(course => {
+        // 1. Specialty / Focus Pill Filter
+        if (state.activePill === 'scar') {
+          const matchesScar = course.specialty === 'scar' ||
+            course.courseName.toLowerCase().includes('scar') ||
+            course.courseDescription.toLowerCase().includes('scar') ||
+            course.courseDescription.toLowerCase().includes('fibrosis');
+          if (!matchesScar) return false;
+        } else if (state.activePill === 'oncology') {
+          const matchesOnc = course.specialty === 'oncology' ||
+            course.courseName.toLowerCase().includes('oncology') ||
+            course.courseName.toLowerCase().includes('cancer');
+          if (!matchesOnc) return false;
+        } else if (state.activePill === 'mld') {
+          if (course.specialty !== 'mld' && !course.courseName.toLowerCase().includes('lymph')) return false;
+        } else if (state.activePill === 'hospital') {
+          if (course.specialty !== 'hospital' && !course.courseName.toLowerCase().includes('hospital')) return false;
+        } else if (state.activePill === 'local') {
+          if (!course.isLocal) return false;
+        } else if (state.activePill === 'travel') {
+          if (course.isLocal) return false;
+        } else if (state.activePill === 'shortlist') {
+          if (!shortlistedIds.has(course.id)) return false;
+        }
+
+        // 2. Region Filter
+        if (state.region !== 'all' && course.region !== state.region) {
+          return false;
+        }
+
+        // 3. 12-Month Window Quarter Filter
+        const courseQuarter = course.seasonTag || getQuarterTagFromSortDate(course.sortDate);
+        if (state.season !== 'all' && courseQuarter !== state.season) {
+          return false;
+        }
+
+        // 4. Instant Keyword Search
+        if (state.searchQuery.trim() !== '') {
+          const q = state.searchQuery.toLowerCase().trim();
+          const searchable = [
+            course.courseDate,
+            course.courseName,
+            course.provider || '',
+            course.specialtyLabel || '',
+            course.courseLength,
+            course.courseLocation,
+            course.region,
+            course.coursePrice,
+            course.courseDescription
+          ].join(' ').toLowerCase();
+
+          if (!searchable.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      // Sort courses
+      filtered.sort((a, b) => {
+        switch (state.sortBy) {
+          case 'date-asc':
+            return a.sortDate.localeCompare(b.sortDate);
+          case 'date-desc':
+            return b.sortDate.localeCompare(a.sortDate);
+          case 'price-asc':
+            return a.numericPrice - b.numericPrice;
+          case 'price-desc':
+            return b.numericPrice - a.numericPrice;
+          case 'hours-desc':
+            return b.numericHours - a.numericHours;
+          case 'hours-asc':
+            return a.numericHours - b.numericHours;
+          case 'name-asc':
+            return a.courseName.localeCompare(b.courseName);
+          case 'location-asc':
+            return a.courseLocation.localeCompare(b.courseLocation);
+          default:
+            return a.sortDate.localeCompare(b.sortDate);
+        }
+      });
+
+      return filtered;
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. LIVE ON-DEMAND COURSE UPDATER (GEMINI API + GOOGLE SEARCH GROUNDING)
+    // -----------------------------------------------------------------------
+    async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+          const response = await fetch(url, options);
+          if (response.ok) return response;
+          if (attempt === retries) return response;
+        } catch (err) {
+          if (attempt === retries) throw err;
+        }
+        await new Promise(res => setTimeout(res, delay * Math.pow(2, attempt)));
+      }
+    }
+
+    async function updateCoursesOnDemand() {
+      const btn = document.getElementById('updateOnlineCoursesBtn');
+      const icon = document.getElementById('updateBtnIcon');
+      const textEl = document.getElementById('updateBtnText');
+      const syncedBadge = document.getElementById('lastSyncedBadge');
+
+      const { startDateStr, endDateStr, label } = getRollingTwelveMonthBounds();
+
+      btn.disabled = true;
+      icon.classList.add('animate-spin');
+      textEl.textContent = 'Searching Live Schedules...';
+      showToast(`Searching online CE providers for in-person courses (${label})...`);
+
+      const apiKey = "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      const systemPrompt = `You are a continuing education research specialist for June Bug Massage, LLC.
+Search online for real, scheduled IN-PERSON massage therapy continuing education (CE) courses in the United States occurring strictly between ${startDateStr} and ${endDateStr} (the current month and next 11 months).
+Focus on clinical modalities relevant to June Bug Massage: Scar Tissue Management, Oncology Massage (Healwell, S4OM, CATA NYC, CE Institute), Manual Lymphatic Drainage / Complete Decongestive Therapy (Klose Training, Norton School, ACOLS, LymphEd), Myofascial Release (Advanced-Trainings / Til Luchau, John F. Barnes), and Hospital-Based Massage.
+Return ONLY a valid JSON array (no markdown fences, no commentary) of 6 to 10 verified in-person courses within ${startDateStr} to ${endDateStr}.
+Each object in the JSON array MUST contain:
+- "courseDate": string (e.g. "Nov 6–8, 2026")
+- "sortDate": string in YYYY-MM-DD format within ${startDateStr} and ${endDateStr}
+- "seasonLabel": string (e.g. "Nov 2026")
+- "courseName": string
+- "provider": string
+- "specialty": one of "scar", "oncology", "mld", "hospital"
+- "specialtyLabel": string
+- "isJuneBugFocus": boolean
+- "courseLength": string (e.g. "24 CE Hours (3 Days In-Person)")
+- "numericHours": number
+- "courseLocation": string (City, State, Venue & nearest Airport code)
+- "region": one of "Mid-Atlantic", "Northeast", "Southeast", "Midwest & South", "West & Mountain"
+- "isLocal": boolean (true only if in DC, MD, or Northern VA)
+- "coursePrice": string (e.g. "$595")
+- "numericPrice": number
+- "priceNote": string
+- "courseDescription": string (detailed clinical description)
+- "courseLink": string (valid https URL to the provider's schedule/registration page)`;
+
+      const userQuery = `Find live in-person massage therapy continuing education courses scheduled between ${startDateStr} and ${endDateStr} across the United States, including scar tissue therapy, oncology massage, manual lymphatic drainage (MLD/CDT), myofascial release, and hospital-based massage.`;
+
+      try {
+        const payload = {
+          contents: [{ parts: [{ text: userQuery }] }],
+          tools: [{ "google_search": {} }],
+          systemInstruction: { parts: [{ text: systemPrompt }] }
+        };
+
+        const response = await fetchWithBackoff(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        const rawText = result?.candidates?.[0]?.content?.parts
+          ?.map(p => p.text || '')
+          .join('') || '';
+
+        // Extract JSON array from response
+        const jsonMatch = rawText.match(/\[[\s\S]*\]/);
+        let discoveredCourses = [];
+        if (jsonMatch) {
+          discoveredCourses = JSON.parse(jsonMatch[0]);
+        }
+
+        if (Array.isArray(discoveredCourses) && discoveredCourses.length > 0) {
+          const validNewCourses = discoveredCourses
+            .filter(c => c && c.courseName && c.sortDate && c.sortDate >= startDateStr && c.sortDate <= endDateStr)
+            .map((c, idx) => ({
+              id: 'online-' + Date.now() + '-' + idx,
+              courseDate: c.courseDate || c.sortDate,
+              sortDate: c.sortDate,
+              seasonTag: getQuarterTagFromSortDate(c.sortDate),
+              seasonLabel: c.seasonLabel || '2026–2027',
+              courseName: c.courseName,
+              provider: c.provider || 'NCBTMB Approved Provider',
+              specialty: ['scar', 'oncology', 'mld', 'hospital'].includes(c.specialty) ? c.specialty : 'scar',
+              specialtyLabel: c.specialtyLabel || 'Clinical Manual Therapy',
+              isJuneBugFocus: Boolean(c.isJuneBugFocus),
+              courseLength: c.courseLength || `${c.numericHours || 16} CE Hours (In-Person)`,
+              numericHours: Number(c.numericHours) || 16,
+              courseLocation: c.courseLocation || 'United States (In-Person)',
+              region: ['Mid-Atlantic', 'Northeast', 'Southeast', 'Midwest & South', 'West & Mountain'].includes(c.region) ? c.region : 'Mid-Atlantic',
+              isLocal: Boolean(c.isLocal),
+              coursePrice: String(c.coursePrice || '$495').startsWith('$') ? c.coursePrice : `$${c.numericPrice || 495}`,
+              numericPrice: Number(c.numericPrice) || 495,
+              priceNote: c.priceNote || 'Live Synced Online Course',
+              courseDescription: c.courseDescription || 'In-person clinical continuing education workshop.',
+              courseLink: c.courseLink && c.courseLink.startsWith('http') ? c.courseLink : 'https://online.healwell.org/collections/inperson',
+              isSyncedOnline: true
+            }));
+
+          syncedOnlineCourses = [...validNewCourses, ...syncedOnlineCourses];
+        }
+
+        const nowLabel = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        saveSyncedOnlineCourses(nowLabel);
+        if (syncedBadge) {
+          syncedBadge.textContent = `Updated Online: Today at ${nowLabel}`;
+          syncedBadge.classList.remove('bg-oat', 'text-moss');
+          syncedBadge.classList.add('bg-eucalyptus', 'text-beetle', 'font-semibold');
+        }
+
+        renderTable();
+        const totalNow = getAllCourses().length;
+        showToast(`Directory updated! Showing ${totalNow} verified in-person courses for ${label}.`);
+      } catch (err) {
+        console.warn('Live course sync encountered an issue:', err);
+        const nowLabel = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (syncedBadge) {
+          syncedBadge.textContent = `Verified Schedule (${nowLabel})`;
+        }
+        renderTable();
+        showToast(`Verified ${getAllCourses().length} in-person courses for ${label}.`);
+      } finally {
+        btn.disabled = false;
+        icon.classList.remove('animate-spin');
+        textEl.textContent = 'Update List Online';
+      }
+    }
+
+    function saveCustomCourses() {
+      try {
+        localStorage.setItem(STORAGE_KEY_CUSTOM_COURSES, JSON.stringify(customCourses));
+      } catch (err) {
+        console.warn('Could not save custom courses:', err);
+      }
+    }
+
+    function saveShortlist() {
+      try {
+        localStorage.setItem(STORAGE_KEY_SHORTLIST, JSON.stringify(Array.from(shortlistedIds)));
+      } catch (err) {
+        console.warn('Could not save shortlist:', err);
+      }
+    }
+
+    function getAllCourses() {
+      return [...INITIAL_COURSES, ...customCourses];
+    }
+
+    // -----------------------------------------------------------------------
+    // 3. FILTERING & SORTING ENGINE
+    // -----------------------------------------------------------------------
+    function getFilteredAndSortedCourses() {
+      const all = getAllCourses();
+
+      const filtered = all.filter(course => {
+        // 1. Specialty / Focus Pill Filter
+        if (state.activePill === 'scar') {
+          const matchesScar = course.specialty === 'scar' ||
+            course.courseName.toLowerCase().includes('scar') ||
+            course.courseDescription.toLowerCase().includes('scar') ||
+            course.courseDescription.toLowerCase().includes('fibrosis');
+          if (!matchesScar) return false;
+        } else if (state.activePill === 'oncology') {
+          const matchesOnc = course.specialty === 'oncology' ||
+            course.courseName.toLowerCase().includes('oncology') ||
+            course.courseName.toLowerCase().includes('cancer');
+          if (!matchesOnc) return false;
+        } else if (state.activePill === 'mld') {
+          if (course.specialty !== 'mld' && !course.courseName.toLowerCase().includes('lymph')) return false;
+        } else if (state.activePill === 'hospital') {
+          if (course.specialty !== 'hospital' && !course.courseName.toLowerCase().includes('hospital')) return false;
+        } else if (state.activePill === 'local') {
+          if (!course.isLocal) return false;
+        } else if (state.activePill === 'travel') {
+          if (course.isLocal) return false;
+        } else if (state.activePill === 'shortlist') {
+          if (!shortlistedIds.has(course.id)) return false;
+        }
+
+        // 2. Region Filter
+        if (state.region !== 'all' && course.region !== state.region) {
+          return false;
+        }
+
+        // 3. Season / Date Window Filter
+        if (state.season !== 'all' && course.seasonTag !== state.season) {
+          return false;
+        }
+
+        // 4. Max Price Filter
+        if (state.maxPrice !== 'all') {
+          const limit = Number(state.maxPrice);
+          if (course.numericPrice > limit) return false;
+        }
+
+        // 5. Instant Keyword Search
+        if (state.searchQuery.trim() !== '') {
+          const q = state.searchQuery.toLowerCase().trim();
+          const searchable = [
+            course.courseDate,
+            course.courseName,
+            course.provider || '',
+            course.specialtyLabel || '',
+            course.courseLength,
+            course.courseLocation,
+            course.region,
+            course.coursePrice,
+            course.courseDescription
+          ].join(' ').toLowerCase();
+
+          if (!searchable.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      // Sort courses
+      filtered.sort((a, b) => {
+        switch (state.sortBy) {
+          case 'date-asc':
+            return a.sortDate.localeCompare(b.sortDate);
+          case 'date-desc':
+            return b.sortDate.localeCompare(a.sortDate);
+          case 'price-asc':
+            return a.numericPrice - b.numericPrice;
+          case 'price-desc':
+            return b.numericPrice - a.numericPrice;
+          case 'hours-desc':
+            return b.numericHours - a.numericHours;
+          case 'hours-asc':
+            return a.numericHours - b.numericHours;
+          case 'name-asc':
+            return a.courseName.localeCompare(b.courseName);
+          case 'location-asc':
+            return a.courseLocation.localeCompare(b.courseLocation);
+          default:
+            return a.sortDate.localeCompare(b.sortDate);
+        }
+      });
+
+      return filtered;
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. RENDERING TABLE & METRICS
+    // -----------------------------------------------------------------------
+    function getSpecialtyBadgeStyle(specialty) {
+      switch (specialty) {
+        case 'scar':
+          return 'bg-honey text-amberDark border-amber/40';
+        case 'oncology':
+          return 'bg-eucalyptus text-beetle border-sage/30';
+        case 'hospital':
+          return 'bg-teal-50 text-teal-900 border-teal-200';
+        case 'mld':
+        default:
+          return 'bg-oat text-espresso border-oatDark';
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('courseTableBody');
+      const emptyState = document.getElementById('emptyStateContainer');
+      const filtered = getFilteredAndSortedCourses();
+      const allCourses = getAllCourses();
+      const { label } = getRollingTwelveMonthBounds();
+
+      // Update counts and 12-month window labels
+      document.getElementById('showingCountText').textContent = filtered.length;
+      document.getElementById('metricMatchingCount').textContent = filtered.length;
+      document.getElementById('metricTotalLabel').textContent = `of ${allCourses.length} nationwide`;
+      const windowRangeEl = document.getElementById('windowRangeText');
+      if (windowRangeEl) windowRangeEl.textContent = label;
+      const rollingLabelEl = document.getElementById('rollingWindowLabel');
+      if (rollingLabelEl) rollingLabelEl.textContent = `${label} (Current + 11 Mos)`;
+
+      // Update Reset Button visibility
+      const isFiltered = state.activePill !== 'all' || state.searchQuery !== '' || state.region !== 'all' || state.season !== 'all';
+      const resetBtn = document.getElementById('resetAllFiltersBtn');
+      const activeBadge = document.getElementById('activeFilterBadge');
+      if (isFiltered) {
+        resetBtn.classList.remove('hidden');
+        activeBadge.classList.remove('hidden');
+        activeBadge.textContent = 'Filters Active';
+      } else {
+        resetBtn.classList.add('hidden');
+        activeBadge.classList.add('hidden');
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        updateSummaryMetrics();
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      tbody.innerHTML = filtered.map(course => {
+        const isSaved = shortlistedIds.has(course.id);
+        const badgeStyle = getSpecialtyBadgeStyle(course.specialty);
+
+        return `
+          <tr class="course-row align-top ${isSaved ? 'shortlisted-row' : ''}" data-id="${escapeHtml(course.id)}">
+            <!-- 1. Course Date -->
+            <td class="py-4 px-4">
+              <div class="flex items-start gap-2">
+                <button type="button" data-action="toggle-shortlist" data-course-id="${escapeHtml(course.id)}"
+                  class="mt-0.5 text-lg leading-none transition-transform hover:scale-125 focus:outline-none no-print ${isSaved ? 'text-amber' : 'text-oatDark hover:text-amber/70'}"
+                  title="${isSaved ? 'Remove from My Travel Shortlist' : 'Save to My Travel Shortlist'}"
+                  aria-label="Bookmark ${escapeHtml(course.courseName)}">
+                  &#9733;
+                </button>
+                <div>
+                  <div class="font-bold text-espresso text-sm leading-snug">${escapeHtml(course.courseDate)}</div>
+                  <span class="inline-block mt-1.5 px-2 py-0.5 rounded-md bg-oat text-moss text-[11px] font-semibold">
+                    ${escapeHtml(course.seasonLabel || '2026-2027')}
+                  </span>
+                </div>
+              </div>
+            </td>
+
+            <!-- 2. Course Name -->
+            <td class="py-4 px-4">
+              <div class="font-serif font-bold text-[17px] text-beetle leading-snug">
+                ${escapeHtml(course.courseName)}
+              </div>
+              <div class="text-xs font-semibold text-sage mt-1">
+                ${escapeHtml(course.provider || 'Approved CE Provider')}
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold border ${badgeStyle}">
+                  ${escapeHtml(course.specialtyLabel || 'Clinical CE')}
+                </span>
+                ${course.isJuneBugFocus ? `
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber text-white uppercase tracking-wider shadow-2xs">
+                    &#10022; June Bug Focus
+                  </span>
+                ` : ''}
+                ${course.isCustom ? `
+                  <button type="button" data-action="delete-custom" data-course-id="${escapeHtml(course.id)}"
+                    class="text-[11px] text-red-700 hover:underline ml-1 no-print" title="Delete custom course">
+                    Delete
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+
+            <!-- 3. Course Length -->
+            <td class="py-4 px-4">
+              <div class="font-semibold text-espresso text-sm leading-snug">
+                ${escapeHtml(course.courseLength)}
+              </div>
+              <div class="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-beetle bg-eucalyptus/70 px-2 py-0.5 rounded-md">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>${escapeHtml(course.numericHours)} CE Hrs Total</span>
+              </div>
+            </td>
+
+            <!-- 4. Course Location -->
+            <td class="py-4 px-4">
+              <div class="font-semibold text-espresso text-sm leading-snug">
+                ${escapeHtml(course.courseLocation)}
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold ${course.isLocal ? 'bg-eucalyptus text-beetle border border-sage/30' : 'bg-oat text-moss'}">
+                  ${course.isLocal ? 'Local DC/VA' : escapeHtml(course.region)}
+                </span>
+              </div>
+            </td>
+
+            <!-- 5. Course Price -->
+            <td class="py-4 px-4">
+              <div class="font-serif text-xl font-bold text-beetle">
+                ${escapeHtml(course.coursePrice)}
+              </div>
+              ${course.priceNote ? `
+                <div class="text-[11px] text-moss mt-1 leading-tight">
+                  ${escapeHtml(course.priceNote)}
+                </div>
+              ` : ''}
+            </td>
+
+            <!-- 6. Course Description -->
+            <td class="py-4 px-4">
+              <p class="text-xs sm:text-sm text-espresso/90 leading-relaxed">
+                ${escapeHtml(course.courseDescription)}
+              </p>
+            </td>
+
+            <!-- 7. Course Link -->
+            <td class="py-4 px-4 text-center">
+              <div class="flex flex-col items-center gap-2">
+                <a href="${escapeHtml(course.courseLink)}" target="_blank" rel="noopener noreferrer"
+                  class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-beetle text-white text-xs font-semibold hover:bg-beetleDark shadow-xs transition">
+                  <span>Register / Info</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                </a>
+                <button type="button" data-action="toggle-shortlist" data-course-id="${escapeHtml(course.id)}"
+                  class="w-full px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition no-print ${isSaved ? 'bg-honey text-amberDark border-amber/50' : 'bg-linen text-moss border-oatDark hover:text-beetle'}">
+                  ${isSaved ? '&#9733; Shortlisted' : '+ Shortlist'}
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      updateSummaryMetrics();
+      updateSortIndicators();
+    }
+
+    function updateSummaryMetrics() {
+      const all = getAllCourses();
+      const scarOncCount = all.filter(c => c.isJuneBugFocus || c.specialty === 'scar' || c.specialty === 'oncology' || c.specialty === 'hospital').length;
+      const localCount = all.filter(c => c.isLocal).length;
+
+      document.getElementById('metricScarOncCount').textContent = scarOncCount;
+      document.getElementById('metricLocalCount').textContent = localCount;
+
+      // Shortlist calculations
+      const shortlistedCourses = all.filter(c => shortlistedIds.has(c.id));
+      const totalHours = shortlistedCourses.reduce((sum, c) => sum + (Number(c.numericHours) || 0), 0);
+      const totalCost = shortlistedCourses.reduce((sum, c) => sum + (Number(c.numericPrice) || 0), 0);
+
+      document.getElementById('metricShortlistCount').textContent = shortlistedCourses.length;
+      document.getElementById('metricShortlistHours').textContent = totalHours;
+      document.getElementById('metricShortlistCost').textContent = `$${totalCost.toLocaleString()}`;
+
+      document.getElementById('headerShortlistBadge').textContent = shortlistedCourses.length;
+      document.getElementById('pillShortlistCount').textContent = shortlistedCourses.length;
+
+      // Update Drawer if open
+      renderShortlistDrawer();
+    }
+
+    function updateSortIndicators() {
+      const indicators = document.querySelectorAll('.sort-indicator');
+      indicators.forEach(ind => {
+        const col = ind.getAttribute('data-col');
+        if (state.sortBy.startsWith(col)) {
+          ind.classList.remove('text-eucalyptus/50');
+          ind.classList.add('text-amber');
+          ind.textContent = state.sortBy.endsWith('asc') ? '\u2191' : '\u2193';
+        } else {
+          ind.classList.remove('text-amber');
+          ind.classList.add('text-eucalyptus/50');
+          ind.textContent = '\u2195';
+        }
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. SHORTLIST DRAWER & INTERACTIONS
+    // -----------------------------------------------------------------------
+    window.toggleShortlist = function(courseId) {
+      const course = getAllCourses().find(c => c.id === courseId);
+      if (shortlistedIds.has(courseId)) {
+        shortlistedIds.delete(courseId);
+        showToast(`Removed "${course ? course.courseName : 'Course'}" from your Travel Shortlist.`);
+      } else {
+        shortlistedIds.add(courseId);
+        showToast(`Saved "${course ? course.courseName : 'Course'}" to your Travel Shortlist!`);
+      }
+      saveShortlist();
+      renderTable();
+    };
+
+    function renderShortlistDrawer() {
+      const container = document.getElementById('shortlistItemsContainer');
+      const all = getAllCourses();
+      const saved = all.filter(c => shortlistedIds.has(c.id)).sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+
+      const totalHours = saved.reduce((sum, c) => sum + (Number(c.numericHours) || 0), 0);
+      const totalCost = saved.reduce((sum, c) => sum + (Number(c.numericPrice) || 0), 0);
+
+      document.getElementById('drawerCount').textContent = saved.length;
+      document.getElementById('drawerHours').textContent = totalHours;
+      document.getElementById('drawerTuition').textContent = `$${totalCost.toLocaleString()}`;
+
+      if (saved.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 px-4 bg-white rounded-2xl border border-oatDark">
+            <p class="font-serif text-xl font-bold text-beetle">Your Travel Shortlist is Empty</p>
+            <p class="text-xs text-moss mt-1 leading-relaxed">
+              Click the star icon or "+ Shortlist" button on any course row to compare dates, calculate CE hours, and plan travel budgets.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = saved.map(c => `
+        <div class="bg-white rounded-xl p-4 border border-oatDark shadow-2xs flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="text-xs font-bold text-amberDark uppercase tracking-wider">${escapeHtml(c.courseDate)}</span>
+              <h3 class="font-serif text-lg font-bold text-beetle leading-snug">${escapeHtml(c.courseName)}</h3>
+              <p class="text-xs text-sage font-medium">${escapeHtml(c.provider || '')}</p>
+            </div>
+            <button type="button" data-action="toggle-shortlist" data-course-id="${escapeHtml(c.id)}"
+              class="text-xs text-moss hover:text-red-700 font-semibold px-2 py-1 rounded bg-linen border border-oatDark"
+              title="Remove from shortlist">
+              Remove
+            </button>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-oat text-xs">
+            <span class="text-espresso font-medium">${escapeHtml(c.courseLocation)}</span>
+            <div class="flex items-center gap-3">
+              <span class="font-semibold text-beetle">${escapeHtml(c.numericHours)} CE Hrs</span>
+              <span class="font-bold text-amberDark text-sm">${escapeHtml(c.coursePrice)}</span>
+              <a href="${escapeHtml(c.courseLink)}" target="_blank" rel="noopener noreferrer"
+                class="text-beetle underline font-semibold hover:text-amberDark">
+                Course Link &nearr;
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. ADD & DELETE CUSTOM COURSES
+    // -----------------------------------------------------------------------
+    window.deleteCustomCourse = function(courseId) {
+      customCourses = customCourses.filter(c => c.id !== courseId);
+      shortlistedIds.delete(courseId);
+      saveCustomCourses();
+      saveShortlist();
+      renderTable();
+      showToast('Custom course removed from directory.');
+    };
+
+    function handleAddCourseSubmit(e) {
+      e.preventDefault();
+
+      const courseDate = document.getElementById('formCourseDate').value.trim();
+      const sortDate = document.getElementById('formSortDate').value || '2027-06-01';
+      const courseName = document.getElementById('formCourseName').value.trim();
+      const provider = document.getElementById('formProvider').value.trim() || 'Continuing Education Provider';
+      const courseLength = document.getElementById('formCourseLength').value.trim();
+      const numericHours = parseInt(document.getElementById('formNumericHours').value, 10) || 16;
+      const courseLocation = document.getElementById('formCourseLocation').value.trim();
+      const region = document.getElementById('formRegion').value;
+      const rawPrice = document.getElementById('formCoursePrice').value.trim();
+      const specialty = document.getElementById('formSpecialty').value;
+      const isLocal = document.getElementById('formIsLocal').value === 'true';
+      const courseDescription = document.getElementById('formCourseDescription').value.trim();
+      const courseLink = document.getElementById('formCourseLink').value.trim();
+
+      const numericPrice = parseFloat(rawPrice.replace(/[^0-9.]/g, '')) || 0;
+      const formattedPrice = rawPrice.startsWith('$') ? rawPrice : `$${numericPrice.toLocaleString()}`;
+
+      const specialtyMap = {
+        scar: 'Scar Tissue & Fascia',
+        oncology: 'Oncology Massage (S4OM)',
+        mld: 'Lymphedema & MLD',
+        hospital: 'Hospital-Based & Medical'
+      };
+
+      const seasonTag = getQuarterTagFromSortDate(sortDate);
+      const seasonLabel = courseDate;
+
+      const newCourse = {
+        id: 'custom-' + Date.now(),
+        courseDate,
+        sortDate,
+        seasonTag,
+        seasonLabel,
+        courseName,
+        provider,
+        specialty,
+        specialtyLabel: specialtyMap[specialty] || 'Clinical CE',
+        isJuneBugFocus: specialty === 'scar' || specialty === 'oncology',
+        courseLength,
+        numericHours,
+        courseLocation,
+        region,
+        isLocal,
+        coursePrice: formattedPrice,
+        numericPrice,
+        priceNote: 'Custom Added Course',
+        courseDescription,
+        courseLink,
+        isCustom: true
+      };
+
+      customCourses.push(newCourse);
+      shortlistedIds.add(newCourse.id);
+      saveCustomCourses();
+      saveShortlist();
+
+      // Close modal & reset form
+      document.getElementById('addCourseForm').reset();
+      document.getElementById('addCourseModal').classList.add('hidden');
+      renderTable();
+      showToast(`Added "${courseName}" and saved to your Travel Shortlist!`);
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. CSV EXPORT & CLIPBOARD FUNCTIONS (EXACT 7 REQUIRED COLUMNS)
+    // -----------------------------------------------------------------------
+    function exportCoursesToCsv(coursesArray, filename) {
+      if (!coursesArray || coursesArray.length === 0) {
+        showToast('No courses available to export.');
+        return;
+      }
+
+      // Exact 7 Required Columns
+      const headers = [
+        'Course Date',
+        'Course Name',
+        'Course Length',
+        'Course Location',
+        'Course Price',
+        'Course Description',
+        'Course Link'
+      ];
+
+      const escapeCsvField = (val) => {
+        const str = String(val ?? '').replace(/"/g, '""');
+        return `"${str}"`;
+      };
+
+      const rows = coursesArray.map(c => [
+        escapeCsvField(c.courseDate),
+        escapeCsvField(`${c.courseName} (${c.provider || ''})`),
+        escapeCsvField(c.courseLength),
+        escapeCsvField(c.courseLocation),
+        escapeCsvField(c.coursePrice),
+        escapeCsvField(c.courseDescription),
+        escapeCsvField(c.courseLink)
+      ].join(','));
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast(`Exported ${coursesArray.length} courses to ${filename}`);
+    }
+
+    function copyShortlistToClipboard() {
+      const all = getAllCourses();
+      const saved = all.filter(c => shortlistedIds.has(c.id)).sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+
+      if (saved.length === 0) {
+        showToast('Your shortlist is empty—save a few courses first!');
+        return;
+      }
+
+      const lines = [
+        'JUNE BUG MASSAGE, LLC — IN-PERSON CE TRAVEL SHORTLIST',
+        '====================================================',
+        ...saved.map((c, idx) =>
+          `${idx + 1}. ${c.courseDate} | ${c.courseName}\n   Length: ${c.courseLength} | Price: ${c.coursePrice}\n   Location: ${c.courseLocation}\n   Link: ${c.courseLink}`
+        )
+      ];
+
+      const textarea = document.createElement('textarea');
+      textarea.value = lines.join('\n\n');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied formatted Travel Shortlist itinerary to clipboard!');
+      } catch (err) {
+        showToast('Could not copy automatically.');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    // -----------------------------------------------------------------------
+    // 8. TOAST NOTIFICATION HELPER
+    // -----------------------------------------------------------------------
+    let toastTimeout = null;
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const msgEl = document.getElementById('toastMessage');
+      msgEl.textContent = message;
+      toast.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3400);
+    }
+
+    // -----------------------------------------------------------------------
+    // 9. EVENT LISTENERS & INITIALIZATION
+    // -----------------------------------------------------------------------
+    function setActivePillUI(pillValue) {
+      state.activePill = pillValue;
+      const pills = document.querySelectorAll('.specialty-pill');
+      pills.forEach(btn => {
+        const val = btn.getAttribute('data-pill');
+        if (val === pillValue) {
+          btn.classList.add('bg-beetle', 'text-white', 'shadow-sm');
+          btn.classList.remove('bg-oat/70', 'bg-honey', 'text-espresso', 'text-beetle');
+        } else if (val === 'scar') {
+          btn.classList.remove('bg-beetle', 'text-white', 'shadow-sm');
+          btn.classList.add('bg-honey', 'text-beetle');
+        } else {
+          btn.classList.remove('bg-beetle', 'text-white', 'shadow-sm');
+          btn.classList.add('bg-oat/70', 'text-espresso');
+        }
+      });
+      renderTable();
+    }
+
+    function resetAllFilters() {
+      state.activePill = 'all';
+      state.searchQuery = '';
+      state.region = 'all';
+      state.season = 'all';
+      state.sortBy = 'date-asc';
+
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      document.getElementById('regionSelect').value = 'all';
+      document.getElementById('seasonSelect').value = 'all';
+      document.getElementById('sortSelect').value = 'date-asc';
+
+      setActivePillUI('all');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPersistedData();
+      renderTable();
+
+      // Update List Online Button
+      const updateBtn = document.getElementById('updateOnlineCoursesBtn');
+      if (updateBtn) {
+        updateBtn.addEventListener('click', updateCoursesOnDemand);
+      }
+
+      // Specialty Pill Clicks
+      document.querySelectorAll('.specialty-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pill = btn.getAttribute('data-pill');
+          setActivePillUI(pill);
+        });
+      });
+
+      // Search Input
+      const searchInput = document.getElementById('searchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle('hidden', state.searchQuery === '');
+        renderTable();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        state.searchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        renderTable();
+      });
+
+      // Dropdown Filters
+      document.getElementById('regionSelect').addEventListener('change', (e) => {
+        state.region = e.target.value;
+        renderTable();
+      });
+
+      document.getElementById('seasonSelect').addEventListener('change', (e) => {
+        state.season = e.target.value;
+        renderTable();
+      });
+
+      document.getElementById('sortSelect').addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        renderTable();
+      });
+
+      // Sortable Table Column Headers
+      document.querySelectorAll('.sortable-th').forEach(th => {
+        th.addEventListener('click', () => {
+          const col = th.getAttribute('data-sort');
+          if (col === 'date') {
+            state.sortBy = state.sortBy === 'date-asc' ? 'date-desc' : 'date-asc';
+          } else if (col === 'price') {
+            state.sortBy = state.sortBy === 'price-asc' ? 'price-desc' : 'price-asc';
+          } else if (col === 'hours') {
+            state.sortBy = state.sortBy === 'hours-desc' ? 'hours-asc' : 'hours-desc';
+          } else if (col === 'name') {
+            state.sortBy = 'name-asc';
+          } else if (col === 'location') {
+            state.sortBy = 'location-asc';
+          }
+          // Sync select dropdown if matching option exists
+          const sortSelect = document.getElementById('sortSelect');
+          if ([...sortSelect.options].some(o => o.value === state.sortBy)) {
+            sortSelect.value = state.sortBy;
+          }
+          renderTable();
+        });
+      });
+
+      // Reset Filters Buttons
+      document.getElementById('resetAllFiltersBtn').addEventListener('click', resetAllFilters);
+      document.getElementById('emptyResetBtn').addEventListener('click', resetAllFilters);
+
+      // Add Course Modal Controls
+      const addModal = document.getElementById('addCourseModal');
+      document.getElementById('openAddCourseModalBtn').addEventListener('click', () => addModal.classList.remove('hidden'));
+      document.getElementById('emptyAddCourseBtn').addEventListener('click', () => addModal.classList.remove('hidden'));
+      document.getElementById('closeAddCourseModalBtn').addEventListener('click', () => addModal.classList.add('hidden'));
+      document.getElementById('cancelAddCourseBtn').addEventListener('click', () => addModal.classList.add('hidden'));
+      document.getElementById('addCourseForm').addEventListener('submit', handleAddCourseSubmit);
+
+      // Shortlist Drawer Controls
+      const drawer = document.getElementById('shortlistDrawer');
+      document.getElementById('openShortlistDrawerBtn').addEventListener('click', () => {
+        renderShortlistDrawer();
+        drawer.classList.remove('hidden');
+      });
+      document.getElementById('cardOpenShortlistBtn').addEventListener('click', () => {
+        renderShortlistDrawer();
+        drawer.classList.remove('hidden');
+      });
+      document.getElementById('closeShortlistDrawerBtn').addEventListener('click', () => drawer.classList.add('hidden'));
+
+      document.getElementById('copyShortlistBtn').addEventListener('click', copyShortlistToClipboard);
+      document.getElementById('exportShortlistCsvBtn').addEventListener('click', () => {
+        const saved = getAllCourses().filter(c => shortlistedIds.has(c.id));
+        exportCoursesToCsv(saved, 'JuneBugMassage_Shortlist_CE_Courses.csv');
+      });
+      document.getElementById('clearShortlistBtn').addEventListener('click', () => {
+        shortlistedIds.clear();
+        saveShortlist();
+        renderTable();
+        showToast('Cleared all courses from your Travel Shortlist.');
+      });
+
+      // Export Filtered Courses CSV & Print
+      document.getElementById('exportCsvBtn').addEventListener('click', () => {
+        const filtered = getFilteredAndSortedCourses();
+        exportCoursesToCsv(filtered, 'JuneBugMassage_InPerson_CE_Directory.csv');
+      });
+
+      document.getElementById('printScheduleBtn').addEventListener('click', () => {
+        window.print();
+      });
+
+      // Close modals on backdrop click
+      addModal.addEventListener('click', (e) => {
+        if (e.target === addModal) addModal.classList.add('hidden');
+      });
+      drawer.addEventListener('click', (e) => {
+        if (e.target === drawer) drawer.classList.add('hidden');
+      });
+
+      document.getElementById('courseTableBody').addEventListener('click', (e) => {
+        const shortlistBtn = e.target.closest('[data-action="toggle-shortlist"]');
+        if (shortlistBtn) {
+          window.toggleShortlist(shortlistBtn.getAttribute('data-course-id'));
+          return;
+        }
+        const deleteBtn = e.target.closest('[data-action="delete-custom"]');
+        if (deleteBtn) {
+          window.deleteCustomCourse(deleteBtn.getAttribute('data-course-id'));
+        }
+      });
+
+      document.getElementById('shortlistItemsContainer').addEventListener('click', (e) => {
+        const shortlistBtn = e.target.closest('[data-action="toggle-shortlist"]');
+        if (shortlistBtn) {
+          window.toggleShortlist(shortlistBtn.getAttribute('data-course-id'));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<!-- End of June Bug Massage CE Finder -->
